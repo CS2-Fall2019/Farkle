@@ -33,12 +33,8 @@ namespace farkle
             btnScoreDice.IsEnabled = false;
 
             // Dice checkboxes should be dissabled till the roll dice button has been clicked.
-            cbxRoll1.IsEnabled = false;
-            cbxRoll2.IsEnabled = false;
-            cbxRoll3.IsEnabled = false;
-            cbxRoll4.IsEnabled = false;
-            cbxRoll5.IsEnabled = false;
-            cbxRoll6.IsEnabled = false;
+
+
         }
 
         // Set up bool value for farkle.
@@ -129,179 +125,170 @@ namespace farkle
                 // die 1 is null and nothing needs to be done
             }
         }
-
+        /// --------------------------------------------------------------------------------------------------------------------------------------------------------------
         /// <summary>
         /// Method for if cbxRoll1 is checked.
         /// </summary>
-        private void cbxRoll1_Checked(object sender, RoutedEventArgs e)
+        private void imgRoll1_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
             if (imgSavedDie1.Visibility == Visibility.Hidden)
             {
                 imgSavedDie1.Visibility = Visibility.Visible;
-                imgSavedDie1.Source = imgRoll1.Source;
+                imgSavedDie1.Source = imgRoll5.Source;
                 imgRoll1.Visibility = Visibility.Hidden;
-                cbxRoll1.IsChecked = false;
                 allDice.Die1Visible = true;
-                // add the roll to the dice kept array for that player
+                // sixth spot in the array holds die #6
                 player1.DieKept[0] = allDice.Die1;
             }
-            else
+        }
+
+        private void imgSavedDie1_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (imgRoll1.Visibility == Visibility.Hidden)
             {
-                imgSavedDie1.Visibility = Visibility.Hidden;
-                imgRoll1.Visibility = Visibility.Visible;
-                cbxRoll1.IsChecked = false;
-                allDice.Die1Visible = false;
-                // if the roll is saved, and between 1 and 6, remove it from the dice kept array and set the image source back to the original
-                player1.DieKept[0] = 0;
                 imgRoll1.Source = imgSavedDie1.Source;
-
-
+                imgRoll1.Visibility = Visibility.Visible;
+                imgSavedDie1.Visibility = Visibility.Hidden;
+                allDice.Die1Visible = false;
+                player1.DieKept[0] = 0;
             }
         }
 
         /// <summary>
         /// Method to check if cbxRoll2 is checked.
         /// </summary>
-        private void cbxRoll2_Checked(object sender, RoutedEventArgs e)
+        private void imgRoll2_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
             if (imgSavedDie2.Visibility == Visibility.Hidden)
             {
                 imgSavedDie2.Visibility = Visibility.Visible;
                 imgSavedDie2.Source = imgRoll2.Source;
                 imgRoll2.Visibility = Visibility.Hidden;
-                cbxRoll2.IsChecked = false;
                 allDice.Die2Visible = true;
-                // second spot in the array holds die #2
+                // sixth spot in the array holds die #6
                 player1.DieKept[1] = allDice.Die2;
             }
-            else
+        }
+
+        private void imgSavedDie2_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (imgRoll2.Visibility == Visibility.Hidden)
             {
-                imgSavedDie2.Visibility = Visibility.Hidden;
-                imgRoll2.Visibility = Visibility.Visible;
-                cbxRoll2.IsChecked = false;
-                allDice.Die2Visible = false;
-                // if the roll is saved, and between 1 and 6, remove it from the dice kept array and set the image source back to the original
-                player1.DieKept[1] = 0;
                 imgRoll2.Source = imgSavedDie2.Source;
+                imgRoll2.Visibility = Visibility.Visible;
+                imgSavedDie2.Visibility = Visibility.Hidden;
+                allDice.Die2Visible = false;
+                player1.DieKept[1] = 0;
             }
         }
 
         /// <summary>
         /// Method to check if cbxRoll3 is checked.
         /// </summary>
-        private void cbxRoll3_Checked(object sender, RoutedEventArgs e)
+        private void imgRoll3_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
             if (imgSavedDie3.Visibility == Visibility.Hidden)
             {
                 imgSavedDie3.Visibility = Visibility.Visible;
                 imgSavedDie3.Source = imgRoll3.Source;
                 imgRoll3.Visibility = Visibility.Hidden;
-                cbxRoll3.IsChecked = false;
                 allDice.Die3Visible = true;
-                // third spot in the array holds die #3
+                // sixth spot in the array holds die #6
                 player1.DieKept[2] = allDice.Die3;
             }
-            else
+        }
+
+        private void imgSavedDie3_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (imgRoll3.Visibility == Visibility.Hidden)
             {
-                imgSavedDie3.Visibility = Visibility.Hidden;
-                imgRoll3.Visibility = Visibility.Visible;
-                cbxRoll3.IsChecked = false;
-                allDice.Die3Visible = false;
-                // if the roll is saved, and between 1 and 6, remove it from the dice kept array and set the image source back to the original
-
-                player1.DieKept[2] = 0;
                 imgRoll3.Source = imgSavedDie3.Source;
-
+                imgRoll3.Visibility = Visibility.Visible;
+                imgSavedDie3.Visibility = Visibility.Hidden;
+                allDice.Die3Visible = false;
+                player1.DieKept[2] = 0;
             }
         }
 
         /// <summary>
         /// Method to check if cbxRoll4 is checked.
         /// </summary>
-        private void cbxRoll4_Checked(object sender, RoutedEventArgs e)
+        private void imgRoll4_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
             if (imgSavedDie4.Visibility == Visibility.Hidden)
             {
                 imgSavedDie4.Visibility = Visibility.Visible;
                 imgSavedDie4.Source = imgRoll4.Source;
                 imgRoll4.Visibility = Visibility.Hidden;
-                cbxRoll4.IsChecked = false;
                 allDice.Die4Visible = true;
-                // fourth spot in the array holds die #4
+                // sixth spot in the array holds die #6
                 player1.DieKept[3] = allDice.Die4;
-            }
-            else
-            {
-                imgSavedDie4.Visibility = Visibility.Hidden;
-                imgRoll4.Visibility = Visibility.Visible;
-                cbxRoll4.IsChecked = false;
-                allDice.Die4Visible = false;
-                // if the roll is saved, and between 1 and 6, remove it from the dice kept array and set the image source back to the original
-                player1.DieKept[3] = 0;
-                imgRoll4.Source = imgSavedDie4.Source;
             }
         }
 
-        /// <summary>
-        /// Method to check if cbxRoll5 is checked.
-        /// </summary>
-        private void cbxRoll5_Checked(object sender, RoutedEventArgs e)
+        private void imgSavedDie4_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (imgRoll4.Visibility == Visibility.Hidden)
+            {
+                imgRoll4.Source = imgSavedDie4.Source;
+                imgRoll4.Visibility = Visibility.Visible;
+                imgSavedDie4.Visibility = Visibility.Hidden;
+                allDice.Die4Visible = false;
+                player1.DieKept[3] = 0;
+            }
+        }
 
+        private void imgRoll5_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
             if (imgSavedDie5.Visibility == Visibility.Hidden)
             {
                 imgSavedDie5.Visibility = Visibility.Visible;
                 imgSavedDie5.Source = imgRoll5.Source;
                 imgRoll5.Visibility = Visibility.Hidden;
-                cbxRoll5.IsChecked = false;
                 allDice.Die5Visible = true;
-                // fifth spot in the array holds die #5
+                // sixth spot in the array holds die #6
                 player1.DieKept[4] = allDice.Die5;
-            }
-            else
-            {
-                imgSavedDie5.Visibility = Visibility.Hidden;
-                imgRoll5.Visibility = Visibility.Visible;
-                cbxRoll5.IsChecked = false;
-                allDice.Die5Visible = false;
-                // if the roll is saved, and between 1 and 6, remove it from the dice kept array and set the image source back to the original
-                player1.DieKept[4] = 0;
-                imgRoll5.Source = imgSavedDie5.Source;
             }
         }
 
-        /// <summary>
-        /// Method to check if cbxRoll6 is checked.
-        /// </summary>
-        private void cbxRoll6_Checked(object sender, RoutedEventArgs e)
+        private void imgSavedDie5_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (imgRoll5.Visibility == Visibility.Hidden)
+            {
+                imgRoll5.Source = imgSavedDie5.Source;
+                imgRoll5.Visibility = Visibility.Visible;
+                imgSavedDie5.Visibility = Visibility.Hidden;
+                allDice.Die5Visible = false;
+                player1.DieKept[4] = 0;
+                BtnScoreDice_Click(null, null);
+            }
+        }
 
+        private void imgRoll6_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
             if (imgSavedDie6.Visibility == Visibility.Hidden)
             {
                 imgSavedDie6.Visibility = Visibility.Visible;
                 imgSavedDie6.Source = imgRoll6.Source;
                 imgRoll6.Visibility = Visibility.Hidden;
-                cbxRoll6.IsChecked = false;
                 allDice.Die6Visible = true;
                 // sixth spot in the array holds die #6
                 player1.DieKept[5] = allDice.Die6;
             }
-            else
-            {
-                imgSavedDie6.Visibility = Visibility.Hidden;
-                imgRoll6.Visibility = Visibility.Visible;
-                cbxRoll6.IsChecked = false;
-                allDice.Die6Visible = true;
-                // if the roll is saved, and between 1 and 6, remove it from the dice kept array and set the image source back to the original
-                player1.DieKept[5] = 0;
-                imgRoll6.Source = imgSavedDie6.Source;
-            }
         }
 
+        private void imgSavedDie6_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (imgRoll6.Visibility == Visibility.Hidden)
+            {
+                imgRoll6.Source = imgSavedDie6.Source;
+                imgRoll6.Visibility = Visibility.Visible;                
+                imgSavedDie6.Visibility = Visibility.Hidden;
+                allDice.Die6Visible = false;
+                player1.DieKept[5] = 0;
+            }
+        }
+        /// ------------------------------------------------------------------------------------------------------------------------------------------------------------
         /// <summary>
         /// Method to Check the Dice.
         /// </summary>
@@ -842,12 +829,8 @@ namespace farkle
             if (playerFarkle)
             {
                 // Disable the dice check boxes.
-                cbxRoll1.IsEnabled = false;
-                cbxRoll2.IsEnabled = false;
-                cbxRoll3.IsEnabled = false;
-                cbxRoll4.IsEnabled = false;
-                cbxRoll5.IsEnabled = false;
-                cbxRoll6.IsEnabled = false;
+
+
 
                 // Disable the score dice button.
                 btnScoreDice.IsEnabled = false;
@@ -855,12 +838,7 @@ namespace farkle
             else
             {
                 // Enable the dice check boxes
-                cbxRoll1.IsEnabled = true;
-                cbxRoll2.IsEnabled = true;
-                cbxRoll3.IsEnabled = true;
-                cbxRoll4.IsEnabled = true;
-                cbxRoll5.IsEnabled = true;
-                cbxRoll6.IsEnabled = true;
+
             }
         }
 
@@ -917,12 +895,8 @@ namespace farkle
                 player1.CurrentScore += 0;
 
                 // Disable the dice check boxes.
-                cbxRoll1.IsEnabled = false;
-                cbxRoll2.IsEnabled = false;
-                cbxRoll3.IsEnabled = false;
-                cbxRoll4.IsEnabled = false;
-                cbxRoll5.IsEnabled = false;
-                cbxRoll6.IsEnabled = false;
+
+
 
                 // Reset farkle to false.
                 playerFarkle = false;
@@ -955,12 +929,11 @@ namespace farkle
             btnScoreDice.IsEnabled = false;
 
             // Disable the dice check boxes.
-            cbxRoll1.IsEnabled = false;
-            cbxRoll2.IsEnabled = false;
-            cbxRoll3.IsEnabled = false;
-            cbxRoll4.IsEnabled = false;
-            cbxRoll5.IsEnabled = false;
-            cbxRoll6.IsEnabled = false;
+
+
+            //Roll for the next turn
+            BtnRoll_Click(null, null);
+
         }
 
         /// <summary>
@@ -976,6 +949,7 @@ namespace farkle
         {
             Scoring ScoreSheet = new Scoring();
             ScoreSheet.Show();
+
         }
 
         private void BtnScoreDice_Click(object sender, RoutedEventArgs e)
@@ -996,12 +970,8 @@ namespace farkle
                 btnScoreDice.IsEnabled = false;
 
                 // Disable the dice check boxes.
-                cbxRoll1.IsEnabled = false;
-                cbxRoll2.IsEnabled = false;
-                cbxRoll3.IsEnabled = false;
-                cbxRoll4.IsEnabled = false;
-                cbxRoll5.IsEnabled = false;
-                cbxRoll6.IsEnabled = false;
+
+
             }
             else
             {
@@ -1025,12 +995,8 @@ namespace farkle
                 MessageBox.Show("You have hot dice! Roll again!");
 
                 // Disable the dice check boxes.
-                cbxRoll1.IsEnabled = false;
-                cbxRoll2.IsEnabled = false;
-                cbxRoll3.IsEnabled = false;
-                cbxRoll4.IsEnabled = false;
-                cbxRoll5.IsEnabled = false;
-                cbxRoll6.IsEnabled = false;
+
+
             }
             else
             {
