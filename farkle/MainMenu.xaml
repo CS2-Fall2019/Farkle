@@ -12,10 +12,10 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Image HorizontalAlignment="Left" Height="105" Margin="57,23,0,0" VerticalAlignment="Top" Width="235" Source="pack://siteoforigin:,,,/Resources/Farkle.png" Grid.ColumnSpan="2"/>
-        <Button x:Name="btnStart" Content="Start" HorizontalAlignment="Left" Margin="70,152,0,0" VerticalAlignment="Top" Width="87" Height="40" Background="#FFF90404" FontFamily="Yu Gothic UI Semibold" FontSize="20"/>
+        <Button x:Name="btnStart" Content="Start" HorizontalAlignment="Left" Margin="70,152,0,0" VerticalAlignment="Top" Width="87" Height="40" Background="#FFF90404" FontFamily="Yu Gothic UI Semibold" FontSize="20" Click="BtnStart_Click"/>
         <Button x:Name="btnMenu" Content="Menu" HorizontalAlignment="Left" Margin="70,210,0,0" VerticalAlignment="Top" Width="87" Height="40" Background="#FFF90404" FontFamily="Yu Gothic UI Semibold" FontSize="20"/>
-        <Button x:Name="btnAbout" Content="About" HorizontalAlignment="Left" Margin="205,152,0,0" VerticalAlignment="Top" Width="87" Height="40" Background="#FFF90404" FontFamily="Yu Gothic UI Semibold" FontSize="20" Grid.ColumnSpan="2"/>
-        <Button x:Name="btnScoring" Content="Scoring" HorizontalAlignment="Left" Margin="205,210,0,0" VerticalAlignment="Top" Width="87" Height="40" Background="#FFF90404" FontFamily="Yu Gothic UI Semibold" FontSize="20" Grid.ColumnSpan="2"/>
+        <Button x:Name="btnAbout" Content="About" HorizontalAlignment="Left" Margin="205,152,0,0" VerticalAlignment="Top" Width="87" Height="40" Background="#FFF90404" FontFamily="Yu Gothic UI Semibold" FontSize="20" Grid.ColumnSpan="2" Click="BtnAbout_Click"/>
+        <Button x:Name="btnScoring" Content="Scoring" HorizontalAlignment="Left" Margin="205,210,0,0" VerticalAlignment="Top" Width="87" Height="40" Background="#FFF90404" FontFamily="Yu Gothic UI Semibold" FontSize="20" Grid.ColumnSpan="2" Click="BtnScoring_Click"/>
         <Image HorizontalAlignment="Left" Height="65" Margin="256,71,0,0" VerticalAlignment="Top" Width="81" Source="pack://siteoforigin:,,,/Resources/threeDie.jpg" RenderTransformOrigin="0.5,0.5" Panel.ZIndex="-1" Grid.ColumnSpan="2">
             <Image.RenderTransform>
                 <TransformGroup>

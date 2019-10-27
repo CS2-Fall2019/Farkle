@@ -4,8 +4,6 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using System.Windows;
-
 namespace farkle
 {
     using System;
@@ -13,6 +11,8 @@ namespace farkle
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using System.Windows;
+
 
     class Player
     {
@@ -76,7 +76,7 @@ namespace farkle
         }
 
         // Instance of dice class
-        public Dice currentDie;
+        //public Dice currentDie;
 
         /// <summary>
         /// Gets or sets Score.
@@ -141,7 +141,7 @@ namespace farkle
             set => round = value;
         }
 
-        public void ScoreDice(int[] diceArray)
+        public void ScoreDice(List<Dice> savedDieList)
         {
             // Variable for total score from the dice roll.
             int totalScore = 0;
@@ -198,6 +198,7 @@ namespace farkle
             // Set up a bool value to hold true if there are dice that can be scored.
             bool keptDiceScorable = false;
 
+            /*
             // todo set up a way to tell if there are scoreable dice.
             // todo list of dice that arent being kept.
             List<int> rolledDice = new List<int>();
@@ -224,12 +225,13 @@ namespace farkle
                     rolledDice.Add(dieKept[index]);
                 }
             }
+            */
 
             // If there is only one dice kept.
-            if (rolledDice.Count == 1)
+            if (savedDieList.Count == 1)
             {
                 // If the dice kept is a 1.
-                if (rolledDice[0] == 1)
+                if (savedDieList[0].pips == 1)
                 {
                     // Add 100 to pendingScore.
                     pendingScore = die1;
@@ -240,7 +242,7 @@ namespace farkle
                     // Set validDice to true.
                     validDice = true;
                 }
-                else if (rolledDice[0] == 5)
+                else if (savedDieList[0].pips == 5)
                 {
                     // The dice kept is a 5. Add 50 to the pendingScore.
                     pendingScore = die5;
@@ -260,30 +262,30 @@ namespace farkle
             else
             {
                 // Loop through the diceKept list and increment the counters of each die rolled.
-                foreach (int die in rolledDice)
+                foreach (Dice die in savedDieList)
                 {
                     // If the current die is a 1.
-                    if (die == 1)
+                    if (die.pips == 1)
                     {
                         // Increment the one counter.
                         oneCounter++;
                     }
-                    else if (die == 2)
+                    else if (die.pips == 2)
                     {
                         // Increment the two counter
                         twoCounter++;
                     }
-                    else if (die == 3)
+                    else if (die.pips == 3)
                     {
                         // Increment the three counter.
                         threeCounter++;
                     }
-                    else if (die == 4)
+                    else if (die.pips == 4)
                     {
                         // Increment the four counter.
                         fourCounter++;
                     }
-                    else if (die == 5)
+                    else if (die.pips == 5)
                     {
                         // Increment the five counter.
                         fiveCounter++;
@@ -515,7 +517,7 @@ namespace farkle
                 }
 
                 // Check to see if the player rolled a straight or three pairs.
-                if (rolledDice.Count == 6)
+                if (savedDieList.Count == 6)
                 {
                     // Set hotDice to true.
                     this.HotDice = true;
@@ -948,22 +950,22 @@ namespace farkle
 
 
             // Check to make sure the dice kept are scorable.
-            if (twoCounter >= 3 && twoCounter + oneCounter + fiveCounter == rolledDice.Count)
+            if (twoCounter >= 3 && twoCounter + oneCounter + fiveCounter == savedDieList.Count)
             {
                 // Set scorable dice to true.
                 keptDiceScorable = true;
             }
-            else if (threeCounter >=3 && threeCounter + oneCounter + fiveCounter == rolledDice.Count)
+            else if (threeCounter >=3 && threeCounter + oneCounter + fiveCounter == savedDieList.Count)
             {
                 // Set scorable dice to true.
                 keptDiceScorable = true;
             }
-            else if(fourCounter >= 3 && fourCounter + oneCounter + fiveCounter == rolledDice.Count)
+            else if(fourCounter >= 3 && fourCounter + oneCounter + fiveCounter == savedDieList.Count)
             {
                 // Set scorable dice to true.
                 keptDiceScorable = true;
             }
-            else if (sixCounter >= 3 && sixCounter + oneCounter + fiveCounter == rolledDice.Count)
+            else if (sixCounter >= 3 && sixCounter + oneCounter + fiveCounter == savedDieList.Count)
             {
                 // Set scorable dice to true.
                 keptDiceScorable = true;
@@ -974,9 +976,9 @@ namespace farkle
                 keptDiceScorable = false;
             }
 
-            if (straight || threePairs || threeOfAKinds || keptDiceScorable || (oneCounter + fiveCounter == rolledDice.Count))
+            if (straight || threePairs || threeOfAKinds || keptDiceScorable || (oneCounter + fiveCounter == savedDieList.Count))
             {
-                if (rolledDice.Count == 6)
+                if (savedDieList.Count == 6)
                 {
                     // Set hot dice to true.
                     this.HotDice = true;
@@ -1031,8 +1033,15 @@ namespace farkle
                 validDice = false;
             }
 
+            
             // Clear rolledDice.
-            rolledDice.Clear();
+            foreach(Dice die in savedDieList)
+            {
+                die.isLocked = true;
+            }
+
+            savedDieList.Clear();
+            
 
             /*
             else if (diceKept.Count == 2)
@@ -1084,6 +1093,7 @@ namespace farkle
 
             // todo return tempScore???
 
+            /*
             for(int i = 0; i < 6; i++)
             {
                 if (DieKept[i] != 0)
@@ -1091,6 +1101,7 @@ namespace farkle
                     DieKept[i] = 0;
                 }
             }
+            */
 
         }
     }

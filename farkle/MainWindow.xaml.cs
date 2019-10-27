@@ -24,11 +24,12 @@ namespace farkle
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    {
+    {        
         public MainWindow()
-        {
+        {            
             InitializeComponent();
 
+            // TODO: ScoreDice button needs to be depricated before we turn this in.
             // Score dice button should be disabeled till the roll dice button has been clicked.
             btnScoreDice.IsEnabled = false;
 
@@ -41,7 +42,21 @@ namespace farkle
         private bool playerFarkle = false;
 
         // New instance of the Dice Class.
-        Dice allDice = new Dice();
+        Dice die1 = new Dice();
+        Dice die2 = new Dice();
+        Dice die3 = new Dice();
+        Dice die4 = new Dice();
+        Dice die5 = new Dice();
+        Dice die6 = new Dice();
+
+        // Declare the Dicelist that holds the dice
+        public List<int> DiceList = new List<int>();
+
+        // Declare a new list to hold the dice that are in the saved die area.
+        List<Dice> savedDieList = new List<Dice>();
+
+        // Set up a new list to hold the dice not being kept.
+        List<int> diceInPlay = new List<int>();
 
         // New instance of the Player Class.
         Player player1 = new Player();
@@ -57,12 +72,12 @@ namespace farkle
         /// </summary>
         public void SetDiceImg()
         {
-            allDice.Die1 = allDice.DiceList[0];
-            allDice.Die2 = allDice.DiceList[1];
-            allDice.Die3 = allDice.DiceList[2];
-            allDice.Die4 = allDice.DiceList[3];
-            allDice.Die5 = allDice.DiceList[4];
-            allDice.Die6 = allDice.DiceList[5];
+            die1.pips = DiceList[0];
+            die2.pips = DiceList[1];
+            die3.pips = DiceList[2];
+            die4.pips = DiceList[3];
+            die5.pips = DiceList[4];
+            die6.pips = DiceList[5];
 
             // Set up another array called currentDiceList to hold re-rolled dice.
 
@@ -71,54 +86,54 @@ namespace farkle
 
 
             // For die 1
-            if (allDice.Die1 >= 1 && allDice.Die1 <= 6)
+            if (die1.pips >= 1 && die1.pips <= 6)
             {
-                imgRoll1.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + allDice.Die1.ToString() + "Die.jpg"));
+                imgRoll1.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + die1.pips.ToString() + "Die.jpg"));
             }
             else
             {
                 // die 1 is null and nothing needs to be done
             }
             // For die 2
-            if (allDice.Die2 >= 1 && allDice.Die2 <= 6)
+            if (die2.pips >= 1 && die2.pips <= 6)
             {
-                imgRoll2.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + allDice.Die2.ToString() + "Die.jpg"));
+                imgRoll2.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + die2.pips.ToString() + "Die.jpg"));
             }
             else
             {
                 // die 1 is null and nothing needs to be done
             }
             // For die 3
-            if (allDice.Die3 >= 1 && allDice.Die3 <= 6)
+            if (die3.pips >= 1 && die3.pips <= 6)
             {
-                imgRoll3.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + allDice.Die3.ToString() + "Die.jpg"));
+                imgRoll3.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + die3.pips.ToString() + "Die.jpg"));
             }
             else
             {
                 // die 1 is null and nothing needs to be done
             }
             // For die 4
-            if (allDice.Die4 >= 1 && allDice.Die4 <= 6)
+            if (die4.pips >= 1 && die4.pips <= 6)
             {
-                imgRoll4.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + allDice.Die4.ToString() + "Die.jpg"));
+                imgRoll4.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + die4.pips.ToString() + "Die.jpg"));
             }
             else
             {
                 // die 1 is null and nothing needs to be done
             }
             // For die 5
-            if (allDice.Die5 >= 1 && allDice.Die5 <= 6)
+            if (die5.pips >= 1 && die5.pips <= 6)
             {
-                imgRoll5.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + allDice.Die5.ToString() + "Die.jpg"));
+                imgRoll5.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + die5.pips.ToString() + "Die.jpg"));
             }
             else
             {
                 // die 1 is null and nothing needs to be done
             }
             //For die 6
-            if (allDice.Die6 >= 1 && allDice.Die6 <= 6)
+            if (die6.pips >= 1 && die6.pips <= 6)
             {
-                imgRoll6.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + allDice.Die6.ToString() + "Die.jpg"));
+                imgRoll6.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + die6.pips.ToString() + "Die.jpg"));
             }
             else
             {
@@ -134,11 +149,14 @@ namespace farkle
             if (imgSavedDie1.Visibility == Visibility.Hidden)
             {
                 imgSavedDie1.Visibility = Visibility.Visible;
-                imgSavedDie1.Source = imgRoll5.Source;
+                imgSavedDie1.Source = imgRoll1.Source;
                 imgRoll1.Visibility = Visibility.Hidden;
-                allDice.Die1Visible = true;
                 // sixth spot in the array holds die #6
-                player1.DieKept[0] = allDice.Die1;
+                player1.DieKept[0] = die1.pips;
+                die1.isLocked = true;
+                savedDieList.Add(die1);
+                diceInPlay.Remove(die1.pips);
+                player1.ScoreDice(savedDieList);
             }
         }
 
@@ -146,11 +164,17 @@ namespace farkle
         {
             if (imgRoll1.Visibility == Visibility.Hidden)
             {
-                imgRoll1.Source = imgSavedDie1.Source;
-                imgRoll1.Visibility = Visibility.Visible;
-                imgSavedDie1.Visibility = Visibility.Hidden;
-                allDice.Die1Visible = false;
-                player1.DieKept[0] = 0;
+                if (!die1.isLocked)
+                {
+                    imgRoll1.Source = imgSavedDie1.Source;
+                    imgRoll1.Visibility = Visibility.Visible;
+                    imgSavedDie1.Visibility = Visibility.Hidden;
+                    player1.DieKept[0] = 0;
+                    diceInPlay.Add(die1.pips);
+                    savedDieList.Remove(die1);
+                    player1.ScoreDice(savedDieList);
+                }
+
             }
         }
 
@@ -164,9 +188,11 @@ namespace farkle
                 imgSavedDie2.Visibility = Visibility.Visible;
                 imgSavedDie2.Source = imgRoll2.Source;
                 imgRoll2.Visibility = Visibility.Hidden;
-                allDice.Die2Visible = true;
                 // sixth spot in the array holds die #6
-                player1.DieKept[1] = allDice.Die2;
+                player1.DieKept[1] = die2.pips;
+                savedDieList.Add(die2);
+                diceInPlay.Remove(die2.pips);
+                player1.ScoreDice(savedDieList);
             }
         }
 
@@ -174,11 +200,17 @@ namespace farkle
         {
             if (imgRoll2.Visibility == Visibility.Hidden)
             {
-                imgRoll2.Source = imgSavedDie2.Source;
-                imgRoll2.Visibility = Visibility.Visible;
-                imgSavedDie2.Visibility = Visibility.Hidden;
-                allDice.Die2Visible = false;
-                player1.DieKept[1] = 0;
+                if (!die2.isLocked)
+                {
+                    imgRoll2.Source = imgSavedDie2.Source;
+                    imgRoll2.Visibility = Visibility.Visible;
+                    imgSavedDie2.Visibility = Visibility.Hidden;
+                    player1.DieKept[1] = 0;
+                    diceInPlay.Add(die2.pips);
+                    savedDieList.Remove(die2);
+                    player1.ScoreDice(savedDieList);
+                }
+
             }
         }
 
@@ -192,9 +224,11 @@ namespace farkle
                 imgSavedDie3.Visibility = Visibility.Visible;
                 imgSavedDie3.Source = imgRoll3.Source;
                 imgRoll3.Visibility = Visibility.Hidden;
-                allDice.Die3Visible = true;
                 // sixth spot in the array holds die #6
-                player1.DieKept[2] = allDice.Die3;
+                player1.DieKept[2] = die3.pips;
+                savedDieList.Add(die3);
+                diceInPlay.Remove(die3.pips);
+                player1.ScoreDice(savedDieList);
             }
         }
 
@@ -202,11 +236,17 @@ namespace farkle
         {
             if (imgRoll3.Visibility == Visibility.Hidden)
             {
-                imgRoll3.Source = imgSavedDie3.Source;
-                imgRoll3.Visibility = Visibility.Visible;
-                imgSavedDie3.Visibility = Visibility.Hidden;
-                allDice.Die3Visible = false;
-                player1.DieKept[2] = 0;
+                if (!die3.isLocked)
+                {
+                    imgRoll3.Source = imgSavedDie3.Source;
+                    imgRoll3.Visibility = Visibility.Visible;
+                    imgSavedDie3.Visibility = Visibility.Hidden;
+                    player1.DieKept[2] = 0;
+                    diceInPlay.Add(die3.pips);
+                    savedDieList.Remove(die3);
+                    player1.ScoreDice(savedDieList);
+                }
+
             }
         }
 
@@ -220,9 +260,11 @@ namespace farkle
                 imgSavedDie4.Visibility = Visibility.Visible;
                 imgSavedDie4.Source = imgRoll4.Source;
                 imgRoll4.Visibility = Visibility.Hidden;
-                allDice.Die4Visible = true;
                 // sixth spot in the array holds die #6
-                player1.DieKept[3] = allDice.Die4;
+                player1.DieKept[3] = die4.pips;
+                savedDieList.Add(die4);
+                diceInPlay.Remove(die4.pips);
+                player1.ScoreDice(savedDieList);
             }
         }
 
@@ -230,11 +272,16 @@ namespace farkle
         {
             if (imgRoll4.Visibility == Visibility.Hidden)
             {
-                imgRoll4.Source = imgSavedDie4.Source;
-                imgRoll4.Visibility = Visibility.Visible;
-                imgSavedDie4.Visibility = Visibility.Hidden;
-                allDice.Die4Visible = false;
-                player1.DieKept[3] = 0;
+                if (!die4.isLocked)
+                {
+                    imgRoll4.Source = imgSavedDie4.Source;
+                    imgRoll4.Visibility = Visibility.Visible;
+                    imgSavedDie4.Visibility = Visibility.Hidden;
+                    player1.DieKept[3] = 0;
+                    diceInPlay.Add(die4.pips);
+                    savedDieList.Remove(die4);
+                    player1.ScoreDice(savedDieList);
+                }
             }
         }
 
@@ -245,9 +292,11 @@ namespace farkle
                 imgSavedDie5.Visibility = Visibility.Visible;
                 imgSavedDie5.Source = imgRoll5.Source;
                 imgRoll5.Visibility = Visibility.Hidden;
-                allDice.Die5Visible = true;
                 // sixth spot in the array holds die #6
-                player1.DieKept[4] = allDice.Die5;
+                player1.DieKept[4] = die5.pips;
+                savedDieList.Add(die5);
+                diceInPlay.Remove(die5.pips);
+                player1.ScoreDice(savedDieList);
             }
         }
 
@@ -255,12 +304,16 @@ namespace farkle
         {
             if (imgRoll5.Visibility == Visibility.Hidden)
             {
-                imgRoll5.Source = imgSavedDie5.Source;
-                imgRoll5.Visibility = Visibility.Visible;
-                imgSavedDie5.Visibility = Visibility.Hidden;
-                allDice.Die5Visible = false;
-                player1.DieKept[4] = 0;
-                BtnScoreDice_Click(null, null);
+                if (die5.isLocked == false)
+                {
+                    imgRoll5.Source = imgSavedDie5.Source;
+                    imgRoll5.Visibility = Visibility.Visible;
+                    imgSavedDie5.Visibility = Visibility.Hidden;
+                    player1.DieKept[4] = 0;
+                    diceInPlay.Add(die5.pips);
+                    savedDieList.Remove(die5);
+                    player1.ScoreDice(savedDieList);
+                }
             }
         }
 
@@ -271,9 +324,11 @@ namespace farkle
                 imgSavedDie6.Visibility = Visibility.Visible;
                 imgSavedDie6.Source = imgRoll6.Source;
                 imgRoll6.Visibility = Visibility.Hidden;
-                allDice.Die6Visible = true;
                 // sixth spot in the array holds die #6
-                player1.DieKept[5] = allDice.Die6;
+                player1.DieKept[5] = die6.pips;
+                savedDieList.Add(die6);
+                diceInPlay.Remove(die6.pips);
+                player1.ScoreDice(savedDieList);
             }
         }
 
@@ -281,11 +336,21 @@ namespace farkle
         {
             if (imgRoll6.Visibility == Visibility.Hidden)
             {
-                imgRoll6.Source = imgSavedDie6.Source;
-                imgRoll6.Visibility = Visibility.Visible;                
-                imgSavedDie6.Visibility = Visibility.Hidden;
-                allDice.Die6Visible = false;
-                player1.DieKept[5] = 0;
+                if (die6.isLocked == false)
+                {
+                    imgRoll6.Source = imgSavedDie6.Source;
+                    imgRoll6.Visibility = Visibility.Visible;
+                    imgSavedDie6.Visibility = Visibility.Hidden;
+                    player1.DieKept[5] = 0;
+                    diceInPlay.Add(die6.pips);
+                    savedDieList.Remove(die6);
+                    player1.ScoreDice(savedDieList);
+                }
+                else
+                {
+                    MessageBox.Show("You've saved this die and it is locked for this round");
+                }
+
             }
         }
         /// ------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -302,9 +367,6 @@ namespace farkle
             int dv5 = player1.DieKept[4];
             int dv6 = player1.DieKept[5];
             */
-
-            // Set up a new list to hold the dice not being kept.
-            List<int> diceInPlay = new List<int>();
 
             // Set up a boolean value to hold true if there is a straight.
             bool straight = false;
@@ -323,47 +385,49 @@ namespace farkle
             // Set up a bool value to hold true if there are scorable dice.
             bool scoreableDice = false;
 
+            /*
             // If imgRoll1 is in play.
             if (imgRoll1.IsVisible)
             {
                 // Add the first die.
-                diceInPlay.Add(allDice.DiceList[0]);
+                diceInPlay.Add(DiceList[0]);
             }
 
             // If imgRoll2 is in play.
             if (imgRoll2.IsVisible)
             {
                 // Add the second die.
-                diceInPlay.Add(allDice.DiceList[1]);
+                diceInPlay.Add(DiceList[1]);
             }
 
             // If imgRoll3 is in play.
             if (imgRoll3.IsVisible)
             {
                 // Add the third die.
-                diceInPlay.Add(allDice.DiceList[2]);
+                diceInPlay.Add(DiceList[2]);
             }
 
             // If imgRoll4 is in play.
             if (imgRoll4.IsVisible)
             {
                 // Add the fourth die.
-                diceInPlay.Add(allDice.DiceList[3]);
+                diceInPlay.Add(DiceList[3]);
             }
 
             // If imgRoll5 is in play.
             if (imgRoll5.IsVisible)
             {
                 // Add the fifth die.
-                diceInPlay.Add(allDice.DiceList[4]);
+                diceInPlay.Add(DiceList[4]);
             }
 
             // If imgRoll6 is in play.
             if (imgRoll6.IsVisible)
             {
                 // Add the first die.
-                diceInPlay.Add(allDice.DiceList[5]);
+                diceInPlay.Add(DiceList[5]);
             }
+            */
 
             // Counters for each dice number.
             int oneCounter = 0;
@@ -744,53 +808,32 @@ namespace farkle
                 // Nothing needs to be done here.
             }
 
+            //Add the Die to the list
+            DiceList.Add(die1.pips);
+            DiceList.Add(die2.pips);
+            DiceList.Add(die3.pips);
+            DiceList.Add(die4.pips);
+            DiceList.Add(die5.pips);
+            DiceList.Add(die6.pips);
+
             // Reset players hotdice value to false.
             player1.HotDice = false;
-            
+
             // Call RollDice method using the return value from check dice.
-            Random rand = new Random();
+            
+            RollDice(diceInPlay.Count);
+            die1.pips = DiceList[0];
+            die2.pips = DiceList[1];
+            die3.pips = DiceList[2];
+            die4.pips = DiceList[3];
+            die5.pips = DiceList[4];
+            die6.pips = DiceList[5];
 
-            // Set up a counter for images visible.
-            int visibleCounter = 0;
-
-            if (imgRoll1.IsVisible)
+            foreach(Dice die in savedDieList)
             {
-                visibleCounter++;
+                die.isLocked = true;
             }
 
-            if (imgRoll2.IsVisible)
-            {
-                visibleCounter++;
-            }
-
-            if (imgRoll3.IsVisible)
-            {
-                visibleCounter++;
-            }
-
-            if (imgRoll4.IsVisible)
-            {
-                visibleCounter++;
-            }
-
-            if (imgRoll5.IsVisible)
-            {
-                visibleCounter++;
-            }
-
-            if (imgRoll6.IsVisible)
-            {
-                visibleCounter++;
-            }
-
-
-            allDice.RollDice(visibleCounter);
-            allDice.Die1 = allDice.DiceList[0];
-            allDice.Die2 = allDice.DiceList[1];
-            allDice.Die3 = allDice.DiceList[2];
-            allDice.Die4 = allDice.DiceList[3];
-            allDice.Die5 = allDice.DiceList[4];
-            allDice.Die6 = allDice.DiceList[5];
             // todo set text content of lblPendingScore. Im not sure how were going to do this continuously.
 
             // Call the SetDiceImg method.
@@ -851,12 +894,21 @@ namespace farkle
             player1.Round = 0;
 
             int i = 0;
+
             // Reset their dikept array to 0's
             while (i < player1.DieKept.Count())
             {
                 player1.DieKept[i] = 0;
                 i++;
             }
+
+            // reset the isLocked variable on every die to false
+            die1.isLocked = false;
+            die2.isLocked = false;
+            die3.isLocked = false;
+            die4.isLocked = false;
+            die5.isLocked = false;
+            die6.isLocked = false;
 
             // Hide all the saved die images.
             imgSavedDie1.Visibility = Visibility.Hidden;
@@ -912,13 +964,28 @@ namespace farkle
             lblCurrentScore.Content = "Current Score: " + player1.CurrentScore;
 
             // Check if score is greater than or equal to 10000. If it is the player wins.
-            if (player1.CurrentScore >= 10000) 
+            if (player1.CurrentScore >= 10000)
             {
-                // Message box to show winner message.
-                MessageBox.Show("Great job! You won a single player game!");
-
-                // Close the game.
-                this.Close();
+                // Message box to show winner message and ask if player wants to start a new game.
+                MessageBoxResult dialogResult = MessageBox.Show("Great job, player 1 wins! Would you like to start a new game.",
+                                "Winner",
+                                MessageBoxButton.YesNo);
+                if (dialogResult == MessageBoxResult.Yes)
+                {
+                    // Start new game.                 
+                    // Close the current form.
+                    this.Hide();
+                    // Create new MainWindow form.
+                    // Change to showing options menu to start new game.
+                    MainWindow newgame = new MainWindow();
+                    // Show form.
+                    newgame.ShowDialog();
+                }
+                else
+                {
+                    // Close the game.
+                    this.Close();
+                }
             }
             else
             {
@@ -949,13 +1016,12 @@ namespace farkle
         {
             Scoring ScoreSheet = new Scoring();
             ScoreSheet.Show();
-
         }
 
         private void BtnScoreDice_Click(object sender, RoutedEventArgs e)
         {
             // Score the dice for that hand.
-            player1.ScoreDice(player1.DieKept);
+            player1.ScoreDice(savedDieList);
 
             // If dice are valid.
             if (player1.ValidDice)
@@ -965,7 +1031,7 @@ namespace farkle
 
                 // Set label to show score.
                 lblPendingScore.Content = "Pending Score: " + player1.TempScore.ToString();
-                
+
                 // Disable the button: we don't want any cheaters.
                 btnScoreDice.IsEnabled = false;
 
@@ -1008,12 +1074,12 @@ namespace farkle
             {
                 int i = 0;
                 // if they do reset their dikept array to 0's
-                while(i < player1.DieKept.Count())
+                while (i < player1.DieKept.Count())
                 {
                     player1.DieKept[i] = 0;
                     i++;
-                } 
-               
+                }
+
                 // If they do, hide all the saved die images.
                 imgSavedDie1.Visibility = Visibility.Hidden;
                 imgSavedDie2.Visibility = Visibility.Hidden;
@@ -1026,6 +1092,24 @@ namespace farkle
             {
                 // Nothing needs to be done here.
             }
+        }
+
+
+        Random rand = new Random();
+        /// <summary>
+        /// Method to roll the dice.
+        /// </summary>
+        public void RollDice(int diceRolled)
+        {
+
+
+            for (int counter = 0; counter < DiceList.Count(); counter++)
+            {
+
+                DiceList[counter] = rand.Next(6) + 1;
+            }
+
+
         }
     }
 }
