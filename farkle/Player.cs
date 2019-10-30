@@ -4,8 +4,6 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using System.Windows;
-
 namespace farkle
 {
     using System;
@@ -13,6 +11,8 @@ namespace farkle
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using System.Windows;
+
 
     class Player
     {
@@ -25,7 +25,7 @@ namespace farkle
         /// <summary>
         /// Players temporary current score for this round. Can be added to w/ hot dice or lost if farkled.
         /// </summary>
-        private int tempScore;
+        private int tempScore = 0;
 
         /// <summary>
         /// The current score for the player.
@@ -48,6 +48,11 @@ namespace farkle
         private bool hotDice;
 
         /// <summary>
+        /// Bool value to hold true if hotDice was previously true on the last roll.
+        /// </summary>
+        private bool wasHotDice;
+
+        /// <summary>
         /// Intger value to increment every time the player gets hot dice. Resets on new turn.
         /// </summary>
         private int round;
@@ -56,6 +61,25 @@ namespace farkle
         /// Intger value to increment every time the player gets hot dice. Resets on new turn.
         /// </summary>
         private int oldTemp;
+
+        /// <summary>
+        /// Field to keep track of the tempScore if hotDice happens.
+        /// </summary>
+        private int hotDiceAccumulator;
+
+        /// <summary>
+        /// Field to keep track of the tempScore if hotDice happens.
+        /// </summary>
+        private int number;
+
+        /// <summary>
+        /// Gets or sets validDice.
+        /// </summary>
+        public int Number
+        {
+            get => number;
+            set => number = value;
+        }
 
         /// <summary>
         /// Gets or sets validDice.
@@ -76,7 +100,7 @@ namespace farkle
         }
 
         // Instance of dice class
-        public Dice currentDie;
+        //public Dice currentDie;
 
         /// <summary>
         /// Gets or sets Score.
@@ -141,7 +165,25 @@ namespace farkle
             set => round = value;
         }
 
-        public void ScoreDice(int[] diceArray)
+        /// <summary>
+        /// Gets or sets wasHotDice.
+        /// </summary>
+        public bool WasHotDice
+        {
+            get => wasHotDice;
+            set => wasHotDice = value;
+        }
+
+        /// <summary>
+        /// Gets or sets hotDiceAccumulator.
+        /// </summary>
+        public int HotDiceAccumulator
+        {
+            get => hotDiceAccumulator;
+            set => hotDiceAccumulator = value;
+        }
+
+        public void ScoreDice(List<Dice> savedDieList)
         {
             // Variable for total score from the dice roll.
             int totalScore = 0;
@@ -198,6 +240,7 @@ namespace farkle
             // Set up a bool value to hold true if there are dice that can be scored.
             bool keptDiceScorable = false;
 
+            /*
             // todo set up a way to tell if there are scoreable dice.
             // todo list of dice that arent being kept.
             List<int> rolledDice = new List<int>();
@@ -224,12 +267,13 @@ namespace farkle
                     rolledDice.Add(dieKept[index]);
                 }
             }
+            */
 
             // If there is only one dice kept.
-            if (rolledDice.Count == 1)
+            if (savedDieList.Count == 1)
             {
                 // If the dice kept is a 1.
-                if (rolledDice[0] == 1)
+                if (savedDieList[0].pips == 1)
                 {
                     // Add 100 to pendingScore.
                     pendingScore = die1;
@@ -240,7 +284,7 @@ namespace farkle
                     // Set validDice to true.
                     validDice = true;
                 }
-                else if (rolledDice[0] == 5)
+                else if (savedDieList[0].pips == 5)
                 {
                     // The dice kept is a 5. Add 50 to the pendingScore.
                     pendingScore = die5;
@@ -254,44 +298,49 @@ namespace farkle
                 else
                 {
                     // The dice kept is not scoreable.
-                    MessageBox.Show("The die you kept is not scorable.");
+                    // MessageBox.Show("The die you kept is not scorable.");
+
+                    // ^^^ This will get caught later on.
                 }
             }
             else
             {
                 // Loop through the diceKept list and increment the counters of each die rolled.
-                foreach (int die in rolledDice)
+                foreach (Dice die in savedDieList)
                 {
-                    // If the current die is a 1.
-                    if (die == 1)
+                    if (die.isLocked == false)
                     {
-                        // Increment the one counter.
-                        oneCounter++;
-                    }
-                    else if (die == 2)
-                    {
-                        // Increment the two counter
-                        twoCounter++;
-                    }
-                    else if (die == 3)
-                    {
-                        // Increment the three counter.
-                        threeCounter++;
-                    }
-                    else if (die == 4)
-                    {
-                        // Increment the four counter.
-                        fourCounter++;
-                    }
-                    else if (die == 5)
-                    {
-                        // Increment the five counter.
-                        fiveCounter++;
-                    }
-                    else
-                    {
-                        // Increment the six counter.
-                        sixCounter++;
+                        // If the current die is a 1.
+                        if (die.pips == 1)
+                        {
+                            // Increment the one counter.
+                            oneCounter++;
+                        }
+                        else if (die.pips == 2)
+                        {
+                            // Increment the two counter
+                            twoCounter++;
+                        }
+                        else if (die.pips == 3)
+                        {
+                            // Increment the three counter.
+                            threeCounter++;
+                        }
+                        else if (die.pips == 4)
+                        {
+                            // Increment the four counter.
+                            fourCounter++;
+                        }
+                        else if (die.pips == 5)
+                        {
+                            // Increment the five counter.
+                            fiveCounter++;
+                        }
+                        else
+                        {
+                            // Increment the six counter.
+                            sixCounter++;
+                        }
                     }
                 }
 
@@ -515,7 +564,7 @@ namespace farkle
                 }
 
                 // Check to see if the player rolled a straight or three pairs.
-                if (rolledDice.Count == 6)
+                if (savedDieList.Count == 6)
                 {
                     // Set hotDice to true.
                     this.HotDice = true;
@@ -946,24 +995,36 @@ namespace farkle
                 }
             }
 
+            // Variable to hold the count of the savedDieList without the locked dice.
+            int tempSavedDieListCount = 0;
+
+            foreach (Dice die in savedDieList)
+            {
+                // Loop through the savedDieList.
+                if (!die.isLocked)
+                {
+                    // Add 1 to the counter for each die that isnt locked.
+                    tempSavedDieListCount++;
+                }
+            }
 
             // Check to make sure the dice kept are scorable.
-            if (twoCounter >= 3 && twoCounter + oneCounter + fiveCounter == rolledDice.Count)
+            if (twoCounter >= 3 && twoCounter + oneCounter + fiveCounter == savedDieList.Count)
             {
                 // Set scorable dice to true.
                 keptDiceScorable = true;
             }
-            else if (threeCounter >=3 && threeCounter + oneCounter + fiveCounter == rolledDice.Count)
+            else if (threeCounter >= 3 && threeCounter + oneCounter + fiveCounter == savedDieList.Count)
             {
                 // Set scorable dice to true.
                 keptDiceScorable = true;
             }
-            else if(fourCounter >= 3 && fourCounter + oneCounter + fiveCounter == rolledDice.Count)
+            else if (fourCounter >= 3 && fourCounter + oneCounter + fiveCounter == savedDieList.Count)
             {
                 // Set scorable dice to true.
                 keptDiceScorable = true;
             }
-            else if (sixCounter >= 3 && sixCounter + oneCounter + fiveCounter == rolledDice.Count)
+            else if (sixCounter >= 3 && sixCounter + oneCounter + fiveCounter == savedDieList.Count)
             {
                 // Set scorable dice to true.
                 keptDiceScorable = true;
@@ -974,9 +1035,9 @@ namespace farkle
                 keptDiceScorable = false;
             }
 
-            if (straight || threePairs || threeOfAKinds || keptDiceScorable || (oneCounter + fiveCounter == rolledDice.Count))
+            if (straight || threePairs || threeOfAKinds || keptDiceScorable || (oneCounter + fiveCounter == tempSavedDieListCount))
             {
-                if (rolledDice.Count == 6)
+                if (savedDieList.Count == 6)
                 {
                     // Set hot dice to true.
                     this.HotDice = true;
@@ -1002,7 +1063,7 @@ namespace farkle
 
                 // Set the tempScore field as pending score.
                 //currentScore += tempScore;
-                
+
                 /*
                 if (round == 0)
                 {
@@ -1016,11 +1077,38 @@ namespace farkle
                     tempScore += (pendingScore - oldTemp);                    
                 }
                 */
-                
-                tempScore += pendingScore;
+
+                // todo is this right?
+                // If the number of dice saved is the same as the amount being scored, and the roll
+                // isnt happening after hot dice.
+                if (savedDieList.Count == tempSavedDieListCount && !wasHotDice)
+                {
+                    // Set the tempScore equal to the pendingScore.                    
+                    tempScore = pendingScore;
+
+                }
+                else if (savedDieList.Count == tempSavedDieListCount && wasHotDice)
+                {
+                    tempScore = hotDiceAccumulator + pendingScore;
+                }
+                else
+                {
+                    tempScore += pendingScore;
+                }
 
 
-                
+                /*
+                // This is how it was before. I think.
+                if (savedDieList.Count == tempSavedDieListCount)
+                {
+                    tempScore = pendingScore;
+                }
+                else
+                {
+                    tempScore += pendingScore;
+                }
+                */
+
                 // Reset pending score to 0.
                 pendingScore = 0;
             }
@@ -1031,8 +1119,15 @@ namespace farkle
                 validDice = false;
             }
 
+            /*
             // Clear rolledDice.
-            rolledDice.Clear();
+            foreach(Dice die in savedDieList)
+            {
+                die.isLocked = true;
+            }
+            */
+            // savedDieList.Clear();
+
 
             /*
             else if (diceKept.Count == 2)
@@ -1084,6 +1179,7 @@ namespace farkle
 
             // todo return tempScore???
 
+            /*
             for(int i = 0; i < 6; i++)
             {
                 if (DieKept[i] != 0)
@@ -1091,7 +1187,217 @@ namespace farkle
                     DieKept[i] = 0;
                 }
             }
+            */
+        }
 
+        public void RemoveDieScore(List<Dice> diceInPlay, List<Dice> savedDieList)
+        {
+            /*
+            // Counters for how many are in our list
+            int oneCounter = 0;
+            int twoCounter = 0;
+            int threeCounter = 0;
+            int fourCounter = 0;
+            int fiveCounter = 0;
+            int sixCounter = 0;
+            // Loop through diceInPlay checking for removed dice.
+            foreach (Dice die in diceInPlay)
+            {
+                // If the die has been removed.
+                if (die.removed)
+                {
+                    if (die.pips == 1)
+                    {
+                        if (oneCounter < 3)
+                        {
+                            pendingScore = -100;
+                        }
+                        else if (oneCounter == 3)
+                        {
+                            pendingScore = -1000;
+                        }
+                        else if (oneCounter == 4)
+                        {
+                            pendingScore = -1000;
+                        }
+                        else if (oneCounter == 5)
+                        {
+                            pendingScore = -2000;
+                        }
+                        else
+                        {
+                            // OneCounter is 6.
+                            pendingScore = -4000;
+                        }
+                    }
+                    else if (die.pips == 2)
+                    {
+                        if (twoCounter == 3)
+                        {
+                            pendingScore = -200;
+                        }
+                        else if (twoCounter == 4)
+                        {
+                            pendingScore = -200;
+                        }
+                        else if (twoCounter == 5)
+                        {
+                            pendingScore = -400;
+                        }
+                        else if (twoCounter == 6)
+                        {
+                            pendingScore = -800;
+                        }
+                        else
+                        {
+                            // Removal of two doesnt effect the score.
+                        }
+                    }
+                    else if (die.pips == 3)
+                    {
+                        if (threeCounter == 3)
+                        {
+                            pendingScore = -300;
+                        }
+                        else if (threeCounter == 4)
+                        {
+                            pendingScore = -300;
+                        }
+                        else if (threeCounter == 5)
+                        {
+                            pendingScore = -600;
+                        }
+                        else if (threeCounter == 6)
+                        {
+                            pendingScore = -1200;
+                        }
+                        else
+                        {
+                            // Removal of three doesnt effect the score.
+                        }
+                    }
+                    else if (die.pips == 4)
+                    {
+                        if (fourCounter == 3)
+                        {
+                            pendingScore = -400;
+                        }
+                        else if (fourCounter == 4)
+                        {
+                            pendingScore = -400;
+                        }
+                        else if (fourCounter == 5)
+                        {
+                            pendingScore = -800;
+                        }
+                        else if (fourCounter == 6)
+                        {
+                            pendingScore = -1600;
+                        }
+                        else
+                        {
+                            // Removal of four doesnt effect the score.
+                        }
+                    }
+                    else if (die.pips == 5)
+                    {
+                        if (fiveCounter < 3)
+                        {
+                            pendingScore = -50;
+                        }
+                        else if (fiveCounter == 3)
+                        {
+                            pendingScore = -500;
+                        }
+                        else if (fiveCounter == 4)
+                        {
+                            pendingScore = -500;
+                        }
+                        else if (fiveCounter == 5)
+                        {
+                            pendingScore = -1000;
+                        }
+                        else
+                        {
+                            // FiveCounter is 6.
+                            pendingScore = -2000;
+                        }
+                    }
+                    else
+                    {
+                        // Pips is a 6.
+                        if (sixCounter == 3)
+                        {
+                            pendingScore = -600;
+                        }
+                        else if (sixCounter == 4)
+                        {
+                            pendingScore = -600;
+                        }
+                        else if (sixCounter == 5)
+                        {
+                            pendingScore = -1200;
+                        }
+                        else if (sixCounter == 6)
+                        {
+                            pendingScore = -3200;
+                        }
+                        else
+                        {
+                            // Removal of six doesnt effect the score.
+                        }
+                    }
+
+                    // Variable to hold the count of the savedDieList without the locked dice.
+                    int tempSavedDieListCount = 0;
+
+                    foreach (Dice dice in savedDieList)
+                    {
+                        // Loop through the savedDieList.
+                        if (!dice.isLocked)
+                        {
+                            // Add 1 to the counter for each die that isnt locked.
+                            tempSavedDieListCount++;
+                        }
+                    }
+
+                    if (savedDieList.Count == tempSavedDieListCount && !wasHotDice)
+                    {
+                        // Set the tempScore equal to the pendingScore.                    
+                        tempScore = pendingScore;
+
+                    }
+                    else if (savedDieList.Count == tempSavedDieListCount && wasHotDice)
+                    {
+                        tempScore = hotDiceAccumulator + pendingScore;
+                    }
+                    else
+                    {
+                        tempScore += pendingScore;
+                    }
+
+                    die.removed = false;
+                }
+            }      
+            */
+        }
+
+        public void ResetFieldsForNewTurn()
+        {
+            // Reset round to 0.
+            round = 0;
+
+            // Reset hotDiceAccumulator to 0.
+            hotDiceAccumulator = 0;
+
+            // Reset hotDice to false.
+            hotDice = false;
+
+            // Reset wasHotDice to false.
+            wasHotDice = false;
+
+            // Reset validDice to false.
+            validDice = false;
         }
     }
 }
