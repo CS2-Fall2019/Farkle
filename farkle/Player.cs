@@ -4,8 +4,6 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using System.Windows;
-
 namespace farkle
 {
     using System;
@@ -13,6 +11,8 @@ namespace farkle
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using System.Windows;
+
 
     class Player
     {
@@ -25,7 +25,7 @@ namespace farkle
         /// <summary>
         /// Players temporary current score for this round. Can be added to w/ hot dice or lost if farkled.
         /// </summary>
-        private int tempScore;
+        private int tempScore = 0;
 
         /// <summary>
         /// The current score for the player.
@@ -48,6 +48,11 @@ namespace farkle
         private bool hotDice;
 
         /// <summary>
+        /// Bool value to hold true if hotDice was previously true on the last roll.
+        /// </summary>
+        private bool wasHotDice;
+
+        /// <summary>
         /// Intger value to increment every time the player gets hot dice. Resets on new turn.
         /// </summary>
         private int round;
@@ -56,6 +61,50 @@ namespace farkle
         /// Intger value to increment every time the player gets hot dice. Resets on new turn.
         /// </summary>
         private int oldTemp;
+
+        /// <summary>
+        /// Field to keep track of the tempScore if hotDice happens.
+        /// </summary>
+        private int hotDiceAccumulator;
+
+        /// <summary>
+        /// Field to keep track of the tempScore of locked1List.
+        /// </summary>
+        private int locked1ListScore;
+
+        /// <summary>
+        /// Field to keep track of the tempScore of locked2List.
+        /// </summary>
+        private int locked2ListScore;
+
+        /// <summary>
+        /// Field to keep track of the tempScore of locked3List.
+        /// </summary>
+        private int locked3ListScore;
+
+        /// <summary>
+        /// Field to keep track of the tempScore of locked4List.
+        /// </summary>
+        private int locked4ListScore;
+
+        /// <summary>
+        /// Field to keep track of the tempScore of locked5List.
+        /// </summary>
+        private int locked5ListScore;
+
+        /// <summary>
+        /// Field to keep track of the tempScore if hotDice happens.
+        /// </summary>
+        private int number;
+
+        /// <summary>
+        /// Gets or sets validDice.
+        /// </summary>
+        public int Number
+        {
+            get => number;
+            set => number = value;
+        }
 
         /// <summary>
         /// Gets or sets validDice.
@@ -76,7 +125,7 @@ namespace farkle
         }
 
         // Instance of dice class
-        public Dice currentDie;
+        //public Dice currentDie;
 
         /// <summary>
         /// Gets or sets Score.
@@ -141,7 +190,71 @@ namespace farkle
             set => round = value;
         }
 
-        public void ScoreDice(int[] diceArray)
+        /// <summary>
+        /// Gets or sets wasHotDice.
+        /// </summary>
+        public bool WasHotDice
+        {
+            get => wasHotDice;
+            set => wasHotDice = value;
+        }
+
+        /// <summary>
+        /// Gets or sets hotDiceAccumulator.
+        /// </summary>
+        public int HotDiceAccumulator
+        {
+            get => hotDiceAccumulator;
+            set => hotDiceAccumulator = value;
+        }
+
+        /// <summary>
+        /// Gets or sets locked1ListScore.
+        /// </summary>
+        public int Locked1ListScore
+        {
+            get => locked1ListScore;
+            set => locked1ListScore = value;
+        }
+
+        /// <summary>
+        /// Gets or sets locked2ListScore.
+        /// </summary>
+        public int Locked2ListScore
+        {
+            get => locked2ListScore;
+            set => locked2ListScore = value;
+        }
+
+        /// <summary>
+        /// Gets or sets locked3ListScore.
+        /// </summary>
+        public int Locked3ListScore
+        {
+            get => locked3ListScore;
+            set => locked3ListScore = value;
+        }
+
+        /// <summary>
+        /// Gets or sets locked4ListScore.
+        /// </summary>
+        public int Locked4ListScore
+        {
+            get => locked4ListScore;
+            set => locked4ListScore = value;
+        }
+
+        /// <summary>
+        /// Gets or sets locked5ListScore.
+        /// </summary>
+        public int Locked5ListScore
+        {
+            get => locked5ListScore;
+            set => locked5ListScore = value;
+        }
+
+        public void ScoreDice(List<Dice> savedDieList, List<Dice> locked1List, List<Dice> locked2List,
+            List<Dice> locked3List, List<Dice> locked4List, List<Dice> locked5List)
         {
             // Variable for total score from the dice roll.
             int totalScore = 0;
@@ -198,6 +311,7 @@ namespace farkle
             // Set up a bool value to hold true if there are dice that can be scored.
             bool keptDiceScorable = false;
 
+            /*
             // todo set up a way to tell if there are scoreable dice.
             // todo list of dice that arent being kept.
             List<int> rolledDice = new List<int>();
@@ -224,12 +338,13 @@ namespace farkle
                     rolledDice.Add(dieKept[index]);
                 }
             }
+            */
 
             // If there is only one dice kept.
-            if (rolledDice.Count == 1)
+            if (savedDieList.Count == 1)
             {
                 // If the dice kept is a 1.
-                if (rolledDice[0] == 1)
+                if (savedDieList[0].pips == 1)
                 {
                     // Add 100 to pendingScore.
                     pendingScore = die1;
@@ -240,7 +355,7 @@ namespace farkle
                     // Set validDice to true.
                     validDice = true;
                 }
-                else if (rolledDice[0] == 5)
+                else if (savedDieList[0].pips == 5)
                 {
                     // The dice kept is a 5. Add 50 to the pendingScore.
                     pendingScore = die5;
@@ -254,44 +369,50 @@ namespace farkle
                 else
                 {
                     // The dice kept is not scoreable.
-                    MessageBox.Show("The die you kept is not scorable.");
+                    // MessageBox.Show("The die you kept is not scorable.");
+
+                    // ^^^ This will get caught later on.
                 }
             }
             else
             {
                 // Loop through the diceKept list and increment the counters of each die rolled.
-                foreach (int die in rolledDice)
+                foreach (Dice die in savedDieList)
                 {
-                    // If the current die is a 1.
-                    if (die == 1)
+                    // if (die.isLocked == false)
+                    if (!die.locked1 && !die.locked2 && !die.locked3 && !die.locked4 && !die.locked5)
                     {
-                        // Increment the one counter.
-                        oneCounter++;
-                    }
-                    else if (die == 2)
-                    {
-                        // Increment the two counter
-                        twoCounter++;
-                    }
-                    else if (die == 3)
-                    {
-                        // Increment the three counter.
-                        threeCounter++;
-                    }
-                    else if (die == 4)
-                    {
-                        // Increment the four counter.
-                        fourCounter++;
-                    }
-                    else if (die == 5)
-                    {
-                        // Increment the five counter.
-                        fiveCounter++;
-                    }
-                    else
-                    {
-                        // Increment the six counter.
-                        sixCounter++;
+                        // If the current die is a 1.
+                        if (die.pips == 1)
+                        {
+                            // Increment the one counter.
+                            oneCounter++;
+                        }
+                        else if (die.pips == 2)
+                        {
+                            // Increment the two counter
+                            twoCounter++;
+                        }
+                        else if (die.pips == 3)
+                        {
+                            // Increment the three counter.
+                            threeCounter++;
+                        }
+                        else if (die.pips == 4)
+                        {
+                            // Increment the four counter.
+                            fourCounter++;
+                        }
+                        else if (die.pips == 5)
+                        {
+                            // Increment the five counter.
+                            fiveCounter++;
+                        }
+                        else
+                        {
+                            // Increment the six counter.
+                            sixCounter++;
+                        }
                     }
                 }
 
@@ -347,7 +468,7 @@ namespace farkle
                     if (twoCounter == 3)
                     {
                         // If twoCounter is 3 add 200.
-                        pendingScore = 200;
+                        pendingScore += 200;
 
                         // Set threeTwos to true;
                         threeTwos = true;
@@ -355,17 +476,17 @@ namespace farkle
                     else if (twoCounter == 4)
                     {
                         // If twoCounter is 4 add 400.
-                        pendingScore = 400;
+                        pendingScore += 400;
                     }
                     else if (twoCounter == 5)
                     {
                         // If twoCounter is 5 add 800.
-                        pendingScore = 800;
+                        pendingScore += 800;
                     }
                     else
                     {
                         // If twoCounter is 6 add 1600.
-                        pendingScore = 1600;
+                        pendingScore += 1600;
                     }
                 }
                 else
@@ -515,7 +636,7 @@ namespace farkle
                 }
 
                 // Check to see if the player rolled a straight or three pairs.
-                if (rolledDice.Count == 6)
+                if (savedDieList.Count == 6)
                 {
                     // Set hotDice to true.
                     this.HotDice = true;
@@ -946,24 +1067,39 @@ namespace farkle
                 }
             }
 
+            
+            // Variable to hold the count of the savedDieList without the locked dice.
+            int tempSavedDieListCount = 0;
+
+            foreach (Dice die in savedDieList)
+            {
+                // Loop through the savedDieList.
+                // if (!die.isLocked)
+                if (!die.locked1 && !die.locked2 && !die.locked3 && !die.locked4 && !die.locked5)
+                {
+                    // Add 1 to the counter for each die that isnt locked.
+                    tempSavedDieListCount++;
+                }
+            }
+            
 
             // Check to make sure the dice kept are scorable.
-            if (twoCounter >= 3 && twoCounter + oneCounter + fiveCounter == rolledDice.Count)
+            if (twoCounter >= 3 && twoCounter + oneCounter + fiveCounter == savedDieList.Count)
             {
                 // Set scorable dice to true.
                 keptDiceScorable = true;
             }
-            else if (threeCounter >=3 && threeCounter + oneCounter + fiveCounter == rolledDice.Count)
+            else if (threeCounter >= 3 && threeCounter + oneCounter + fiveCounter == savedDieList.Count)
             {
                 // Set scorable dice to true.
                 keptDiceScorable = true;
             }
-            else if(fourCounter >= 3 && fourCounter + oneCounter + fiveCounter == rolledDice.Count)
+            else if (fourCounter >= 3 && fourCounter + oneCounter + fiveCounter == savedDieList.Count)
             {
                 // Set scorable dice to true.
                 keptDiceScorable = true;
             }
-            else if (sixCounter >= 3 && sixCounter + oneCounter + fiveCounter == rolledDice.Count)
+            else if (sixCounter >= 3 && sixCounter + oneCounter + fiveCounter == savedDieList.Count)
             {
                 // Set scorable dice to true.
                 keptDiceScorable = true;
@@ -974,9 +1110,9 @@ namespace farkle
                 keptDiceScorable = false;
             }
 
-            if (straight || threePairs || threeOfAKinds || keptDiceScorable || (oneCounter + fiveCounter == rolledDice.Count))
+            if (straight || threePairs || threeOfAKinds || keptDiceScorable || (oneCounter + fiveCounter == tempSavedDieListCount))
             {
-                if (rolledDice.Count == 6)
+                if (savedDieList.Count == 6)
                 {
                     // Set hot dice to true.
                     this.HotDice = true;
@@ -986,41 +1122,147 @@ namespace farkle
                 // Set validDice to true.
                 validDice = true;
 
-                // Keep the scores sepererated, roll to roll.
-                // tempScore holds the total pending score, where as the pendingScore is for each seperate roll.
-                // ex. During the first roll only a 5 is kept (50pts). The second roll three 5's are kept, we don't want the
-                // value of the pending score to be 2000 when it should only be 550.
 
-                //if (tempScore > pendingScore)
-                //{
-                //    tempScore = tempScore - pendingScore;
-                //}
-                //else
-                //{
-                //    tempScore = pendingScore - tempScore;
-                //}
-
-                // Set the tempScore field as pending score.
-                //currentScore += tempScore;
-                
-                /*
-                if (round == 0)
+                if (!wasHotDice)
                 {
-                    tempScore += pendingScore;
-                    oldTemp = tempScore;
-                    round++;
+                    // Check if locked1List has anything in it.
+                    if (locked1List.Count > 0)
+                    {
+                        // Check if locked2List has anything in it.
+                        if (locked2List.Count > 0)
+                        {
+                            // Check if locked3List has anything in it.
+                            if (locked3List.Count > 0)
+                            {
+                                // Check if locked4List has anything in it.
+                                if (locked4List.Count > 0)
+                                {
+                                    // Check if locked5List has anything in it.
+                                    if (locked5List.Count > 0)
+                                    {
+                                        // Set tempScore as the current pending score.
+                                        tempScore = locked1ListScore + locked2ListScore + locked3ListScore
+                                                    + locked4ListScore + locked5ListScore + pendingScore;
+                                    }
+                                    else
+                                    {
+                                        // Set tempScore as the current pending score.
+                                        tempScore = locked1ListScore + locked2ListScore + locked3ListScore
+                                                    + locked4ListScore + pendingScore;
+
+                                        // Set locked5List score as the current pending score.
+                                        locked5ListScore = pendingScore;
+                                    }
+                                }
+                                else
+                                {
+                                    // Set tempScore as the current pending score.
+                                    tempScore = locked1ListScore + locked2ListScore + locked3ListScore + pendingScore;
+
+                                    // Set locked4List score as the current pending score.
+                                    locked4ListScore = pendingScore;
+                                }
+                            }
+                            else
+                            {
+                                // Set tempScore as the current pending score.
+                                tempScore = locked1ListScore + locked2ListScore + pendingScore;
+
+                                // Set locked3List score as the current pending score.
+                                locked3ListScore = pendingScore;
+                            }
+                        }
+                        else
+                        {
+                            // Set tempScore as the current pending score.
+                            tempScore = locked1ListScore + pendingScore;
+
+                            // Set locked2List score as the current pending score.
+                            locked2ListScore = pendingScore;
+                        }
+                    }
+                    else
+                    {
+                        // Set tempScore as the current pending score.
+                        tempScore = pendingScore;
+
+                        // Set locked1List score as the current pending score.
+                        locked1ListScore = pendingScore;
+                    }
                 }
                 else
                 {
-                    // Add new score.
-                    tempScore += (pendingScore - oldTemp);                    
+                    // Hot dice scoring.
+                    // Check if locked1List has anything in it.
+                    if (locked1List.Count > 0)
+                    {
+                        // Check if locked2List has anything in it.
+                        if (locked2List.Count > 0)
+                        {
+                            // Check if locked3List has anything in it.
+                            if (locked3List.Count > 0)
+                            {
+                                // Check if locked4List has anything in it.
+                                if (locked4List.Count > 0)
+                                {
+                                    // Check if locked5List has anything in it.
+                                    if (locked5List.Count > 0)
+                                    {
+                                        // Set tempScore as the current pending score.
+                                        tempScore = hotDiceAccumulator + locked1ListScore + locked2ListScore
+                                                    + locked3ListScore + locked4ListScore + locked5ListScore 
+                                                    + pendingScore;
+                                    }
+                                    else
+                                    {
+                                        // Set tempScore as the current pending score.
+                                        tempScore = hotDiceAccumulator + locked1ListScore + locked2ListScore 
+                                                    + locked3ListScore + locked4ListScore + pendingScore;
+
+                                        // Set locked5List score as the current pending score.
+                                        locked5ListScore = pendingScore;
+                                    }
+                                }
+                                else
+                                {
+                                    // Set tempScore as the current pending score.
+                                    tempScore = hotDiceAccumulator + locked1ListScore + locked2ListScore 
+                                                + locked3ListScore + pendingScore;
+
+                                    // Set locked4List score as the current pending score.
+                                    locked4ListScore = pendingScore;
+                                }
+                            }
+                            else
+                            {
+                                // Set tempScore as the current pending score.
+                                tempScore = hotDiceAccumulator + locked1ListScore + locked2ListScore 
+                                            + pendingScore;
+
+                                // Set locked3List score as the current pending score.
+                                locked3ListScore = pendingScore;
+                            }
+                        }
+                        else
+                        {
+                            // Set tempScore as the current pending score.
+                            tempScore = hotDiceAccumulator + locked1ListScore + pendingScore;
+
+                            // Set locked2List score as the current pending score.
+                            locked2ListScore = pendingScore;
+                        }
+                    }
+                    else
+                    {
+                        // Set tempScore as the current pending score.
+                        tempScore = hotDiceAccumulator + pendingScore;
+
+                        // Set locked1List score as the current pending score.
+                        locked1ListScore = pendingScore;
+                    }
+
                 }
-                */
-                
-                tempScore += pendingScore;
 
-
-                
                 // Reset pending score to 0.
                 pendingScore = 0;
             }
@@ -1030,68 +1272,29 @@ namespace farkle
                 // MessageBox.Show("Some of the dice you kept are not scorable.");
                 validDice = false;
             }
+        }
 
-            // Clear rolledDice.
-            rolledDice.Clear();
+        public void RemoveDieScore(List<Dice> diceInPlay, List<Dice> savedDieList)
+        {
+           
+        }
 
-            /*
-            else if (diceKept.Count == 2)
-            {
+        public void ResetFieldsForNewTurn()
+        {
+            // Reset round to 0.
+            round = 0;
 
-            }
-            else if (diceKept.Count == 3)
-            {
-                // Three of the dice have been kept.
-            }
-            else if (diceKept.Count == 4)
-            {
-                // Four of the dice have been kept.
-            }
-            else if (diceKept.Count == 5)
-            {
-                // Five of the dice have been kept.
-            }
-            else
-            {
-                // Dice kept count is 6.
+            // Reset hotDiceAccumulator to 0.
+            hotDiceAccumulator = 0;
 
-                // Re-roll.
-                Dice Die = new Dice();
-                int returnAmt;
-                returnAmt = Die.RollDice();
-            }
-            */
+            // Reset hotDice to false.
+            hotDice = false;
 
-            // Die 1-dot = 100pts
+            // Reset wasHotDice to false.
+            wasHotDice = false;
 
-            // Die 1-dot x 3 = 1000pts
-
-            // Die 5-dot x 3 = 500pts
-
-            // Die 3 x 2 = 200pts
-
-            // Die 3 x 3 = 300pts
-
-            // Die 3 x 4 = 400pts
-
-            // Die 3 x 5 = 500pts
-
-            // Die 3 x 6 = 600pts
-
-            // Straight = 3000pts
-
-            // Three pair = 1500pts
-
-            // todo return tempScore???
-
-            for(int i = 0; i < 6; i++)
-            {
-                if (DieKept[i] != 0)
-                {
-                    DieKept[i] = 0;
-                }
-            }
-
+            // Reset validDice to false.
+            validDice = false;
         }
     }
 }
