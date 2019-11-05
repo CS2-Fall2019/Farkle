@@ -21,18 +21,10 @@ namespace farkle
         public int pips = 0;
 
         // Bool to see if the die has been saved or not
-        // public bool isLocked = false;
+        //public bool locked = false;
 
-        public bool locked1 = false;
-
-        public bool locked2 = false;
-
-        public bool locked3 = false;
-
-        public bool locked4 = false;
-
-        public bool locked5 = false;
-
+        public bool locked = false;
+        
         // Bool to see if the die has been scored or not.
         public bool removed = false;
 
@@ -42,11 +34,12 @@ namespace farkle
         // Method to reset locked dice fields.
         public void ResetLockedDice()
         {
-            locked1 = false;
-            locked2 = false;
-            locked3 = false;
-            locked4 = false;
-            locked5 = false;
+            locked = false;
+            //locked1 = false;
+            //locked = false;
+            //locked = false;
+            //locked = false;
+            //locked = false;
         }
 
     }

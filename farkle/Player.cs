@@ -380,8 +380,8 @@ namespace farkle
                 // Loop through the diceKept list and increment the counters of each die rolled.
                 foreach (Dice die in savedDieList)
                 {
-                    // if (die.isLocked == false)
-                    if (!die.locked1 && !die.locked2 && !die.locked3 && !die.locked4 && !die.locked5)
+                    // if (die.locked == false)
+                    if (!die.locked && !die.locked && !die.locked && !die.locked && !die.locked)
                     {
                         // If the current die is a 1.
                         if (die.pips == 1)
@@ -1074,8 +1074,7 @@ namespace farkle
             foreach (Dice die in savedDieList)
             {
                 // Loop through the savedDieList.
-                // if (!die.isLocked)
-                if (!die.locked1 && !die.locked2 && !die.locked3 && !die.locked4 && !die.locked5)
+                if (!die.locked && !die.locked && !die.locked && !die.locked && !die.locked)
                 {
                     // Add 1 to the counter for each die that isnt locked.
                     tempSavedDieListCount++;

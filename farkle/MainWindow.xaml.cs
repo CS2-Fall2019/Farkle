@@ -231,8 +231,7 @@ namespace farkle
         {
             if (imgRoll1.Visibility == Visibility.Hidden)
             {
-                // if (!die1.isLocked)
-                if (!die1.locked1 && !die1.locked2 && !die1.locked3 && !die1.locked4 && !die1.locked5)
+                if (!die1.locked && !die1.locked && !die1.locked && !die1.locked && !die1.locked)
                 {
                     imgRoll1.Source = imgSavedDie1.Source;
                     imgRoll1.Visibility = Visibility.Visible;
@@ -280,8 +279,7 @@ namespace farkle
         {
             if (imgRoll2.Visibility == Visibility.Hidden)
             {
-                // if (!die2.isLocked)
-                if (!die2.locked1 && !die2.locked2 && !die2.locked3 && !die2.locked4 && !die2.locked5)
+                if (!die2.locked)
                 {
                     imgRoll2.Source = imgSavedDie2.Source;
                     imgRoll2.Visibility = Visibility.Visible;
@@ -289,15 +287,7 @@ namespace farkle
                     currentPlayerList[0].DieKept[1] = 0;
                     diceInPlay.Add(die2);
                     savedDieList.Remove(die2);
-                    // player1.ScoreDice(savedDieList);
 
-                    /*
-                    die2.removed = true;
-
-                    player1.RemoveDieScore(diceInPlay, savedDieList);
-
-                    lblPendingScore.Content = "Pending Score: " + player1.TempScore.ToString();
-                    */
                     // Call Display Score method.
                     DisplayScore();
                 }
@@ -315,11 +305,11 @@ namespace farkle
                 imgSavedDie3.Visibility = Visibility.Visible;
                 imgSavedDie3.Source = imgRoll3.Source;
                 imgRoll3.Visibility = Visibility.Hidden;
+
                 // sixth spot in the array holds die #6
                 currentPlayerList[0].DieKept[2] = die3.pips;
                 savedDieList.Add(die3);
                 diceInPlay.Remove(die3);
-                // player1.ScoreDice(savedDieList);
 
                 // Call Display Score method.
                 DisplayScore();
@@ -330,8 +320,7 @@ namespace farkle
         {
             if (imgRoll3.Visibility == Visibility.Hidden)
             {
-                // if (!die3.isLocked)
-                if (!die3.locked1 && !die3.locked2 && !die3.locked3 && !die3.locked4 && !die3.locked5)
+                if (!die3.locked)
                 {
                     imgRoll3.Source = imgSavedDie3.Source;
                     imgRoll3.Visibility = Visibility.Visible;
@@ -339,15 +328,7 @@ namespace farkle
                     currentPlayerList[0].DieKept[2] = 0;
                     diceInPlay.Add(die3);
                     savedDieList.Remove(die3);
-                    // player1.ScoreDice(savedDieList);
 
-                    /*
-                    die3.removed = true;
-
-                    player1.RemoveDieScore(diceInPlay, savedDieList);
-
-                    lblPendingScore.Content = "Pending Score: " + player1.TempScore.ToString();
-                    */
                     // Call Display Score method.
                     DisplayScore();
                 }
@@ -365,11 +346,11 @@ namespace farkle
                 imgSavedDie4.Visibility = Visibility.Visible;
                 imgSavedDie4.Source = imgRoll4.Source;
                 imgRoll4.Visibility = Visibility.Hidden;
+
                 // sixth spot in the array holds die #6
                 currentPlayerList[0].DieKept[3] = die4.pips;
                 savedDieList.Add(die4);
                 diceInPlay.Remove(die4);
-                // player1.ScoreDice(savedDieList);
 
                 // Call Display Score method.
                 DisplayScore();
@@ -380,8 +361,7 @@ namespace farkle
         {
             if (imgRoll4.Visibility == Visibility.Hidden)
             {
-                // if (!die4.isLocked)
-                if (!die4.locked1 && !die4.locked2 && !die4.locked3 && !die4.locked4 && !die4.locked5)
+                if (!die4.locked)
                 {
                     imgRoll4.Source = imgSavedDie4.Source;
                     imgRoll4.Visibility = Visibility.Visible;
@@ -389,15 +369,7 @@ namespace farkle
                     currentPlayerList[0].DieKept[3] = 0;
                     diceInPlay.Add(die4);
                     savedDieList.Remove(die4);
-                    // player1.ScoreDice(savedDieList);
 
-                    /*
-                    die4.removed = true;
-
-                    player1.RemoveDieScore(diceInPlay, savedDieList);
-
-                    lblPendingScore.Content = "Pending Score: " + player1.TempScore.ToString();
-                    */
                     // Call Display Score method.
                     DisplayScore();
                 }
@@ -411,11 +383,11 @@ namespace farkle
                 imgSavedDie5.Visibility = Visibility.Visible;
                 imgSavedDie5.Source = imgRoll5.Source;
                 imgRoll5.Visibility = Visibility.Hidden;
+
                 // sixth spot in the array holds die #6
                 currentPlayerList[0].DieKept[4] = die5.pips;
                 savedDieList.Add(die5);
                 diceInPlay.Remove(die5);
-                // player1.ScoreDice(savedDieList);
 
                 // Call Display Score method.
                 DisplayScore();
@@ -426,8 +398,7 @@ namespace farkle
         {
             if (imgRoll5.Visibility == Visibility.Hidden)
             {
-                // if (die5.isLocked == false)
-                if (!die5.locked1 && !die5.locked2 && !die5.locked3 && !die5.locked4 && !die5.locked5)
+                if (!die5.locked && !die5.locked && !die5.locked && !die5.locked && !die5.locked)
                 {
                     imgRoll5.Source = imgSavedDie5.Source;
                     imgRoll5.Visibility = Visibility.Visible;
@@ -435,15 +406,7 @@ namespace farkle
                     currentPlayerList[0].DieKept[4] = 0;
                     diceInPlay.Add(die5);
                     savedDieList.Remove(die5);
-                    // player1.ScoreDice(savedDieList);
 
-                    /*
-                    die5.removed = true;
-
-                    player1.RemoveDieScore(diceInPlay, savedDieList);
-
-                    lblPendingScore.Content = "Pending Score: " + player1.TempScore.ToString();
-                    */
                     // Call Display Score method.
                     DisplayScore();
                 }
@@ -457,11 +420,11 @@ namespace farkle
                 imgSavedDie6.Visibility = Visibility.Visible;
                 imgSavedDie6.Source = imgRoll6.Source;
                 imgRoll6.Visibility = Visibility.Hidden;
+
                 // sixth spot in the array holds die #6
                 currentPlayerList[0].DieKept[5] = die6.pips;
                 savedDieList.Add(die6);
                 diceInPlay.Remove(die6);
-                // player1.ScoreDice(savedDieList);
 
                 // Call Display Score method.
                 DisplayScore();
@@ -472,8 +435,7 @@ namespace farkle
         {
             if (imgRoll6.Visibility == Visibility.Hidden)
             {
-                // if (die6.isLocked == false)
-                if (!die6.locked1 && !die6.locked2 && !die6.locked3 && !die6.locked4 && !die6.locked5)
+                if (!die6.locked && !die6.locked && !die6.locked && !die6.locked && !die6.locked)
                 {
                     imgRoll6.Source = imgSavedDie6.Source;
                     imgRoll6.Visibility = Visibility.Visible;
@@ -481,15 +443,7 @@ namespace farkle
                     currentPlayerList[0].DieKept[5] = 0;
                     diceInPlay.Add(die6);
                     savedDieList.Remove(die6);
-                    // player1.ScoreDice(savedDieList);
 
-                    /*
-                    die6.removed = true;
-
-                    player1.RemoveDieScore(diceInPlay, savedDieList);
-
-                    lblPendingScore.Content = "Pending Score: " + player1.TempScore.ToString();
-                    */
                     // Call Display Score method.
                     DisplayScore();
                 }
@@ -506,15 +460,6 @@ namespace farkle
         /// </summary>
         public void CheckDice()     // todo return value for int method. (changed to void to make it work temporarily)
         {
-            /*
-            int dv1 = player1.DieKept[0];
-            int dv2 = player1.DieKept[1];
-            int dv3 = player1.DieKept[2];
-            int dv4 = player1.DieKept[3];
-            int dv5 = player1.DieKept[4];
-            int dv6 = player1.DieKept[5];
-            */
-
             // Set up a boolean value to hold true if there is a straight.
             bool straight = false;
 
@@ -531,7 +476,6 @@ namespace farkle
 
             // Set up a bool value to hold true if there are scorable dice.
             bool scoreableDice = false;
-
 
             // Clear diceInPlay.
             diceInPlay.Clear();
@@ -958,40 +902,40 @@ namespace farkle
                         // Check rollIncrementer to see which roll it is.
                         if (rollIncrementer == 1)
                         {
-                            // Set locked1 to true.
-                            die.locked1 = true;
+                            // Set locked to true.
+                            die.locked = true;
 
                             // Add to locked1List.
                             locked1List.Add(die);
                         }
                         else if (rollIncrementer == 2)
                         {
-                            // Set locked2 to true.
-                            die.locked2 = true;
+                            // Set locked to true.
+                            die.locked = true;
 
                             // Add to locked2List.
                             locked2List.Add(die);
                         }
                         else if (rollIncrementer == 3)
                         {
-                            // Set locked3 to true.
-                            die.locked3 = true;
+                            // Set locked to true.
+                            die.locked = true;
 
                             // Add to locked1List.
                             locked3List.Add(die);
                         }
                         else if (rollIncrementer == 4)
                         {
-                            // Set locked4 to true.
-                            die.locked4 = true;
+                            // Set locked to true.
+                            die.locked = true;
 
                             // Add to locked1List.
                             locked4List.Add(die);
                         }
                         else if (rollIncrementer == 5)
                         {
-                            // Set locked5 to true.
-                            die.locked5 = true;
+                            // Set locked to true.
+                            die.locked = true;
 
                             // Add to locked1List.
                             locked5List.Add(die);
@@ -1003,7 +947,7 @@ namespace farkle
                     }
 
                     // If die 1 is locked.
-                    if (die1.locked1 || die1.locked2 || die1.locked3 || die1.locked4 || die1.locked5)
+                    if (die1.locked || die1.locked || die1.locked || die1.locked || die1.locked)
                     {
                         // Make the border visible.
                         bdrDie1.Visibility = Visibility.Visible;
@@ -1014,7 +958,7 @@ namespace farkle
                     }
 
                     // If die 2 is locked.
-                    if (die2.locked1 || die2.locked2 || die2.locked3 || die2.locked4 || die2.locked5)
+                    if (die2.locked || die2.locked || die2.locked || die2.locked || die2.locked)
                     {
                         // Make the border visible.
                         bdrDie2.Visibility = Visibility.Visible;
@@ -1025,7 +969,7 @@ namespace farkle
                     }
 
                     // If die 3 is locked.
-                    if (die3.locked1 || die3.locked2 || die3.locked3 || die3.locked4 || die3.locked5)
+                    if (die3.locked || die3.locked || die3.locked || die3.locked || die3.locked)
                     {
                         // Make the border visible.
                         bdrDie3.Visibility = Visibility.Visible;
@@ -1036,7 +980,7 @@ namespace farkle
                     }
 
                     // If die 4 is locked.
-                    if (die4.locked1 || die4.locked2 || die4.locked3 || die4.locked4 || die4.locked5)
+                    if (die4.locked || die4.locked || die4.locked || die4.locked || die4.locked)
                     {
                         // Make the border visible.
                         bdrDie4.Visibility = Visibility.Visible;
@@ -1047,7 +991,7 @@ namespace farkle
                     }
 
                     // If die 5 is locked.
-                    if (die5.locked1 || die5.locked2 || die5.locked3 || die5.locked4 || die5.locked5)
+                    if (die5.locked || die5.locked || die5.locked || die5.locked || die5.locked)
                     {
                         // Make the border visible.
                         bdrDie5.Visibility = Visibility.Visible;
@@ -1058,7 +1002,7 @@ namespace farkle
                     }
 
                     // If die 6 is locked.
-                    if (die6.locked1 || die6.locked2 || die6.locked3 || die6.locked4 || die6.locked5)
+                    if (die6.locked || die6.locked || die6.locked || die6.locked || die6.locked)
                     {
                         // Make the border visible.
                         bdrDie6.Visibility = Visibility.Visible;
@@ -1111,12 +1055,7 @@ namespace farkle
                         // Unlock each die in savedDieList. todo new
                         foreach (Dice die in savedDieList)
                         {
-                            // die.isLocked = false;
-                            die.locked1 = false;
-                            die.locked2 = false;
-                            die.locked3 = false;
-                            die.locked4 = false;
-                            die.locked5 = false;
+                            die.locked = false;                            
                         }
 
                         // Clear the savedDieList. todo new
@@ -1263,13 +1202,13 @@ namespace farkle
             }
 
             /*
-            // reset the isLocked variable on every die to false
-            die1.isLocked = false;
-            die2.isLocked = false;
-            die3.isLocked = false;
-            die4.isLocked = false;
-            die5.isLocked = false;
-            die6.isLocked = false;
+            // reset the locked variable on every die to false
+            die1.locked = false;
+            die2.locked = false;
+            die3.locked = false;
+            die4.locked = false;
+            die5.locked = false;
+            die6.locked = false;
             */
 
             // Hide all the saved die images.

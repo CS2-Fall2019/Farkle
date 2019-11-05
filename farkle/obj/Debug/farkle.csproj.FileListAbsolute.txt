@@ -177,3 +177,5 @@ C:\Users\Home\OneDrive\Desktop\Farkle\farkle\obj\Debug\farkle.Properties.Resourc
 C:\Users\Home\OneDrive\Desktop\Farkle\farkle\obj\Debug\farkle.csproj.GenerateResource.cache
 C:\Users\Home\OneDrive\Desktop\Farkle\farkle\obj\Debug\farkle.exe
 C:\Users\Home\OneDrive\Desktop\Farkle\farkle\obj\Debug\farkle.pdb
+C:\Users\james.schulze\source\repos\farkle\farkle\bin\Debug\Resources\Farkle.png
+C:\Users\james.schulze\source\repos\farkle\farkle\obj\Debug\farkle_Content.g.cs
