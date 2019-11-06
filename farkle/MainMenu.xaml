@@ -55,8 +55,8 @@
         <RadioButton x:Name="rdoTwoAI" Content="2 AI" HorizontalAlignment="Left" Margin="46,216,0,0" VerticalAlignment="Top" GroupName="AI" Visibility="Hidden"/>
         <RadioButton x:Name="rdoThreeAI" Content="3 AI" HorizontalAlignment="Left" Margin="117,200,0,0" VerticalAlignment="Top" GroupName="AI" Visibility="Hidden"/>
         <RadioButton x:Name="rdoFourAI" Content="4 AI" HorizontalAlignment="Left" Margin="117,216,0,0" VerticalAlignment="Top" GroupName="AI" Visibility="Hidden" />
-        <RadioButton x:Name="rdoEasy" Content="Easy" HorizontalAlignment="Left" Margin="65,244,0,0" VerticalAlignment="Top" GroupName="AIDifficulty"/>
-        <RadioButton x:Name="rdoHard" Content="Hard" HorizontalAlignment="Left" Margin="112,244,0,0" VerticalAlignment="Top" GroupName="AIDifficulty"/>
+        <RadioButton x:Name="rdoEasy" Content="Easy" HorizontalAlignment="Left" Margin="65,244,0,0" VerticalAlignment="Top" GroupName="AIDifficulty" Checked="rdoEasy_Checked"/>
+        <RadioButton x:Name="rdoHard" Content="Hard" HorizontalAlignment="Left" Margin="112,244,0,0" VerticalAlignment="Top" GroupName="AIDifficulty" Checked="rdoHard_Checked"/>
 
     </Grid>
 </Window>

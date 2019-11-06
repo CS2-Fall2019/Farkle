@@ -29,6 +29,11 @@ namespace farkle
         /// <summary>
         /// True if one player was selected.
         /// </summary>
+        private int difficulty;
+
+        /// <summary>
+        /// True if one player was selected.
+        /// </summary>
         private bool onePlayer;
 
         /// <summary>
@@ -160,6 +165,15 @@ namespace farkle
         {
             get => this.AIcount;
             set => this.AIcount = value;
+        }
+
+        /// <summary>
+        /// True if player farkled.
+        /// </summary>
+        public int Difficulty
+        {
+            get => this.difficulty;
+            set => this.difficulty = value;
         }
 
         /// <summary>
@@ -1009,21 +1023,12 @@ namespace farkle
                 // Set label to show score.
                 lblPendingScore.Content = "Pending Score: " + this.currentPlayerList[0].TempScore.ToString();
 
-                if (!this.playerFarkle)
-                {
-                    lblCurrentScore.Content = "Current Score: " + (this.currentPlayerList[0].CurrentScore + this.currentPlayerList[0].TempScore).ToString();
-                }
-                else
-                {
-                    lblCurrentScore.Content = "Current Score: " + this.currentPlayerList[0].CurrentScore.ToString();
-                }
+
             }
             else
             {
                 lblPendingScore.Content = "Pending Score: " + this.currentPlayerList[0].TempScore.ToString();
-                lblCurrentScore.Content = "Current Score: " +
-                                          (this.currentPlayerList[0].CurrentScore + this.currentPlayerList[0].TempScore)
-                                          .ToString();
+
             }
 
             // Check to see if all dice have been kept and are valid.
@@ -1641,6 +1646,7 @@ namespace farkle
             {
                 this.rollIncrementer++;
             }
+            AImakePlay();
         }
 
         /// <summary>
@@ -1728,8 +1734,7 @@ namespace farkle
             // Reset lblPendingScore.
             lblPendingScore.Content = "Pending Score: " + this.currentPlayerList[0].TempScore.ToString();
 
-            // Set text content of lblCurrentScore.
-            lblCurrentScore.Content = "Current Score: " + this.currentPlayerList[0].CurrentScore;
+
 
             // Check if score is greater than or equal to 10000. If it is the player wins.
             if (this.currentPlayerList[0].CurrentScore >= 10000)
@@ -1775,9 +1780,15 @@ namespace farkle
             this.BtnRoll_Click(null, null);
 
             // Set text content of where the players information goes.
-            lblPlayerInformation.Content = "Player " + this.currentPlayerList[0].Number.ToString() + "'s Turn";
-
-            lblCurrentScore.Content = "Current Score: " + this.currentPlayerList[0].CurrentScore;
+            // first make sure the player is supposed to be AI
+            if (currentPlayerList[0].IsAI == true)
+            {
+                lblPlayerInformation.Content = "Player " + currentPlayerList[0].Number + "'s Turn (AI)";
+            }
+            else
+            {
+                lblPlayerInformation.Content = "Player " + this.currentPlayerList[0].Number.ToString() + "'s Turn";
+            }
 
             btnRoll.IsEnabled = false;
         }
@@ -2059,9 +2070,29 @@ namespace farkle
                 }
             }
 
-            lblPlayerInformation.Content = "Player " + this.currentPlayerList[0].Number + "'s Turn";
+            // Set text content of where the players information goes.
+            // first make sure the player is supposed to be AI
+            if (currentPlayerList[0].IsAI == true)
+            {
+                lblPlayerInformation.Content = "Player " + currentPlayerList[0].Number + "'s Turn (AI)";
+            }
+            else
+            {
+                lblPlayerInformation.Content = "Player " + this.currentPlayerList[0].Number.ToString() + "'s Turn";
+            }
 
             this.currentPlayerList[0].ValidDice = true;
+
+            if(difficulty == 1)
+            {
+                lblDifficulty.Content = "Difficulty: Easy";
+                lblDifficulty.Foreground = Brushes.LimeGreen;
+            }
+            else if (difficulty == 2)
+            {
+                lblDifficulty.Content = "Difficulty: Hard";
+                lblDifficulty.Foreground = Brushes.IndianRed;
+            }
         }
 
         public void AImakePlay()

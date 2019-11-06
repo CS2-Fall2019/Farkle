@@ -40,6 +40,17 @@ namespace farkle
         /// <param name="e">RoutedEventArgs e.</param>
         private void BtnStart_Click(object sender, RoutedEventArgs e)
         {
+            int d = 0;
+
+            if (rdoEasy.IsChecked == true)
+            {
+                d = 1;
+            }
+            else if(rdoHard.IsChecked == true)
+            {
+                d = 2;
+            }
+
             if ((bool)rdoOnePlayer.IsChecked == true)
             {
                 if(rdoOneAI.IsChecked == true)
@@ -47,12 +58,14 @@ namespace farkle
                     MainWindow farkleGame = new MainWindow();
                     farkleGame.OnePlayer = true;
                     farkleGame.AICount = 1;
+                    farkleGame.Difficulty = d;
                     farkleGame.Show();
                 }
                 else
                 {
                     MainWindow farkleGame = new MainWindow();
                     farkleGame.OnePlayer = true;
+                    farkleGame.Difficulty = d;
                     farkleGame.Show();
                 }
             }
@@ -63,6 +76,7 @@ namespace farkle
                     MainWindow farkleGame = new MainWindow();
                     farkleGame.TwoPlayer = true;
                     farkleGame.AICount = 1;
+                    farkleGame.Difficulty = d;
                     farkleGame.Show();
                 }
                 else if (rdoTwoAI.IsChecked == true)
@@ -70,12 +84,14 @@ namespace farkle
                     MainWindow farkleGame = new MainWindow();
                     farkleGame.TwoPlayer = true;
                     farkleGame.AICount = 2;
+                    farkleGame.Difficulty = d;
                     farkleGame.Show();
                 }
                 else
                 {
                     MainWindow farkleGame = new MainWindow();
                     farkleGame.TwoPlayer = true;
+                    farkleGame.Difficulty = d;
                     farkleGame.Show();
                 }
             }
@@ -86,6 +102,7 @@ namespace farkle
                     MainWindow farkleGame = new MainWindow();
                     farkleGame.ThreePlayer = true;
                     farkleGame.AICount = 1;
+                    farkleGame.Difficulty = d;
                     farkleGame.Show();
                 }
                 else if (rdoTwoAI.IsChecked == true)
@@ -93,6 +110,7 @@ namespace farkle
                     MainWindow farkleGame = new MainWindow();
                     farkleGame.ThreePlayer = true;
                     farkleGame.AICount = 2;
+                    farkleGame.Difficulty = d;
                     farkleGame.Show();
                 }
                 else if (rdoThreeAI.IsChecked == true)
@@ -100,12 +118,14 @@ namespace farkle
                     MainWindow farkleGame = new MainWindow();
                     farkleGame.ThreePlayer = true;
                     farkleGame.AICount = 3;
+                    farkleGame.Difficulty = d;
                     farkleGame.Show();
                 }
                 else
                 {
                     MainWindow farkleGame = new MainWindow();
                     farkleGame.ThreePlayer = true;
+                    farkleGame.Difficulty = d;
                     farkleGame.Show();
                 }
             }
@@ -116,6 +136,7 @@ namespace farkle
                     MainWindow farkleGame = new MainWindow();
                     farkleGame.FourPlayer = true;
                     farkleGame.AICount = 1;
+                    farkleGame.Difficulty = d;
                     farkleGame.Show();
                 }
                 else if (rdoTwoAI.IsChecked == true)
@@ -123,6 +144,7 @@ namespace farkle
                     MainWindow farkleGame = new MainWindow();
                     farkleGame.FourPlayer = true;
                     farkleGame.AICount = 2;
+                    farkleGame.Difficulty = d;
                     farkleGame.Show();
                 }
                 else if (rdoThreeAI.IsChecked == true)
@@ -130,6 +152,7 @@ namespace farkle
                     MainWindow farkleGame = new MainWindow();
                     farkleGame.FourPlayer = true;
                     farkleGame.AICount = 3;
+                    farkleGame.Difficulty = d;
                     farkleGame.Show();
                 }
                 else if (rdoFourAI.IsChecked == true)
@@ -138,6 +161,7 @@ namespace farkle
                     MainWindow farkleGame = new MainWindow();
                     farkleGame.FourPlayer = true;
                     farkleGame.AICount = 4;
+                    farkleGame.Difficulty = d;
                     farkleGame.Show();
                 }
                 else
@@ -145,6 +169,7 @@ namespace farkle
                     // Four players was selected.
                     MainWindow farkleGame = new MainWindow();
                     farkleGame.FourPlayer = true;
+                    farkleGame.Difficulty = d;
                     farkleGame.Show();
                 }
             }
@@ -221,6 +246,16 @@ namespace farkle
             rdoTwoAI.Visibility = Visibility.Visible;
             rdoThreeAI.Visibility = Visibility.Visible;
             rdoFourAI.Visibility = Visibility.Visible;
+        }
+
+        private void rdoEasy_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void rdoHard_Checked(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
