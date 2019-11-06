@@ -3,6 +3,7 @@
 //     Copyright (c) Ian Burroughs, Mike Boudreau, Brandon Biles & James A. Schulze. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
+
 namespace farkle
 {
     using System;
@@ -25,35 +26,329 @@ namespace farkle
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
-        {
-            InitializeComponent();
+        /// <summary>
+        /// True if one player was selected.
+        /// </summary>
+        private bool onePlayer;
 
-            // Score dice button should be disabeled till the roll dice button has been clicked.
-            btnScoreDice.IsEnabled = false;
+        /// <summary>
+        /// True if two players was selected.
+        /// </summary>
+        private bool twoPlayer;
 
-            // Dice checkboxes should be dissabled till the roll dice button has been clicked.
-            cbxRoll1.IsEnabled = false;
-            cbxRoll2.IsEnabled = false;
-            cbxRoll3.IsEnabled = false;
-            cbxRoll4.IsEnabled = false;
-            cbxRoll5.IsEnabled = false;
-            cbxRoll6.IsEnabled = false;
-        }
+        /// <summary>
+        /// True if three players was selected.
+        /// </summary>
+        private bool threePlayer;
 
-        // Set up bool value for farkle.
+        /// <summary>
+        /// True if four players was selected.
+        /// </summary>
+        private bool fourPlayer;
+
+        /// <summary>
+        /// True if player farkled.
+        /// </summary>
         private bool playerFarkle = false;
 
-        // New instance of the Dice Class.
-        Dice allDice = new Dice();
+        /// <summary>
+        /// True if player farkled.
+        /// </summary>
+        private int AIcount = 0;
 
-        // New instance of the Player Class.
-        Player player1 = new Player();
+        /// <summary>
+        /// The Die 1.
+        /// </summary>
+        private Dice die1 = new Dice();
 
+        /// <summary>
+        /// The Die 2.
+        /// </summary>
+        private Dice die2 = new Dice();
+
+        /// <summary>
+        /// The Die 3.
+        /// </summary>
+        private Dice die3 = new Dice();
+
+        /// <summary>
+        /// The Die 4.
+        /// </summary>
+        private Dice die4 = new Dice();
+
+        /// <summary>
+        /// The Die 5.
+        /// </summary>
+        private Dice die5 = new Dice();
+
+        /// <summary>
+        /// The Die 6.
+        /// </summary>
+        private Dice die6 = new Dice();
+
+        /// <summary>
+        /// The list of Dice.
+        /// </summary>
+        private List<int> diceList = new List<int>();
+
+        /// <summary>
+        /// The list of currently saved dice.
+        /// </summary>
+        private List<Dice> savedDieList = new List<Dice>();
+
+        /// <summary>
+        /// The list of dice still in play on the board.
+        /// </summary>
+        private List<Dice> diceInPlay = new List<Dice>();
+
+        /// <summary>
+        /// List of dice saved on first roll. The locked1 value is true.
+        /// </summary>
+        private List<Dice> locked1List = new List<Dice>();
+
+        /// <summary>
+        /// List of dice saved on second roll. The locked2 value is true.
+        /// </summary>
+        private List<Dice> locked2List = new List<Dice>();
+
+        /// <summary>
+        /// List of dice saved on third roll. The locked3 value is true.
+        /// </summary>
+        private List<Dice> locked3List = new List<Dice>();
+
+        /// <summary>
+        /// List of dice saved on fourth roll. The locked4 value is true.
+        /// </summary>
+        private List<Dice> locked4List = new List<Dice>();
+
+        /// <summary>
+        /// List of dice saved on fifth roll. The locked5 value is true.
+        /// </summary>
+        private List<Dice> locked5List = new List<Dice>();
+
+        /// <summary>
+        /// Incrementer for the number of rolls in that turn. Resets if hotDice is true.
+        /// </summary>
+        private int rollIncrementer = 0;
+
+        /// <summary>
+        /// List of players in the game.
+        /// </summary>
+        private List<Player> currentPlayerList = new List<Player>();
+
+        /// <summary>
+        /// Random generator for dice rolling.
+        /// </summary>
+        private Random rand = new Random();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainWindow" /> class.
+        /// </summary>
+        public MainWindow()
+        {
+            this.InitializeComponent();
+
+            // TODO: ScoreDice button needs to be depricated before we turn this in.
+            // Score dice button should be disabeled till the roll dice button has been clicked.
+            // Dice checkboxes should be dissabled till the roll dice button has been clicked.
+        }
+
+        /// <summary>
+        /// True if player farkled.
+        /// </summary>
+        public int AICount
+        {
+            get => this.AIcount;
+            set => this.AIcount = value;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether playerFarkle is true or false.
+        /// </summary>
         public bool PlayerFarkle
         {
-            get => playerFarkle;
-            set => playerFarkle = value;
+            get => this.playerFarkle;
+            set => this.playerFarkle = value;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether onePlayer is true or false.
+        /// </summary>
+        public bool OnePlayer
+        {
+            get => this.onePlayer;
+            set => this.onePlayer = value;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether twoPlayer is true or false.
+        /// </summary>
+        public bool TwoPlayer
+        {
+            get => this.twoPlayer;
+            set => this.twoPlayer = value;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether threePlayer is true or false.
+        /// </summary>
+        public bool ThreePlayer
+        {
+            get => this.threePlayer;
+            set => this.threePlayer = value;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether fourPlayer is true or false.
+        /// </summary>
+        public bool FourPlayer
+        {
+            get => this.fourPlayer;
+            set => this.fourPlayer = value;
+        }
+
+        /// <summary>
+        /// Gets or sets die1.
+        /// </summary>
+        public Dice Die1
+        {
+            get => this.die1;
+            set => this.die1 = value;
+        }
+
+        /// <summary>
+        /// Gets or sets die2.
+        /// </summary>
+        public Dice Die2
+        {
+            get => this.die2;
+            set => this.die2 = value;
+        }
+
+        /// <summary>
+        /// Gets or sets die3.
+        /// </summary>
+        public Dice Die3
+        {
+            get => this.die3;
+            set => this.die3 = value;
+        }
+
+        /// <summary>
+        /// Gets or sets die4.
+        /// </summary>
+        public Dice Die4
+        {
+            get => this.die4;
+            set => this.die4 = value;
+        }
+
+        /// <summary>
+        /// Gets or sets die5.
+        /// </summary>
+        public Dice Die5
+        {
+            get => this.die5;
+            set => this.die5 = value;
+        }
+
+        /// <summary>
+        /// Gets or sets die6.
+        /// </summary>
+        public Dice Die6
+        {
+            get => this.die6;
+            set => this.die6 = value;
+        }
+
+        /// <summary>
+        /// Gets or sets this.diceList.
+        /// </summary>
+        public List<int> DiceList
+        {
+            get => this.diceList;
+            set => this.diceList = value;
+        }
+
+        /// <summary>
+        /// Gets or sets this.savedDieList.
+        /// </summary>
+        public List<Dice> SavedDieList
+        {
+            get => this.savedDieList;
+            set => this.savedDieList = value;
+        }
+
+        /// <summary>
+        /// Gets or sets this.diceInPlay.
+        /// </summary>
+        public List<Dice> DiceInPlay
+        {
+            get => this.diceInPlay;
+            set => this.diceInPlay = value;
+        }
+
+        /// <summary>
+        /// Gets or sets locked1List.
+        /// </summary>
+        public List<Dice> Locked1List
+        {
+            get => this.locked1List;
+            set => this.locked1List = value;
+        }
+
+        /// <summary>
+        /// Gets or sets locked2List.
+        /// </summary>
+        public List<Dice> Locked2List
+        {
+            get => this.locked2List;
+            set => this.locked2List = value;
+        }
+
+        /// <summary>
+        /// Gets or sets locked3List.
+        /// </summary>
+        public List<Dice> Locked3List
+        {
+            get => this.locked3List;
+            set => this.locked3List = value;
+        }
+
+        /// <summary>
+        /// Gets or sets locked4List.
+        /// </summary>
+        public List<Dice> Locked4List
+        {
+            get => this.locked4List;
+            set => this.locked4List = value;
+        }
+
+        /// <summary>
+        /// Gets or sets locked5List.
+        /// </summary>
+        public List<Dice> Locked5List
+        {
+            get => this.locked5List;
+            set => this.locked5List = value;
+        }
+
+        /// <summary>
+        /// Gets or sets this.currentPlayerList.
+        /// </summary>
+        public List<Player> CurrentPlayerList
+        {
+            get => this.currentPlayerList;
+            set => this.currentPlayerList = value;
+        }
+
+        /// <summary>
+        /// Gets or sets rand.
+        /// </summary>
+        public Random Rand
+        {
+            get => this.rand;
+            set => this.rand = value;
         }
 
         /// <summary>
@@ -61,251 +356,78 @@ namespace farkle
         /// </summary>
         public void SetDiceImg()
         {
-            allDice.Die1 = allDice.DiceList[0];
-            allDice.Die2 = allDice.DiceList[1];
-            allDice.Die3 = allDice.DiceList[2];
-            allDice.Die4 = allDice.DiceList[3];
-            allDice.Die5 = allDice.DiceList[4];
-            allDice.Die6 = allDice.DiceList[5];
-
-            // Set up another array called currentDiceList to hold re-rolled dice.
-
-            // If allDice.Die1-6 is not equal to currentDiceList[1-6]
-            // if (all)
-
+            this.die1.Pips = this.diceList[0];
+            this.die2.Pips = this.diceList[1];
+            this.die3.Pips = this.diceList[2];
+            this.die4.Pips = this.diceList[3];
+            this.die5.Pips = this.diceList[4];
+            this.die6.Pips = this.diceList[5];
 
             // For die 1
-            if (allDice.Die1 >= 1 && allDice.Die1 <= 6)
+            if (this.die1.Pips >= 1 && this.die1.Pips <= 6)
             {
-                imgRoll1.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + allDice.Die1.ToString() + "Die.jpg"));
+                imgRoll1.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + this.die1.Pips.ToString() + "Die.jpg"));
             }
             else
             {
                 // die 1 is null and nothing needs to be done
             }
+
             // For die 2
-            if (allDice.Die2 >= 1 && allDice.Die2 <= 6)
+            if (this.die2.Pips >= 1 && this.die2.Pips <= 6)
             {
-                imgRoll2.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + allDice.Die2.ToString() + "Die.jpg"));
+                imgRoll2.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + this.die2.Pips.ToString() + "Die.jpg"));
             }
             else
             {
                 // die 1 is null and nothing needs to be done
             }
+
             // For die 3
-            if (allDice.Die3 >= 1 && allDice.Die3 <= 6)
+            if (this.die3.Pips >= 1 && this.die3.Pips <= 6)
             {
-                imgRoll3.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + allDice.Die3.ToString() + "Die.jpg"));
+                imgRoll3.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + this.die3.Pips.ToString() + "Die.jpg"));
             }
             else
             {
                 // die 1 is null and nothing needs to be done
             }
+
             // For die 4
-            if (allDice.Die4 >= 1 && allDice.Die4 <= 6)
+            if (this.die4.Pips >= 1 && this.die4.Pips <= 6)
             {
-                imgRoll4.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + allDice.Die4.ToString() + "Die.jpg"));
+                imgRoll4.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + this.die4.Pips.ToString() + "Die.jpg"));
             }
             else
             {
                 // die 1 is null and nothing needs to be done
             }
+
             // For die 5
-            if (allDice.Die5 >= 1 && allDice.Die5 <= 6)
+            if (this.die5.Pips >= 1 && this.die5.Pips <= 6)
             {
-                imgRoll5.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + allDice.Die5.ToString() + "Die.jpg"));
+                imgRoll5.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + this.die5.Pips.ToString() + "Die.jpg"));
             }
             else
             {
                 // die 1 is null and nothing needs to be done
             }
-            //For die 6
-            if (allDice.Die6 >= 1 && allDice.Die6 <= 6)
+
+            // For die 6
+            if (this.die6.Pips >= 1 && this.die6.Pips <= 6)
             {
-                imgRoll6.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + allDice.Die6.ToString() + "Die.jpg"));
+                imgRoll6.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + this.die6.Pips.ToString() + "Die.jpg"));
             }
             else
             {
                 // die 1 is null and nothing needs to be done
-            }
-        }
-
-        /// <summary>
-        /// Method for if cbxRoll1 is checked.
-        /// </summary>
-        private void cbxRoll1_Checked(object sender, RoutedEventArgs e)
-        {
-
-            if (imgSavedDie1.Visibility == Visibility.Hidden)
-            {
-                imgSavedDie1.Visibility = Visibility.Visible;
-                imgSavedDie1.Source = imgRoll1.Source;
-                imgRoll1.Visibility = Visibility.Hidden;
-                cbxRoll1.IsChecked = false;
-                allDice.Die1Visible = true;
-                // add the roll to the dice kept array for that player
-                player1.DieKept[0] = allDice.Die1;
-            }
-            else
-            {
-                imgSavedDie1.Visibility = Visibility.Hidden;
-                imgRoll1.Visibility = Visibility.Visible;
-                cbxRoll1.IsChecked = false;
-                allDice.Die1Visible = false;
-                // if the roll is saved, and between 1 and 6, remove it from the dice kept array and set the image source back to the original
-                player1.DieKept[0] = 0;
-                imgRoll1.Source = imgSavedDie1.Source;
-
-
-            }
-        }
-
-        /// <summary>
-        /// Method to check if cbxRoll2 is checked.
-        /// </summary>
-        private void cbxRoll2_Checked(object sender, RoutedEventArgs e)
-        {
-
-            if (imgSavedDie2.Visibility == Visibility.Hidden)
-            {
-                imgSavedDie2.Visibility = Visibility.Visible;
-                imgSavedDie2.Source = imgRoll2.Source;
-                imgRoll2.Visibility = Visibility.Hidden;
-                cbxRoll2.IsChecked = false;
-                allDice.Die2Visible = true;
-                // second spot in the array holds die #2
-                player1.DieKept[1] = allDice.Die2;
-            }
-            else
-            {
-                imgSavedDie2.Visibility = Visibility.Hidden;
-                imgRoll2.Visibility = Visibility.Visible;
-                cbxRoll2.IsChecked = false;
-                allDice.Die2Visible = false;
-                // if the roll is saved, and between 1 and 6, remove it from the dice kept array and set the image source back to the original
-                player1.DieKept[1] = 0;
-                imgRoll2.Source = imgSavedDie2.Source;
-            }
-        }
-
-        /// <summary>
-        /// Method to check if cbxRoll3 is checked.
-        /// </summary>
-        private void cbxRoll3_Checked(object sender, RoutedEventArgs e)
-        {
-
-            if (imgSavedDie3.Visibility == Visibility.Hidden)
-            {
-                imgSavedDie3.Visibility = Visibility.Visible;
-                imgSavedDie3.Source = imgRoll3.Source;
-                imgRoll3.Visibility = Visibility.Hidden;
-                cbxRoll3.IsChecked = false;
-                allDice.Die3Visible = true;
-                // third spot in the array holds die #3
-                player1.DieKept[2] = allDice.Die3;
-            }
-            else
-            {
-                imgSavedDie3.Visibility = Visibility.Hidden;
-                imgRoll3.Visibility = Visibility.Visible;
-                cbxRoll3.IsChecked = false;
-                allDice.Die3Visible = false;
-                // if the roll is saved, and between 1 and 6, remove it from the dice kept array and set the image source back to the original
-
-                player1.DieKept[2] = 0;
-                imgRoll3.Source = imgSavedDie3.Source;
-
-            }
-        }
-
-        /// <summary>
-        /// Method to check if cbxRoll4 is checked.
-        /// </summary>
-        private void cbxRoll4_Checked(object sender, RoutedEventArgs e)
-        {
-
-            if (imgSavedDie4.Visibility == Visibility.Hidden)
-            {
-                imgSavedDie4.Visibility = Visibility.Visible;
-                imgSavedDie4.Source = imgRoll4.Source;
-                imgRoll4.Visibility = Visibility.Hidden;
-                cbxRoll4.IsChecked = false;
-                allDice.Die4Visible = true;
-                // fourth spot in the array holds die #4
-                player1.DieKept[3] = allDice.Die4;
-            }
-            else
-            {
-                imgSavedDie4.Visibility = Visibility.Hidden;
-                imgRoll4.Visibility = Visibility.Visible;
-                cbxRoll4.IsChecked = false;
-                allDice.Die4Visible = false;
-                // if the roll is saved, and between 1 and 6, remove it from the dice kept array and set the image source back to the original
-                player1.DieKept[3] = 0;
-                imgRoll4.Source = imgSavedDie4.Source;
-            }
-        }
-
-        /// <summary>
-        /// Method to check if cbxRoll5 is checked.
-        /// </summary>
-        private void cbxRoll5_Checked(object sender, RoutedEventArgs e)
-        {
-
-            if (imgSavedDie5.Visibility == Visibility.Hidden)
-            {
-                imgSavedDie5.Visibility = Visibility.Visible;
-                imgSavedDie5.Source = imgRoll5.Source;
-                imgRoll5.Visibility = Visibility.Hidden;
-                cbxRoll5.IsChecked = false;
-                allDice.Die5Visible = true;
-                // fifth spot in the array holds die #5
-                player1.DieKept[4] = allDice.Die5;
-            }
-            else
-            {
-                imgSavedDie5.Visibility = Visibility.Hidden;
-                imgRoll5.Visibility = Visibility.Visible;
-                cbxRoll5.IsChecked = false;
-                allDice.Die5Visible = false;
-                // if the roll is saved, and between 1 and 6, remove it from the dice kept array and set the image source back to the original
-                player1.DieKept[4] = 0;
-                imgRoll5.Source = imgSavedDie5.Source;
-            }
-        }
-
-        /// <summary>
-        /// Method to check if cbxRoll6 is checked.
-        /// </summary>
-        private void cbxRoll6_Checked(object sender, RoutedEventArgs e)
-        {
-
-            if (imgSavedDie6.Visibility == Visibility.Hidden)
-            {
-                imgSavedDie6.Visibility = Visibility.Visible;
-                imgSavedDie6.Source = imgRoll6.Source;
-                imgRoll6.Visibility = Visibility.Hidden;
-                cbxRoll6.IsChecked = false;
-                allDice.Die6Visible = true;
-                // sixth spot in the array holds die #6
-                player1.DieKept[5] = allDice.Die6;
-            }
-            else
-            {
-                imgSavedDie6.Visibility = Visibility.Hidden;
-                imgRoll6.Visibility = Visibility.Visible;
-                cbxRoll6.IsChecked = false;
-                allDice.Die6Visible = true;
-                // if the roll is saved, and between 1 and 6, remove it from the dice kept array and set the image source back to the original
-                player1.DieKept[5] = 0;
-                imgRoll6.Source = imgSavedDie6.Source;
             }
         }
 
         /// <summary>
         /// Method to Check the Dice.
         /// </summary>
-        public void CheckDice()     // todo return value for int method. (changed to void to make it work temporarily)
+        public int[] CheckDice()     // todo return value for int method. (changed to void to make it work temporarily)
         {
             /*
             int dv1 = player1.DieKept[0];
@@ -315,9 +437,6 @@ namespace farkle
             int dv5 = player1.DieKept[4];
             int dv6 = player1.DieKept[5];
             */
-
-            // Set up a new list to hold the dice not being kept.
-            List<int> diceInPlay = new List<int>();
 
             // Set up a boolean value to hold true if there is a straight.
             bool straight = false;
@@ -336,47 +455,52 @@ namespace farkle
             // Set up a bool value to hold true if there are scorable dice.
             bool scoreableDice = false;
 
+
+            // Clear diceInPlay.
+            diceInPlay.Clear();
+
             // If imgRoll1 is in play.
             if (imgRoll1.IsVisible)
             {
                 // Add the first die.
-                diceInPlay.Add(allDice.DiceList[0]);
+                diceInPlay.Add(die1);
             }
 
             // If imgRoll2 is in play.
             if (imgRoll2.IsVisible)
             {
                 // Add the second die.
-                diceInPlay.Add(allDice.DiceList[1]);
+                diceInPlay.Add(die2);
             }
 
             // If imgRoll3 is in play.
             if (imgRoll3.IsVisible)
             {
                 // Add the third die.
-                diceInPlay.Add(allDice.DiceList[2]);
+                diceInPlay.Add(die3);
             }
 
             // If imgRoll4 is in play.
             if (imgRoll4.IsVisible)
             {
                 // Add the fourth die.
-                diceInPlay.Add(allDice.DiceList[3]);
+                diceInPlay.Add(die4);
             }
 
             // If imgRoll5 is in play.
             if (imgRoll5.IsVisible)
             {
                 // Add the fifth die.
-                diceInPlay.Add(allDice.DiceList[4]);
+                diceInPlay.Add(die5);
             }
 
             // If imgRoll6 is in play.
             if (imgRoll6.IsVisible)
             {
                 // Add the first die.
-                diceInPlay.Add(allDice.DiceList[5]);
+                diceInPlay.Add(die6);
             }
+
 
             // Counters for each dice number.
             int oneCounter = 0;
@@ -387,26 +511,26 @@ namespace farkle
             int sixCounter = 0;
 
             // Loop through diceInPlay.
-            foreach (int die in diceInPlay)
+            foreach (Dice die in diceInPlay)
             {
                 // Increment the counters.
-                if (die == 1)
+                if (die.Pips == 1)
                 {
                     oneCounter++;
                 }
-                else if (die == 2)
+                else if (die.Pips == 2)
                 {
                     twoCounter++;
                 }
-                else if (die == 3)
+                else if (die.Pips == 3)
                 {
                     threeCounter++;
                 }
-                else if (die == 4)
+                else if (die.Pips == 4)
                 {
                     fourCounter++;
                 }
-                else if (die == 5)
+                else if (die.Pips == 5)
                 {
                     fiveCounter++;
                 }
@@ -735,150 +859,831 @@ namespace farkle
                     // There are scorable dice.
                 }
             }
+
+            /*
+          * I didnt know how else to get this information out of the method without copying the whole thing
+          * and that doesnt seem effecient. So I decided to make a "packet" like thing. 
+          * This packet called AIPackage will store information that is neccessary for the AI to determine whether
+          * to take die or not.  
+          * the array elements in order are 
+          * 0: ScoreableDice
+          * 1: oneCounter
+          * 2: fiveCounter
+          * 3: pairOnes
+          * 4: pairTwos
+          * 5: pairThrees
+          * 6: pairFours
+          * 7: pairFives
+          * 8: pairSixes
+          * 9: straight
+          * 10: threePairs
+          * A value 0 means false
+          * a value 1 means true
+          */
+            int[] AIPackage = new int[11];
+
+            // ScoreableDice
+            if (scoreableDice == true)
+            {
+                AIPackage[0] = 1;
+            }
+            else
+            {
+                AIPackage[0] = 0;
+            }
+
+            AIPackage[1] = oneCounter;
+            AIPackage[2] = fiveCounter;
+
+            // pair ones
+            if (pairOnes == true)
+            {
+                AIPackage[3] = 1;
+            }
+            else
+            {
+                AIPackage[3] = 0;
+            }
+
+            // pair twos
+            if (pairTwos == true)
+            {
+                AIPackage[4] = 1;
+            }
+            else
+            {
+                AIPackage[4] = 0;
+            }
+
+            // pair threes
+            if (pairThrees == true)
+            {
+                AIPackage[5] = 1;
+            }
+            else
+            {
+                AIPackage[5] = 0;
+            }
+
+            // pair fours
+            if (pairFours == true)
+            {
+                AIPackage[6] = 1;
+            }
+            else
+            {
+                AIPackage[6] = 0;
+            }
+
+            // pair fives
+            if (pairFives == true)
+            {
+                AIPackage[7] = 1;
+            }
+            else
+            {
+                AIPackage[7] = 0;
+            }
+
+            // pair sixes
+            if (pairSixes == true)
+            {
+                AIPackage[8] = 1;
+            }
+            else
+            {
+                AIPackage[8] = 0;
+            }
+
+            // straight
+            if (straight == true)
+            {
+                AIPackage[9] = 1;
+            }
+            else
+            {
+                AIPackage[9] = 0;
+            }
+
+            // threePairs
+            if (threePairs == true)
+            {
+                AIPackage[10] = 1;
+            }
+            else
+            {
+                AIPackage[10] = 0;
+            }
+            return AIPackage;
+        }
+
+        /// <summary>
+        /// Method to roll the dice.
+        /// </summary>
+        /// <param name="diceRolled">The dice that were rolled.</param>
+        public void RollDice(int diceRolled)
+        {
+            for (int counter = 0; counter < this.diceList.Count(); counter++)
+            {
+                this.diceList[counter] = this.rand.Next(6) + 1;
+            }
+        }
+
+        /// <summary>
+        /// Method to display the score for the player.
+        /// </summary>
+        public void DisplayScore()
+        {
+            // Score the dice for that hand.
+            this.currentPlayerList[0].ScoreDice(this.savedDieList, this.locked1List, this.locked2List, this.locked3List, this.locked4List, this.locked5List);
+
+            // If dice are valid.
+            if (this.currentPlayerList[0].ValidDice)
+            {
+                if (!this.playerFarkle)
+                {
+                    // Enable the roll button.
+                    btnRoll.IsEnabled = true;
+                }
+
+                // Set label to show score.
+                lblPendingScore.Content = "Pending Score: " + this.currentPlayerList[0].TempScore.ToString();
+
+                if (!this.playerFarkle)
+                {
+                    lblCurrentScore.Content = "Current Score: " + (this.currentPlayerList[0].CurrentScore + this.currentPlayerList[0].TempScore).ToString();
+                }
+                else
+                {
+                    lblCurrentScore.Content = "Current Score: " + this.currentPlayerList[0].CurrentScore.ToString();
+                }
+            }
+            else
+            {
+                lblPendingScore.Content = "Pending Score: " + this.currentPlayerList[0].TempScore.ToString();
+                lblCurrentScore.Content = "Current Score: " +
+                                          (this.currentPlayerList[0].CurrentScore + this.currentPlayerList[0].TempScore)
+                                          .ToString();
+            }
+
+            // Check to see if all dice have been kept and are valid.
+            if (imgSavedDie1.IsVisible && imgSavedDie2.IsVisible && imgSavedDie3.IsVisible
+                && imgSavedDie4.IsVisible && imgSavedDie5.IsVisible && imgSavedDie6.IsVisible
+                && this.currentPlayerList[0].ValidDice)
+            {
+                // Set hot dice to true.
+                this.currentPlayerList[0].HotDice = true;
+
+                // Messagebox telling the user they can roll again.
+                MessageBox.Show("You have hot dice! You can roll again to try and score" +
+                                " more points, or you can press the next turn button to end your turn!"
+                                + "\n" + "\n" +
+                                "If you decide to roll again you could possibly lose all of your points " +
+                                "for this turn!!");
+            }
+            else
+            {
+                // Hot dice is already false.
+            }
+
+            // todo locked vs scoring maybe?
+            // when clicking on saved die the to scores are adding not subtracting
+            // Extra dice are being scored.
+            // when to lock dice.
+            // when to call scoring?
+            // inverse display method?
+            // todo after some dice are locked dynamic scoring doesnt work if dice is removed.
+            // todo maybe add some sort of counter to check if there are less in saved dice than the previous roll?
+            // todo checkDice method not working.
+            // todo dynamic scoring for currentScore. -- done
+            // todo check to make sure resetFields... method is working
+            // todo goofy stuff going on with scoring, when 3 of a kind + 1 or 5 and removal/addition of dice to this.savedDieList.
+        }
+
+        /// <summary>
+        /// ImgRoll1 Button click.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">MouseButtonEventArgs e.</param>
+        private void ImgRoll1_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (imgSavedDie1.Visibility == Visibility.Hidden)
+            {
+                imgSavedDie1.Visibility = Visibility.Visible;
+                imgSavedDie1.Source = imgRoll1.Source;
+                imgRoll1.Visibility = Visibility.Hidden;
+
+                // sixth spot in the array holds die #6
+                this.currentPlayerList[0].DieKept[0] = this.die1.Pips;
+                this.savedDieList.Add(this.die1);
+                this.diceInPlay.Remove(this.die1);
+
+                // Call Display Score method.
+                this.DisplayScore();
+            }
+        }
+
+        /// <summary>
+        /// ImgsavedDie1 Button click.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">MouseButtonEventArgs e.</param>
+        private void ImgSavedDie1_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (imgRoll1.Visibility == Visibility.Hidden)
+            {
+                // if (!die1.isLocked)
+                if (!this.die1.Locked1 && !this.die1.Locked2 && !this.die1.Locked3 && !this.die1.Locked4 && !this.die1.Locked5)
+                {
+                    imgRoll1.Source = imgSavedDie1.Source;
+                    imgRoll1.Visibility = Visibility.Visible;
+                    imgSavedDie1.Visibility = Visibility.Hidden;
+                    this.currentPlayerList[0].DieKept[0] = 0;
+                    this.diceInPlay.Add(this.die1);
+                    this.savedDieList.Remove(this.die1);
+
+                    // Call Display Score method.
+                    this.DisplayScore();
+                }
+            }
+        }
+
+        /// <summary>
+        /// ImgRoll2 Button click.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">MouseButtonEventArgs e.</param>
+        private void ImgRoll2_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (imgSavedDie2.Visibility == Visibility.Hidden)
+            {
+                imgSavedDie2.Visibility = Visibility.Visible;
+                imgSavedDie2.Source = imgRoll2.Source;
+                imgRoll2.Visibility = Visibility.Hidden;
+
+                // sixth spot in the array holds die #6
+                this.currentPlayerList[0].DieKept[1] = this.die2.Pips;
+                this.savedDieList.Add(this.die2);
+                this.diceInPlay.Remove(this.die2);
+
+                // Call Display Score method.
+                this.DisplayScore();
+            }
+        }
+
+        /// <summary>
+        /// ImgSavedDie2 Button click.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">MouseButtonEventArgs e.</param>
+        private void ImgSavedDie2_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (imgRoll2.Visibility == Visibility.Hidden)
+            {
+                // if (!die2.isLocked)
+                if (!this.die2.Locked1 && !this.die2.Locked2 && !this.die2.Locked3 && !this.die2.Locked4 && !this.die2.Locked5)
+                {
+                    imgRoll2.Source = imgSavedDie2.Source;
+                    imgRoll2.Visibility = Visibility.Visible;
+                    imgSavedDie2.Visibility = Visibility.Hidden;
+                    this.currentPlayerList[0].DieKept[1] = 0;
+                    this.diceInPlay.Add(this.die2);
+                    this.savedDieList.Remove(this.die2);
+
+                    // Call Display Score method.
+                    this.DisplayScore();
+                }
+            }
+        }
+
+        /// <summary>
+        /// ImgRoll3 Button click.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">MouseButtonEventArgs e.</param>
+        private void ImgRoll3_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (imgSavedDie3.Visibility == Visibility.Hidden)
+            {
+                imgSavedDie3.Visibility = Visibility.Visible;
+                imgSavedDie3.Source = imgRoll3.Source;
+                imgRoll3.Visibility = Visibility.Hidden;
+
+                // sixth spot in the array holds die #6
+                this.currentPlayerList[0].DieKept[2] = this.die3.Pips;
+                this.savedDieList.Add(this.die3);
+                this.diceInPlay.Remove(this.die3);
+
+                // Call Display Score method.
+                this.DisplayScore();
+            }
+        }
+
+        /// <summary>
+        /// ImgSavedDie3 Button click.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">MouseButtonEventArgs e.</param>
+        private void ImgSavedDie3_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (imgRoll3.Visibility == Visibility.Hidden)
+            {
+                // if (!die3.isLocked)
+                if (!this.die3.Locked1 && !this.die3.Locked2 && !this.die3.Locked3 && !this.die3.Locked4 && !this.die3.Locked5)
+                {
+                    imgRoll3.Source = imgSavedDie3.Source;
+                    imgRoll3.Visibility = Visibility.Visible;
+                    imgSavedDie3.Visibility = Visibility.Hidden;
+                    this.currentPlayerList[0].DieKept[2] = 0;
+                    this.diceInPlay.Add(this.die3);
+                    this.savedDieList.Remove(this.die3);
+
+                    // Call Display Score method.
+                    this.DisplayScore();
+                }
+            }
+        }
+
+        /// <summary>
+        /// ImgRoll4 Button click.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">MouseButtonEventArgs e.</param>
+        private void ImgRoll4_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (imgSavedDie4.Visibility == Visibility.Hidden)
+            {
+                imgSavedDie4.Visibility = Visibility.Visible;
+                imgSavedDie4.Source = imgRoll4.Source;
+                imgRoll4.Visibility = Visibility.Hidden;
+
+                // sixth spot in the array holds die #6
+                this.currentPlayerList[0].DieKept[3] = this.die4.Pips;
+                this.savedDieList.Add(this.die4);
+                this.diceInPlay.Remove(this.die4);
+
+                // Call Display Score method.
+                this.DisplayScore();
+            }
+        }
+
+        /// <summary>
+        /// ImgSavedDie4 Button click.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">MouseButtonEventArgs e.</param>
+        private void ImgSavedDie4_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (imgRoll4.Visibility == Visibility.Hidden)
+            {
+                // if (!die4.isLocked)
+                if (!this.die4.Locked1 && !this.die4.Locked2 && !this.die4.Locked3 && !this.die4.Locked4 && !this.die4.Locked5)
+                {
+                    imgRoll4.Source = imgSavedDie4.Source;
+                    imgRoll4.Visibility = Visibility.Visible;
+                    imgSavedDie4.Visibility = Visibility.Hidden;
+                    this.currentPlayerList[0].DieKept[3] = 0;
+                    this.diceInPlay.Add(this.die4);
+                    this.savedDieList.Remove(this.die4);
+
+                    // Call Display Score method.
+                    this.DisplayScore();
+                }
+            }
+        }
+
+        /// <summary>
+        /// ImgRoll5 Button click.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">MouseButtonEventArgs e.</param>
+        private void ImgRoll5_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (imgSavedDie5.Visibility == Visibility.Hidden)
+            {
+                imgSavedDie5.Visibility = Visibility.Visible;
+                imgSavedDie5.Source = imgRoll5.Source;
+                imgRoll5.Visibility = Visibility.Hidden;
+
+                // sixth spot in the array holds die #6
+                this.currentPlayerList[0].DieKept[4] = this.die5.Pips;
+                this.savedDieList.Add(this.die5);
+                this.diceInPlay.Remove(this.die5);
+
+                // Call Display Score method.
+                this.DisplayScore();
+            }
+        }
+
+        /// <summary>
+        /// ImgSavedDie5 Button click.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">MouseButtonEventArgs e.</param>
+        private void ImgSavedDie5_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (imgRoll5.Visibility == Visibility.Hidden)
+            {
+                // if (die5.isLocked == false)
+                if (!this.die5.Locked1 && !this.die5.Locked2 && !this.die5.Locked3 && !this.die5.Locked4 && !this.die5.Locked5)
+                {
+                    imgRoll5.Source = imgSavedDie5.Source;
+                    imgRoll5.Visibility = Visibility.Visible;
+                    imgSavedDie5.Visibility = Visibility.Hidden;
+                    this.currentPlayerList[0].DieKept[4] = 0;
+                    this.diceInPlay.Add(this.die5);
+                    this.savedDieList.Remove(this.die5);
+
+                    // Call Display Score method.
+                    this.DisplayScore();
+                }
+            }
+        }
+
+        /// <summary>
+        /// ImgRoll6 Button click.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">MouseButtonEventArgs e.</param>
+        private void ImgRoll6_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (imgSavedDie6.Visibility == Visibility.Hidden)
+            {
+                imgSavedDie6.Visibility = Visibility.Visible;
+                imgSavedDie6.Source = imgRoll6.Source;
+                imgRoll6.Visibility = Visibility.Hidden;
+
+                // sixth spot in the array holds die #6
+                this.currentPlayerList[0].DieKept[5] = this.die6.Pips;
+                this.savedDieList.Add(this.die6);
+                this.diceInPlay.Remove(this.die6);
+
+                // Call Display Score method.
+                this.DisplayScore();
+            }
+        }
+
+        /// <summary>
+        /// ImgSavedDie6 Button click.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">MouseButtonEventArgs e.</param>
+        private void ImgSavedDie6_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (imgRoll6.Visibility == Visibility.Hidden)
+            {
+                // if (die6.isLocked == false)
+                if (!this.die6.Locked1 && !this.die6.Locked2 && !this.die6.Locked3 && !this.die6.Locked4 && !this.die6.Locked5)
+                {
+                    imgRoll6.Source = imgSavedDie6.Source;
+                    imgRoll6.Visibility = Visibility.Visible;
+                    imgSavedDie6.Visibility = Visibility.Hidden;
+                    this.currentPlayerList[0].DieKept[5] = 0;
+                    this.diceInPlay.Add(this.die6);
+                    this.savedDieList.Remove(this.die6);
+
+                    // Call Display Score method.
+                    this.DisplayScore();
+                }
+                else
+                {
+                    // MessageBox.Show("You've saved this die and it is locked for this round");
+                }
+            }
         }
 
         /// <summary>
         /// Method for BtnRoll Click.
         /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">RoutedEventArgs e.</param>
         private void BtnRoll_Click(object sender, RoutedEventArgs e)
         {
-            // If hot dice is true make imgRoll images visible.
-            if (player1.HotDice)
+            if (this.savedDieList.Count > 0 && !this.currentPlayerList[0].ValidDice)
             {
-                imgRoll1.Visibility = Visibility.Visible;
-                imgRoll2.Visibility = Visibility.Visible;
-                imgRoll3.Visibility = Visibility.Visible;
-                imgRoll4.Visibility = Visibility.Visible;
-                imgRoll5.Visibility = Visibility.Visible;
-                imgRoll6.Visibility = Visibility.Visible;
+                // Display message that some dice are not scorable.
+                MessageBox.Show("Some of your dice are not scorable!");
             }
             else
             {
-                // Nothing needs to be done here.
+                if (this.currentPlayerList[0].ValidDice || this.rollIncrementer == 0)
+                {
+                    // Loop through this.savedDieList
+                    foreach (Dice die in this.savedDieList)
+                    {
+                        // Check rollIncrementer to see which roll it is.
+                        if (this.rollIncrementer == 1)
+                        {
+                            // Set Locked1 to true.
+                            die.Locked1 = true;
+
+                            // Add to Locked1List.
+                            this.locked1List.Add(die);
+                        }
+                        else if (this.rollIncrementer == 2)
+                        {
+                            // Set Locked2 to true.
+                            die.Locked2 = true;
+
+                            // Add to Locked2List.
+                            this.locked2List.Add(die);
+                        }
+                        else if (this.rollIncrementer == 3)
+                        {
+                            // Set Locked3 to true.
+                            die.Locked3 = true;
+
+                            // Add to Locked1List.
+                            this.locked3List.Add(die);
+                        }
+                        else if (this.rollIncrementer == 4)
+                        {
+                            // Set Locked4 to true.
+                            die.Locked4 = true;
+
+                            // Add to Locked1List.
+                            this.locked4List.Add(die);
+                        }
+                        else if (this.rollIncrementer == 5)
+                        {
+                            // Set Locked5 to true.
+                            die.Locked5 = true;
+
+                            // Add to Locked1List.
+                            this.locked5List.Add(die);
+                        }
+                        else
+                        {
+                            // 6th roll: Either hotDice or Farkle.
+                        }
+                    }
+
+                    // If die 1 is locked.
+                    if (this.die1.Locked1 || this.die1.Locked2 || this.die1.Locked3 || this.die1.Locked4 || this.die1.Locked5)
+                    {
+                        // Make the border visible.
+                        bdrDie1.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        bdrDie1.Visibility = Visibility.Hidden;
+                    }
+
+                    // If die 2 is locked.
+                    if (this.die2.Locked1 || this.die2.Locked2 || this.die2.Locked3 || this.die2.Locked4 || this.die2.Locked5)
+                    {
+                        // Make the border visible.
+                        bdrDie2.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        bdrDie2.Visibility = Visibility.Hidden;
+                    }
+
+                    // If die 3 is locked.
+                    if (this.die3.Locked1 || this.die3.Locked2 || this.die3.Locked3 || this.die3.Locked4 || this.die3.Locked5)
+                    {
+                        // Make the border visible.
+                        bdrDie3.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        bdrDie3.Visibility = Visibility.Hidden;
+                    }
+
+                    // If die 4 is locked.
+                    if (this.die4.Locked1 || this.die4.Locked2 || this.die4.Locked3 || this.die4.Locked4 || this.die4.Locked5)
+                    {
+                        // Make the border visible.
+                        bdrDie4.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        bdrDie4.Visibility = Visibility.Hidden;
+                    }
+
+                    // If die 5 is locked.
+                    if (this.die5.Locked1 || this.die5.Locked2 || this.die5.Locked3 || this.die5.Locked4 || this.die5.Locked5)
+                    {
+                        // Make the border visible.
+                        bdrDie5.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        bdrDie5.Visibility = Visibility.Hidden;
+                    }
+
+                    // If die 6 is locked.
+                    if (this.die6.Locked1 || this.die6.Locked2 || this.die6.Locked3 || this.die6.Locked4 || this.die6.Locked5)
+                    {
+                        // Make the border visible.
+                        bdrDie6.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        bdrDie6.Visibility = Visibility.Hidden;
+                    }
+
+                    // this used to be in the below if statement check
+                    // imgSavedDie1.IsVisible && imgSavedDie2.IsVisible && imgSavedDie3.IsVisible
+                    // && imgSavedDie4.IsVisible && imgSavedDie5.IsVisible && imgSavedDie6.IsVisible
+                    // && player1.ValidDice
+                    // Check to see if all dice have been kept and are valid.
+                    if (this.savedDieList.Count == 6)
+                    {
+                        // Set hot dice to true.
+                        this.currentPlayerList[0].HotDice = true;
+                        bdrDie1.Visibility = Visibility.Hidden;
+                        bdrDie2.Visibility = Visibility.Hidden;
+                        bdrDie3.Visibility = Visibility.Hidden;
+                        bdrDie4.Visibility = Visibility.Hidden;
+                        bdrDie5.Visibility = Visibility.Hidden;
+                        bdrDie6.Visibility = Visibility.Hidden;
+                    }
+                    else
+                    {
+                        // Hot dice is already false.
+                    }
+
+                    // If hot dice is true make imgRoll images visible.
+                    if (this.currentPlayerList[0].HotDice)
+                    {
+                        // Make the images visible.
+                        imgRoll1.Visibility = Visibility.Visible;
+                        imgRoll2.Visibility = Visibility.Visible;
+                        imgRoll3.Visibility = Visibility.Visible;
+                        imgRoll4.Visibility = Visibility.Visible;
+                        imgRoll5.Visibility = Visibility.Visible;
+                        imgRoll6.Visibility = Visibility.Visible;
+
+                        // If they do, hide all the saved die images. 
+                        imgSavedDie1.Visibility = Visibility.Hidden;
+                        imgSavedDie2.Visibility = Visibility.Hidden;
+                        imgSavedDie3.Visibility = Visibility.Hidden;
+                        imgSavedDie4.Visibility = Visibility.Hidden;
+                        imgSavedDie5.Visibility = Visibility.Hidden;
+                        imgSavedDie6.Visibility = Visibility.Hidden;
+
+                        // Unlock each die in this.savedDieList. 
+                        foreach (Dice die in this.savedDieList)
+                        {
+                            // die.isLocked = false;
+                            die.Locked1 = false;
+                            die.Locked2 = false;
+                            die.Locked3 = false;
+                            die.Locked4 = false;
+                            die.Locked5 = false;
+                        }
+
+                        // Clear the this.savedDieList. todo new
+                        this.savedDieList.Clear();
+
+                        // Set wasHotDice to true.
+                        this.currentPlayerList[0].WasHotDice = true;
+
+                        // Set the hotDiceAccumulator equal to the tempScore.
+                        this.currentPlayerList[0].HotDiceAccumulator = this.currentPlayerList[0].TempScore;
+
+                        // todo set hotDiceAccumulator to 0 somewhere other than next turn?
+
+                        // Reset players hotdice value to false.
+                        this.currentPlayerList[0].HotDice = false;
+                    }
+                    else
+                    {
+                        // Nothing needs to be done here.
+                    }
+
+                    // Add the die to the this.diceInPlayList.
+
+                    // Add the Die to the list
+                    this.diceList.Add(this.die1.Pips);
+                    this.diceList.Add(this.die2.Pips);
+                    this.diceList.Add(this.die3.Pips);
+                    this.diceList.Add(this.die4.Pips);
+                    this.diceList.Add(this.die5.Pips);
+                    this.diceList.Add(this.die6.Pips);
+
+                    // Call RollDice method using the return value from check dice.
+                    this.RollDice(this.diceInPlay.Count);
+                    this.die1.Pips = this.diceList[0];
+                    this.die2.Pips = this.diceList[1];
+                    this.die3.Pips = this.diceList[2];
+                    this.die4.Pips = this.diceList[3];
+                    this.die5.Pips = this.diceList[4];
+                    this.die6.Pips = this.diceList[5];
+
+                    // Call the SetDiceImg method.
+                    this.SetDiceImg();
+
+                    // Clear the diceList.
+                    this.diceList.Clear();
+
+                    // Call Check Dice method.
+                    this.CheckDice();
+
+                    // If player did or did not farkle.
+                    if (!this.playerFarkle)
+                    {
+                        // There are scorable dice.
+                        // Player did not farkle but btnRoll should not be enabled until scoreDice is hit.
+                    }
+                    else
+                    {
+                        // The player farkled and it is no longer their turn.
+
+                        // Set the players score tempScore to 0.
+                        this.currentPlayerList[0].TempScore = 0;
+
+                        // Messagebox telling the player they farkled.
+                        MessageBox.Show("Farkle! You lost all points for this round."
+                            + "\n" + "Please hit the next turn button.");
+
+                        // Disable the roll button.
+                        btnRoll.IsEnabled = false;
+
+                        // Disable the imgRoll images.
+                        imgRoll1.IsEnabled = false;
+                        imgRoll2.IsEnabled = false;
+                        imgRoll3.IsEnabled = false;
+                        imgRoll4.IsEnabled = false;
+                        imgRoll5.IsEnabled = false;
+                        imgRoll6.IsEnabled = false;
+
+                        // Call Display Score method.
+                        this.DisplayScore();
+                    }
+
+                    // Check if player has hot dice.
+                    if (this.currentPlayerList[0].HotDice)
+                    {
+                        int i = 0;
+
+                        // if they do reset their dicekept array to 0's
+                        while (i < this.currentPlayerList[0].DieKept.Count())
+                        {
+                            this.currentPlayerList[0].DieKept[i] = 0;
+                            i++;
+                        }
+                    }
+                    else
+                    {
+                        // Nothing needs to be done here.
+                    }
+                }
             }
 
-            // Reset players hotdice value to false.
-            player1.HotDice = false;
-            
-            // Call RollDice method using the return value from check dice.
-            Random rand = new Random();
-
-            // Set up a counter for images visible.
-            int visibleCounter = 0;
-
-            if (imgRoll1.IsVisible)
+            if (this.currentPlayerList[0].HotDice)
             {
-                visibleCounter++;
-            }
-
-            if (imgRoll2.IsVisible)
-            {
-                visibleCounter++;
-            }
-
-            if (imgRoll3.IsVisible)
-            {
-                visibleCounter++;
-            }
-
-            if (imgRoll4.IsVisible)
-            {
-                visibleCounter++;
-            }
-
-            if (imgRoll5.IsVisible)
-            {
-                visibleCounter++;
-            }
-
-            if (imgRoll6.IsVisible)
-            {
-                visibleCounter++;
-            }
-
-
-            allDice.RollDice(visibleCounter);
-            allDice.Die1 = allDice.DiceList[0];
-            allDice.Die2 = allDice.DiceList[1];
-            allDice.Die3 = allDice.DiceList[2];
-            allDice.Die4 = allDice.DiceList[3];
-            allDice.Die5 = allDice.DiceList[4];
-            allDice.Die6 = allDice.DiceList[5];
-            // todo set text content of lblPendingScore. Im not sure how were going to do this continuously.
-
-            // Call the SetDiceImg method.
-            SetDiceImg();
-
-            //allDice.DiceList.Clear();
-
-            // btnRoll.IsEnabled = false;
-
-            // Call Check Dice method.
-            CheckDice();
-
-            // If player did or did not farkle.
-            if (!playerFarkle)
-            {
-                // There are scorable dice.
-                // Player did not farkle but btnRoll should not be enabled until scoreDice is hit.
+                this.rollIncrementer = 0;
             }
             else
             {
-                // The player farkled and it is no longer their turn.
-
-                // Set the players score tempScore to 0.
-                player1.TempScore = 0;
-
-                // Messagebox telling the player they farkled.
-                MessageBox.Show("Farkle! You lost all points for this round.");
-            }
-
-            // Disable the roll button.
-            btnRoll.IsEnabled = false;
-
-            // Enable the score dice button.
-            btnScoreDice.IsEnabled = true;
-
-            if (playerFarkle)
-            {
-                // Disable the dice check boxes.
-                cbxRoll1.IsEnabled = false;
-                cbxRoll2.IsEnabled = false;
-                cbxRoll3.IsEnabled = false;
-                cbxRoll4.IsEnabled = false;
-                cbxRoll5.IsEnabled = false;
-                cbxRoll6.IsEnabled = false;
-
-                // Disable the score dice button.
-                btnScoreDice.IsEnabled = false;
-            }
-            else
-            {
-                // Enable the dice check boxes
-                cbxRoll1.IsEnabled = true;
-                cbxRoll2.IsEnabled = true;
-                cbxRoll3.IsEnabled = true;
-                cbxRoll4.IsEnabled = true;
-                cbxRoll5.IsEnabled = true;
-                cbxRoll6.IsEnabled = true;
+                this.rollIncrementer++;
             }
         }
 
         /// <summary>
         /// Method for BtnNextTurn Click.
         /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">RoutedEventArgs e.</param>
         private void BtnNextTurn_Click(object sender, RoutedEventArgs e)
         {
-            // Reset round to 0.
-            player1.Round = 0;
+            this.rollIncrementer = 0;
+
+            // Call ResetFieldsForNewTurn.
+            this.currentPlayerList[0].ResetFieldsForNewTurn();
+
+            // Call ResetLockedLists to reset locked lists and dice.
+            this.ResetLockedLists();
+
+            // Disable the imgRoll images.
+            imgRoll1.IsEnabled = true;
+            imgRoll2.IsEnabled = true;
+            imgRoll3.IsEnabled = true;
+            imgRoll4.IsEnabled = true;
+            imgRoll5.IsEnabled = true;
+            imgRoll6.IsEnabled = true;
 
             int i = 0;
+
             // Reset their dikept array to 0's
-            while (i < player1.DieKept.Count())
+            while (i < this.currentPlayerList[0].DieKept.Count())
             {
-                player1.DieKept[i] = 0;
+                this.currentPlayerList[0].DieKept[i] = 0;
                 i++;
             }
+
+            /*
+            // reset the isLocked variable on every die to false
+            die1.isLocked = false;
+            die2.isLocked = false;
+            die3.isLocked = false;
+            die4.isLocked = false;
+            die5.isLocked = false;
+            die6.isLocked = false;
+            */
 
             // Hide all the saved die images.
             imgSavedDie1.Visibility = Visibility.Hidden;
@@ -899,167 +1704,425 @@ namespace farkle
             // Call the score dice method.
             // player1.ScoreDice();
 
-            // Enable the roll button.
-            btnRoll.IsEnabled = true;
-
             // todo for testing purposes put scoring here.
-            // player1.ScoreDice(allDice.DiceList);
+            // player1.ScoreDice(allDice.this.diceList);
 
             // Set current score.
-            if (!playerFarkle)
+            if (!this.playerFarkle)
             {
                 // Add the tempScore returned from the score dice method to current score.
-                player1.CurrentScore += player1.TempScore;
+                this.currentPlayerList[0].CurrentScore = this.currentPlayerList[0].TempScore + this.currentPlayerList[0].CurrentScore;
             }
             else
             {
                 // Add no points to the current score.
-                player1.CurrentScore += 0;
-
-                // Disable the dice check boxes.
-                cbxRoll1.IsEnabled = false;
-                cbxRoll2.IsEnabled = false;
-                cbxRoll3.IsEnabled = false;
-                cbxRoll4.IsEnabled = false;
-                cbxRoll5.IsEnabled = false;
-                cbxRoll6.IsEnabled = false;
+                this.currentPlayerList[0].CurrentScore += 0;
 
                 // Reset farkle to false.
-                playerFarkle = false;
+                this.playerFarkle = false;
             }
 
             // Reset player1s tempScore to 0.
-            player1.TempScore = 0;
+            this.currentPlayerList[0].TempScore = 0;
 
             // Reset lblPendingScore.
-            lblPendingScore.Content = "Pending Score: " + player1.TempScore.ToString();
+            lblPendingScore.Content = "Pending Score: " + this.currentPlayerList[0].TempScore.ToString();
 
             // Set text content of lblCurrentScore.
-            lblCurrentScore.Content = "Current Score: " + player1.CurrentScore;
+            lblCurrentScore.Content = "Current Score: " + this.currentPlayerList[0].CurrentScore;
 
             // Check if score is greater than or equal to 10000. If it is the player wins.
-            if (player1.CurrentScore >= 10000) 
+            if (this.currentPlayerList[0].CurrentScore >= 10000)
             {
-                // Message box to show winner message.
-                MessageBox.Show("Great job! You won a single player game!");
+                // Close current window.
+                this.Hide();
 
-                // Close the game.
-                this.Close();
+                // Create and show Winner page.
+                Winner win = new Winner();
+                win.lblWinner.Content = "Congratulations player " + this.currentPlayerList[0].Number + " you win!";
+                win.ShowDialog();
             }
             else
             {
-                // Player has not won yet.
+                // No players have won yet.
             }
 
-            // Disable the score dice button.
-            btnScoreDice.IsEnabled = false;
+            // Clear the savedDieList.
+            this.savedDieList.Clear();
 
-            // Disable the dice check boxes.
-            cbxRoll1.IsEnabled = false;
-            cbxRoll2.IsEnabled = false;
-            cbxRoll3.IsEnabled = false;
-            cbxRoll4.IsEnabled = false;
-            cbxRoll5.IsEnabled = false;
-            cbxRoll6.IsEnabled = false;
+            // Update this players score on the right hand side of the screen / play area
+            if (this.currentPlayerList[0].Number == 1)
+            {
+                lblPlayerOneScore.Content = "Score " + this.currentPlayerList[0].CurrentScore;
+            }
+            else if (this.currentPlayerList[0].Number == 2)
+            {
+                lblPlayerTwoScore.Content = "Score " + this.currentPlayerList[0].CurrentScore;
+            }
+            else if (this.currentPlayerList[0].Number == 3)
+            {
+                lblPlayerThreeScore.Content = "Score " + this.currentPlayerList[0].CurrentScore;
+            }
+            else if (this.currentPlayerList[0].Number == 4)
+            {
+                lblPlayerFourScore.Content = "Score " + this.currentPlayerList[0].CurrentScore;
+            }
+
+            this.currentPlayerList.Add(this.currentPlayerList[0]);
+            this.currentPlayerList.Remove(this.currentPlayerList[0]);
+
+            // Roll for the next turn
+            this.BtnRoll_Click(null, null);
+
+            // Set text content of where the players information goes.
+            lblPlayerInformation.Content = "Player " + this.currentPlayerList[0].Number.ToString() + "'s Turn";
+
+            lblCurrentScore.Content = "Current Score: " + this.currentPlayerList[0].CurrentScore;
+
+            btnRoll.IsEnabled = false;
         }
 
         /// <summary>
-        /// Method for BtnExitTurn Click.
+        /// Method for BtnExit Click.
         /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">RoutedEventArgs e.</param>
         private void BtnExit_Click(object sender, RoutedEventArgs e)
         {
             // Close the form.
             this.Close();
         }
 
-        private void btnScoring_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Method for BtnScoring Click.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">RoutedEventArgs e.</param>
+        private void BtnScoring_Click(object sender, RoutedEventArgs e)
         {
-            Scoring ScoreSheet = new Scoring();
-            ScoreSheet.Show();
+            // Show all possible scoreable dice combinations.
+            Scoring scoreSheet = new Scoring();
+            scoreSheet.Show();
         }
 
-        private void BtnScoreDice_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Method to reset the locked lists 1-5.
+        /// </summary>
+        private void ResetLockedLists()
         {
-            // Score the dice for that hand.
-            player1.ScoreDice(player1.DieKept);
+            // Reset locked lists.
+            this.locked1List.Clear();
+            this.locked2List.Clear();
+            this.locked3List.Clear();
+            this.locked4List.Clear();
+            this.locked5List.Clear();
 
-            // If dice are valid.
-            if (player1.ValidDice)
+            // Reset the locked fields of every dice.
+            this.die1.ResetLockedDice();
+            this.die2.ResetLockedDice();
+            this.die3.ResetLockedDice();
+            this.die4.ResetLockedDice();
+            this.die5.ResetLockedDice();
+            this.die6.ResetLockedDice();
+
+            // Reset the borders.
+            bdrDie1.Visibility = Visibility.Hidden;
+            bdrDie2.Visibility = Visibility.Hidden;
+            bdrDie3.Visibility = Visibility.Hidden;
+            bdrDie4.Visibility = Visibility.Hidden;
+            bdrDie5.Visibility = Visibility.Hidden;
+            bdrDie6.Visibility = Visibility.Hidden;
+        }
+
+        /// <summary>
+        /// Grid load event.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">RoutedEventArgs e.</param>
+        private void Grid_Loaded(object sender, RoutedEventArgs e)
+        {
+            Player tempPlayer = new Player();
+
+            if (this.onePlayer)
             {
-                // Enable the roll button.
-                btnRoll.IsEnabled = true;
-
-                // Set label to show score.
-                lblPendingScore.Content = "Pending Score: " + player1.TempScore.ToString();
-                
-                // Disable the button: we don't want any cheaters.
-                btnScoreDice.IsEnabled = false;
-
-                // Disable the dice check boxes.
-                cbxRoll1.IsEnabled = false;
-                cbxRoll2.IsEnabled = false;
-                cbxRoll3.IsEnabled = false;
-                cbxRoll4.IsEnabled = false;
-                cbxRoll5.IsEnabled = false;
-                cbxRoll6.IsEnabled = false;
-            }
-            else
-            {
-                // Disable the roll button.
-                btnRoll.IsEnabled = false;
-
-                // Display message that some dice are not scorable.
-                MessageBox.Show("Some of your dice are not scorable!");
-
-            }
-
-            // Check to see if all dice have been kept and are valid.
-            if (imgSavedDie1.IsVisible && imgSavedDie2.IsVisible && imgSavedDie3.IsVisible
-                && imgSavedDie4.IsVisible && imgSavedDie5.IsVisible && imgSavedDie6.IsVisible
-                && player1.ValidDice)
-            {
-                // Set hot dice to true.
-                player1.HotDice = true;
-
-                // Messagebox telling the user they can roll again.
-                MessageBox.Show("You have hot dice! Roll again!");
-
-                // Disable the dice check boxes.
-                cbxRoll1.IsEnabled = false;
-                cbxRoll2.IsEnabled = false;
-                cbxRoll3.IsEnabled = false;
-                cbxRoll4.IsEnabled = false;
-                cbxRoll5.IsEnabled = false;
-                cbxRoll6.IsEnabled = false;
-            }
-            else
-            {
-                // Hot dice is already false.
-            }
-
-            // Check if player has hot dice.
-            if (player1.HotDice)
-            {
-                int i = 0;
-                // if they do reset their dikept array to 0's
-                while(i < player1.DieKept.Count())
+                if(AICount == 1)
                 {
-                    player1.DieKept[i] = 0;
-                    i++;
-                } 
-               
-                // If they do, hide all the saved die images.
-                imgSavedDie1.Visibility = Visibility.Hidden;
-                imgSavedDie2.Visibility = Visibility.Hidden;
-                imgSavedDie3.Visibility = Visibility.Hidden;
-                imgSavedDie4.Visibility = Visibility.Hidden;
-                imgSavedDie5.Visibility = Visibility.Hidden;
-                imgSavedDie6.Visibility = Visibility.Hidden;
+                    tempPlayer.Number = 1;
+                    tempPlayer.IsAI = true;
+                    this.currentPlayerList.Add(tempPlayer);
+                }
+                else
+                {
+                    tempPlayer.Number = 1;
+                    this.currentPlayerList.Add(tempPlayer);
+                }
+
+                // Hide the last three player score labels and player labels.
+                lblPlayerTwo.Visibility = Visibility.Hidden;
+                lblPlayerTwoScore.Visibility = Visibility.Hidden;
+                lblPlayerThree.Visibility = Visibility.Hidden;
+                lblPlayerThreeScore.Visibility = Visibility.Hidden;
+                lblPlayerFour.Visibility = Visibility.Hidden;
+                lblPlayerFourScore.Visibility = Visibility.Hidden;
+            }
+            else if (this.twoPlayer)
+            {
+                tempPlayer = new Player();
+
+                if (AICount == 1)
+                {
+                    tempPlayer.Number = 1;
+                    this.currentPlayerList.Add(tempPlayer);
+                    tempPlayer = new Player();
+                    tempPlayer.Number = 2;
+                    tempPlayer.IsAI = true;
+                    this.currentPlayerList.Add(tempPlayer);
+                }
+                else if (AICount == 2)
+                {
+                    tempPlayer.Number = 1;
+                    tempPlayer.IsAI = true;
+                    this.currentPlayerList.Add(tempPlayer);
+                    tempPlayer = new Player();
+                    tempPlayer.Number = 2;
+                    tempPlayer.IsAI = true;
+                    this.currentPlayerList.Add(tempPlayer);
+                }
+                else
+                {
+                    tempPlayer.Number = 1;
+                    this.currentPlayerList.Add(tempPlayer);
+
+                    tempPlayer = new Player();
+                    tempPlayer.Number = 2;
+                    this.currentPlayerList.Add(tempPlayer);
+                }
+
+                lblPlayerFour.Visibility = Visibility.Hidden;
+                lblPlayerThree.Visibility = Visibility.Hidden;
+                lblPlayerFourScore.Visibility = Visibility.Hidden;
+                lblPlayerThreeScore.Visibility = Visibility.Hidden;
+            }
+            else if (this.threePlayer)
+            {
+                tempPlayer = new Player();
+
+                if (AICount == 1)
+                {
+                    tempPlayer.Number = 1;
+                    this.currentPlayerList.Add(tempPlayer);
+                    tempPlayer = new Player();
+                    tempPlayer.Number = 2;
+                    this.currentPlayerList.Add(tempPlayer);
+                    tempPlayer = new Player();
+                    tempPlayer.Number = 3;
+                    tempPlayer.IsAI = true;
+                    this.currentPlayerList.Add(tempPlayer);
+                }
+                else if (AICount == 2)
+                {
+                    tempPlayer.Number = 1;
+                    tempPlayer.IsAI = false;
+                    this.currentPlayerList.Add(tempPlayer);
+                    tempPlayer = new Player();
+                    tempPlayer.Number = 2;
+                    tempPlayer.IsAI = true;
+                    this.currentPlayerList.Add(tempPlayer);
+                    tempPlayer = new Player();
+                    tempPlayer.Number = 3;
+                    tempPlayer.IsAI = true;
+                    this.currentPlayerList.Add(tempPlayer);
+                }
+                else if (AICount == 3)
+                {
+                    tempPlayer.Number = 1;
+                    tempPlayer.IsAI = true;
+                    this.currentPlayerList.Add(tempPlayer);
+                    tempPlayer = new Player();
+                    tempPlayer.Number = 2;
+                    tempPlayer.IsAI = true;
+                    this.currentPlayerList.Add(tempPlayer);
+                    tempPlayer = new Player();
+                    tempPlayer.Number = 3;
+                    tempPlayer.IsAI = true;
+                    this.currentPlayerList.Add(tempPlayer);
+                }
+                else
+                {
+                    tempPlayer.Number = 1;
+                    this.currentPlayerList.Add(tempPlayer);
+
+                    tempPlayer = new Player();
+                    tempPlayer.Number = 2;
+                    this.currentPlayerList.Add(tempPlayer);
+
+                    tempPlayer = new Player();
+                    tempPlayer.Number = 3;
+                    this.currentPlayerList.Add(tempPlayer);
+                }
+
+                lblPlayerFour.Visibility = Visibility.Hidden;
+                lblPlayerFourScore.Visibility = Visibility.Hidden;
+            }
+            else if (this.fourPlayer)
+            {
+                tempPlayer = new Player();
+
+                if (AICount == 1)
+                {
+                    tempPlayer.Number = 1;
+                    tempPlayer.IsAI = false;
+                    this.currentPlayerList.Add(tempPlayer);
+                    tempPlayer = new Player();
+                    tempPlayer.Number = 2;
+                    tempPlayer.IsAI = false;
+                    this.currentPlayerList.Add(tempPlayer);
+                    tempPlayer = new Player();
+                    tempPlayer.Number = 3;
+                    tempPlayer.IsAI = false;
+                    this.currentPlayerList.Add(tempPlayer);
+                    tempPlayer = new Player();
+                    tempPlayer.Number = 4;
+                    tempPlayer.IsAI = true;
+                    this.currentPlayerList.Add(tempPlayer);
+                }
+                else if (AICount == 2)
+                {
+                    tempPlayer.Number = 1;
+                    tempPlayer.IsAI = false;
+                    this.currentPlayerList.Add(tempPlayer);
+                    tempPlayer = new Player();
+                    tempPlayer.Number = 2;
+                    tempPlayer.IsAI = false;
+                    this.currentPlayerList.Add(tempPlayer);
+                    tempPlayer = new Player();
+                    tempPlayer.Number = 3;
+                    tempPlayer.IsAI = true;
+                    this.currentPlayerList.Add(tempPlayer);
+                    tempPlayer = new Player();
+                    tempPlayer.Number = 4;
+                    tempPlayer.IsAI = true;
+                    this.currentPlayerList.Add(tempPlayer);
+                }
+                else if (AICount == 3)
+                {
+                    tempPlayer.Number = 1;
+                    tempPlayer.IsAI = false;
+                    this.currentPlayerList.Add(tempPlayer);
+                    tempPlayer = new Player();
+                    tempPlayer.Number = 2;
+                    tempPlayer.IsAI = true;
+                    this.currentPlayerList.Add(tempPlayer);
+                    tempPlayer = new Player();
+                    tempPlayer.Number = 3;
+                    tempPlayer.IsAI = true;
+                    this.currentPlayerList.Add(tempPlayer);
+                    tempPlayer = new Player();
+                    tempPlayer.Number = 4;
+                    tempPlayer.IsAI = true;
+                    this.currentPlayerList.Add(tempPlayer);
+                }
+                else if (AICount == 4)
+                {
+                    tempPlayer.Number = 1;
+                    tempPlayer.IsAI = true;
+                    this.currentPlayerList.Add(tempPlayer);
+                    tempPlayer = new Player();
+                    tempPlayer.Number = 2;
+                    tempPlayer.IsAI = true;
+                    this.currentPlayerList.Add(tempPlayer);
+                    tempPlayer = new Player();
+                    tempPlayer.Number = 3;
+                    tempPlayer.IsAI = true;
+                    this.currentPlayerList.Add(tempPlayer);
+                    tempPlayer = new Player();
+                    tempPlayer.Number = 4;
+                    tempPlayer.IsAI = true;
+                    this.currentPlayerList.Add(tempPlayer);
+                }
+                else
+                {
+                    tempPlayer.Number = 1;
+                    this.currentPlayerList.Add(tempPlayer);
+
+                    tempPlayer = new Player();
+                    tempPlayer.Number = 2;
+                    this.currentPlayerList.Add(tempPlayer);
+
+                    tempPlayer = new Player();
+                    tempPlayer.Number = 3;
+                    this.currentPlayerList.Add(tempPlayer);
+
+                    tempPlayer = new Player();
+                    tempPlayer.Number = 4;
+                    this.currentPlayerList.Add(tempPlayer);
+                }
+            }
+
+            lblPlayerInformation.Content = "Player " + this.currentPlayerList[0].Number + "'s Turn";
+
+            this.currentPlayerList[0].ValidDice = true;
+        }
+
+        public void AImakePlay()
+        {
+            // first make sure the player is supposed to be AI
+            if (currentPlayerList[0].IsAI == true)
+            {
+                lblPlayerInformation.Content = "Player " + currentPlayerList[0].Number + "'s Turn (AI)";
+            }
+
+            int[] AIPackage = new int[11];
+            AIPackage = CheckDice().Clone() as int[];
+            /*
+            * the array elements in order are
+            * 0: ScoreableDice
+            * 1: oneCounter
+            * 2: fiveCounter
+            * 3: pairOnes
+            * 4: pairTwos
+            * 5: pairThrees
+            * 6: pairFours
+            * 7: pairFives
+            * 8: pairSixes
+            * 9: straight
+            * 10: threePairs
+            * A value 0 means false
+            * a value 1 means true
+            */
+
+            // if our dice are scoreable then begin our checks
+            if (AIPackage[0] == 1)
+            {
+                // check for a straight
+                if (AIPackage[9] == 1)
+                {
+                    // we have a straight
+                    // then set images and check roll incrementer add to saveddielist/lockedlist for scoring
+                }
+
+                if (AIPackage[10] == 1)
+                {
+                    // we have 3 pairs, now we need to check to see which
+                    // then set images and check roll incrementer add to saveddielist/lockedlist for scoring
+                }
+
+                if (AIPackage[1] > 0)
+                {
+                    // we have more than 0 ones 
+                }
+
+                if (AIPackage[2] > 0)
+                {
+                    // we have more than 0 fives 
+                }
             }
             else
             {
-                // Nothing needs to be done here.
+                // our dice are not scoreable
             }
+
         }
+
     }
 }

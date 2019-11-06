@@ -15,12 +15,12 @@ namespace farkle
     /// <summary>
     /// Class representing the Gameboard.
     /// </summary>
-    class Gameboard
+    public class Gameboard
     {
         /// <summary>
         /// Field for the scoreboard. This may not be used.
         /// </summary>
-        private int scoreBoard; 
+        private int scoreBoard;
 
         /// <summary>
         /// Field for the round of the game.
@@ -39,13 +39,10 @@ namespace farkle
         /// <summary>
         /// Gets or sets the round.
         /// </summary>
-        public int Round 
+        public int Round
         {
             get { return this.round; }
             set { this.round = value; }
         }
     }
-
-
-
 }
