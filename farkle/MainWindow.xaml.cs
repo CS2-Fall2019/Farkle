@@ -8,7 +8,9 @@ namespace farkle
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
+    using System.Media;
     using System.Text;
     using System.Threading.Tasks;
     using System.Windows;
@@ -1039,12 +1041,20 @@ namespace farkle
                 // Set hot dice to true.
                 this.currentPlayerList[0].HotDice = true;
 
+
+
                 // Messagebox telling the user they can roll again.
                 MessageBox.Show("You have hot dice! You can roll again to try and score" +
                                 " more points, or you can press the next turn button to end your turn!"
                                 + "\n" + "\n" +
                                 "If you decide to roll again you could possibly lose all of your points " +
                                 "for this turn!!");
+
+                // Play the applause sound.
+                Stream strHotDice = Properties.Resources.hot_dice;
+                SoundPlayer sndHotDice = new SoundPlayer(strHotDice);
+                sndHotDice.Play();
+
             }
             else
             {
@@ -1577,7 +1587,12 @@ namespace farkle
                     this.die4.Pips = this.diceList[3];
                     this.die5.Pips = this.diceList[4];
                     this.die6.Pips = this.diceList[5];
-
+                    
+                    // Play the rolling dice sound
+                    Stream strRollDice = Properties.Resources.roll_dice;
+                    SoundPlayer sndRollDice = new SoundPlayer(strRollDice);
+                    sndRollDice.Play();
+                    
                     // Call the SetDiceImg method.
                     this.SetDiceImg();
 
@@ -1599,6 +1614,11 @@ namespace farkle
 
                         // Set the players score tempScore to 0.
                         this.currentPlayerList[0].TempScore = 0;
+
+                        // Play the sad horn sound.
+                        Stream strSadHorn = Properties.Resources.sad_trombone;
+                        SoundPlayer sndSadHorn = new SoundPlayer(strSadHorn);
+                        sndSadHorn.Play();
 
                         // Messagebox telling the player they farkled.
                         MessageBox.Show("Farkle! You lost all points for this round."
@@ -1676,6 +1696,7 @@ namespace farkle
             imgRoll5.IsEnabled = true;
             imgRoll6.IsEnabled = true;
 
+            // Set i to zero.
             int i = 0;
 
             // Reset their dikept array to 0's
@@ -1750,6 +1771,7 @@ namespace farkle
                 Winner win = new Winner();
                 win.lblWinner.Content = "Congratulations player " + this.currentPlayerList[0].Number + " you win!";
                 win.ShowDialog();
+
             }
             else
             {
@@ -2107,7 +2129,7 @@ namespace farkle
 
         public void AImakePlay()
         {
-            // first make sure the player is supposed to be AI
+            // First make sure the player is supposed to be AI.
             if (currentPlayerList[0].IsAI == true)
             {
                 lblPlayerInformation.Content = "Player " + currentPlayerList[0].Number + "'s Turn (AI)";
@@ -2132,15 +2154,15 @@ namespace farkle
             * a value 1 means true
             */
 
-            // if our dice are scoreable then begin our checks
+            // If our dice are scoreable then begin our checks
             if (AIPackage[0] == 1)
             {
-                // check for a straight
+                // Check for a straight
                 if (AIPackage[9] == 1)
                 {
-                    // we have a straight
+                    // We have a straight
                     // then set images and check roll incrementer add to saveddielist/lockedlist for scoring
-                    // going to call the aisetimg method, which is below, here
+                    // going to call the aisetimg method, which is below here
                     int counter = 1;
                     while (counter < 6)
                     {

@@ -122,6 +122,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\hot-dice.wav" />
+    <None Include="Resources\sad-trombone.wav" />
+    <None Include="Resources\roll-dice.wav" />
+    <None Include="Resources\applause.wav" />
     <Content Include="Resources\Farkle.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

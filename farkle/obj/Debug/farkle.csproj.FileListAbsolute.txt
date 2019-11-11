@@ -274,3 +274,7 @@ C:\Users\Owner\Documents\C#2\Farkle\Farkle-AI_Start\farkle\obj\Debug\farkle.cspr
 C:\Users\Owner\Documents\C#2\Farkle\Farkle-AI_Start\farkle\obj\Debug\farkle.csproj.CoreCompileInputs.cache
 C:\Users\Owner\Documents\C#2\Farkle\Farkle-AI_Start\farkle\obj\Debug\farkle.exe
 C:\Users\Owner\Documents\C#2\Farkle\Farkle-AI_Start\farkle\obj\Debug\farkle.pdb
+C:\Users\james.schulze\source\repos\farkle\farkle\bin\Debug\Resources\Farkle.png
+C:\Users\james.schulze\source\repos\farkle\farkle\obj\Debug\Winner.g.cs
+C:\Users\james.schulze\source\repos\farkle\farkle\obj\Debug\farkle_Content.g.cs
+C:\Users\james.schulze\source\repos\farkle\farkle\obj\Debug\Winner.baml
