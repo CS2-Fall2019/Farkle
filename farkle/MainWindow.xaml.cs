@@ -8,9 +8,7 @@ namespace farkle
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
-    using System.Media;
     using System.Text;
     using System.Threading.Tasks;
     using System.Windows;
@@ -1041,7 +1039,21 @@ namespace farkle
                 // Set hot dice to true.
                 this.currentPlayerList[0].HotDice = true;
 
+                // todo new
+                // Call resetLockedLists.
+                ResetLockedLists();
 
+                // Reset the borders.
+                bdrDie1.Visibility = Visibility.Visible;
+                bdrDie2.Visibility = Visibility.Visible;
+                bdrDie3.Visibility = Visibility.Visible;
+                bdrDie4.Visibility = Visibility.Visible;
+                bdrDie5.Visibility = Visibility.Visible;
+                bdrDie6.Visibility = Visibility.Visible;
+
+                // Reset the roll incrementer.
+                rollIncrementer = 0;
+                // todo end new 
 
                 // Messagebox telling the user they can roll again.
                 MessageBox.Show("You have hot dice! You can roll again to try and score" +
@@ -1049,17 +1061,28 @@ namespace farkle
                                 + "\n" + "\n" +
                                 "If you decide to roll again you could possibly lose all of your points " +
                                 "for this turn!!");
-
-                // Play the applause sound.
-                Stream strHotDice = Properties.Resources.hot_dice;
-                SoundPlayer sndHotDice = new SoundPlayer(strHotDice);
-                sndHotDice.Play();
-
             }
             else
             {
                 // Hot dice is already false.
             }
+
+            // todo new
+            // Call OkToRoll method and set it equal to a local bool value.
+            bool okay = OkToRollCheck();
+
+            // Check the value of okay.
+            if (okay)
+            {
+                // If true enable the roll button.
+                btnRoll.IsEnabled = true;
+            }
+            else
+            {
+                // If false disable the roll button.
+                btnRoll.IsEnabled = false;
+            }
+            // todo end new
 
             // todo locked vs scoring maybe?
             // when clicking on saved die the to scores are adding not subtracting
@@ -1372,6 +1395,7 @@ namespace farkle
         /// </summary>
         /// <param name="sender">The sender object.</param>
         /// <param name="e">RoutedEventArgs e.</param>
+
         private void BtnRoll_Click(object sender, RoutedEventArgs e)
         {
             if (this.savedDieList.Count > 0 && !this.currentPlayerList[0].ValidDice)
@@ -1381,6 +1405,23 @@ namespace farkle
             }
             else
             {
+                // todo new
+                // Disable the roll button.
+                btnRoll.IsEnabled = false;
+                // todo end new
+
+                // Check if the current player is a human or computer.
+                if (currentPlayerList[0].IsAI)
+                {
+                    // If its a computer disable the next turn button.
+                    btnNextTurn.IsEnabled = false;
+                }
+                else
+                {
+                    // If its a human enable the next turn button.
+                    btnNextTurn.IsEnabled = true;
+                }
+
                 if (this.currentPlayerList[0].ValidDice || this.rollIncrementer == 0)
                 {
                     // Loop through this.savedDieList
@@ -1587,12 +1628,7 @@ namespace farkle
                     this.die4.Pips = this.diceList[3];
                     this.die5.Pips = this.diceList[4];
                     this.die6.Pips = this.diceList[5];
-                    
-                    // Play the rolling dice sound
-                    Stream strRollDice = Properties.Resources.roll_dice;
-                    SoundPlayer sndRollDice = new SoundPlayer(strRollDice);
-                    sndRollDice.Play();
-                    
+
                     // Call the SetDiceImg method.
                     this.SetDiceImg();
 
@@ -1614,11 +1650,6 @@ namespace farkle
 
                         // Set the players score tempScore to 0.
                         this.currentPlayerList[0].TempScore = 0;
-
-                        // Play the sad horn sound.
-                        Stream strSadHorn = Properties.Resources.sad_trombone;
-                        SoundPlayer sndSadHorn = new SoundPlayer(strSadHorn);
-                        sndSadHorn.Play();
 
                         // Messagebox telling the player they farkled.
                         MessageBox.Show("Farkle! You lost all points for this round."
@@ -1656,21 +1687,25 @@ namespace farkle
                         // Nothing needs to be done here.
                     }
                 }
+
+                // todo new
+                // If the player has hot dice. 
+                if (this.currentPlayerList[0].HotDice)
+                {
+                    // Reset the roll incrementer to 0.
+                    this.rollIncrementer = 0;
+                }
+                else
+                {
+                    // Otherwise increment the roll counter.
+                    this.rollIncrementer++;
+                }
+                // todo end new
             }
 
-            if (this.currentPlayerList[0].HotDice)
-            {
-                this.rollIncrementer = 0;
-            }
-            else
-            {
-                this.rollIncrementer++;
-            }
+            Refresh(farkle);
+            System.Threading.Thread.Sleep(300);
 
-            if (CurrentPlayerList[0].IsAI == true)
-            {
-                AImakePlay();
-            }
         }
 
         /// <summary>
@@ -1680,6 +1715,7 @@ namespace farkle
         /// <param name="e">RoutedEventArgs e.</param>
         private void BtnNextTurn_Click(object sender, RoutedEventArgs e)
         {
+            // Reset the roll incrementer to 0.
             this.rollIncrementer = 0;
 
             // Call ResetFieldsForNewTurn.
@@ -1696,7 +1732,6 @@ namespace farkle
             imgRoll5.IsEnabled = true;
             imgRoll6.IsEnabled = true;
 
-            // Set i to zero.
             int i = 0;
 
             // Reset their dikept array to 0's
@@ -1771,7 +1806,6 @@ namespace farkle
                 Winner win = new Winner();
                 win.lblWinner.Content = "Congratulations player " + this.currentPlayerList[0].Number + " you win!";
                 win.ShowDialog();
-
             }
             else
             {
@@ -1816,7 +1850,13 @@ namespace farkle
             // Roll for the next turn
             this.BtnRoll_Click(null, null);
 
+            if (currentPlayerList[0].IsAI == true)
+            {
+                AImakePlay();
+            }
+
             btnRoll.IsEnabled = false;
+
         }
 
         /// <summary>
@@ -1879,16 +1919,10 @@ namespace farkle
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
             Player tempPlayer = new Player();
-            die1.Position = 1;
-            die2.Position = 2;
-            die2.Position = 3;
-            die4.Position = 4;
-            die5.Position = 5;
-            die6.Position = 6;
 
             if (this.onePlayer)
             {
-                if(AICount == 1)
+                if (AICount == 1)
                 {
                     tempPlayer.Number = 1;
                     tempPlayer.IsAI = true;
@@ -2115,7 +2149,7 @@ namespace farkle
 
             this.currentPlayerList[0].ValidDice = true;
 
-            if(difficulty == 1)
+            if (difficulty == 1)
             {
                 lblDifficulty.Content = "Difficulty: Easy";
                 lblDifficulty.Foreground = Brushes.LimeGreen;
@@ -2129,7 +2163,7 @@ namespace farkle
 
         public void AImakePlay()
         {
-            // First make sure the player is supposed to be AI.
+            // first make sure the player is supposed to be AI
             if (currentPlayerList[0].IsAI == true)
             {
                 lblPlayerInformation.Content = "Player " + currentPlayerList[0].Number + "'s Turn (AI)";
@@ -2154,19 +2188,21 @@ namespace farkle
             * a value 1 means true
             */
 
-            // If our dice are scoreable then begin our checks
+            // if our dice are scoreable then begin our checks
             if (AIPackage[0] == 1)
             {
-                // Check for a straight
+                // check for a straight
                 if (AIPackage[9] == 1)
                 {
-                    // We have a straight
+                    // we have a straight
                     // then set images and check roll incrementer add to saveddielist/lockedlist for scoring
-                    // going to call the aisetimg method, which is below here
+                    // going to call the aisetimg method, which is below, here
                     int counter = 1;
                     while (counter < 6)
                     {
+                        System.Threading.Thread.Sleep(150);
                         AISetImg(counter);
+                        System.Threading.Thread.Sleep(150);
                         counter++;
                     }
                 }
@@ -2180,7 +2216,7 @@ namespace farkle
                 if (AIPackage[1] > 0)
                 {
                     int count = AIPackage[1];
-                    while(count > 0)
+                    while (count > 0)
                     {
                         AISetImg(1);
                         count--;
@@ -2190,9 +2226,10 @@ namespace farkle
 
                 if (AIPackage[2] > 0)
                 {
-                    int count = AIPackage[1];
+                    int count = AIPackage[2];
                     while (count > 0)
                     {
+                        System.Threading.Thread.Sleep(100);
                         AISetImg(5);
                         count--;
                     }
@@ -2205,12 +2242,22 @@ namespace farkle
             }
 
             // difficulty check will go here
-            
+            Refresh(farkle);
+            System.Threading.Thread.Sleep(650);
+            BtnNextTurn_Click(null, null);
         }
 
         public void AISetImg(int numberToSet)
         {
-            int dieLocation = 0;
+            // set our dice positions. Die1 will always be for imgroll1, and imgsaveddie1. 
+            die1.Position = 1;
+            die2.Position = 2;
+            die3.Position = 3;
+            die4.Position = 4;
+            die5.Position = 5;
+            die6.Position = 6;
+
+            // int dieLocation = 0;
             // loop through the diceinplay list to find the dice we want to save
             foreach (Dice d in DiceInPlay)
             {
@@ -2218,52 +2265,132 @@ namespace farkle
                 // Also get the dies location
                 if (d.Pips == numberToSet)
                 {
-                    savedDieList.Add(d);
-                    dieLocation = d.Position;
-                    DiceInPlay.Remove(d);
-                    DisplayScore();
+                    // Since die1 will always = imgroll1 and imgsaveddie1(the other dice follow the same pattern)
+                    // we can get the dies position and then set the correct image control on the form
+                    // then set the die to saved
+                    if (d.Position == 1)
+                    {
+                        SavedDieList.Add(d);
+                        imgRoll1.Visibility = Visibility.Hidden;
+                        imgSavedDie1.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + numberToSet + "Die.jpg"));
+                        imgSavedDie1.Visibility = Visibility.Visible;
+                        diceInPlay.Remove(d);
+                        DisplayScore();
+                    }
+
+                    if (d.Position == 2)
+                    {
+                        SavedDieList.Add(d);
+                        imgRoll2.Visibility = Visibility.Hidden;
+                        imgSavedDie2.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + numberToSet + "Die.jpg"));
+                        imgSavedDie2.Visibility = Visibility.Visible;
+                        diceInPlay.Remove(d);
+                        DisplayScore();
+
+                    }
+
+                    if (d.Position == 3)
+                    {
+                        SavedDieList.Add(d);
+                        imgRoll3.Visibility = Visibility.Hidden;
+                        imgSavedDie3.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + numberToSet + "Die.jpg"));
+                        imgSavedDie3.Visibility = Visibility.Visible;
+                        diceInPlay.Remove(d);
+                        DisplayScore();
+
+                    }
+
+                    if (d.Position == 4)
+                    {
+                        SavedDieList.Add(d);
+                        imgRoll4.Visibility = Visibility.Hidden;
+                        imgSavedDie4.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + numberToSet + "Die.jpg"));
+                        imgSavedDie4.Visibility = Visibility.Visible;
+                        diceInPlay.Remove(d);
+                        DisplayScore();
+
+                    }
+
+                    if (d.Position == 5)
+                    {
+                        SavedDieList.Add(d);
+                        imgRoll5.Visibility = Visibility.Hidden;
+                        imgSavedDie5.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + numberToSet + "Die.jpg"));
+                        imgSavedDie5.Visibility = Visibility.Visible;
+                        diceInPlay.Remove(d);
+                        DisplayScore();
+
+                    }
+
+                    if (d.Position == 6)
+                    {
+                        SavedDieList.Add(d);
+                        imgRoll6.Visibility = Visibility.Hidden;
+                        imgSavedDie6.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + numberToSet + "Die.jpg"));
+                        imgSavedDie6.Visibility = Visibility.Visible;
+                        diceInPlay.Remove(d);
+                        DisplayScore();
+
+                    }
+
+                    Refresh(farkle);
+                    System.Threading.Thread.Sleep(1000);
                     // todo keep an eye on where the break takes you back to: the foreach or out of the foreach
                     break;
                 }
             }
+        }
 
-            // if the dieLocation is not 0 (in other words if we found the correct die to save)
-            // then set the die to saved
-            if (dieLocation != 0)
+        // Below code is used to make the form stop proccesing information and force a redraw of the form
+        // use this to refresh and show that the ai is actually doing stuff
+
+        private delegate void Delegate();
+        public static void Refresh(DependencyObject objToRefresh)
+
+        {
+            objToRefresh.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.ApplicationIdle,
+                (Delegate)delegate { });
+        }
+
+
+        private bool OkToRollCheck()
+        {
+            // Counter for all dice that have a locked value.
+            int lockedCount = 0;
+
+            // Counter for all dice currently in the save area.
+            int totalCount = 0;
+
+            // Loop through each die in the savedDieList
+            foreach (Dice die in SavedDieList)
             {
-                // need to determine which position to place the image at. 
-                if(dieLocation == 1)
+                // If the dice is locked.
+                if (die.Locked1 || die.Locked2 || die.Locked3 || die.Locked4 || die.Locked5)
                 {
-                    imgSavedDie1.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + numberToSet + "Die.jpg"));
-                }
-                else if (dieLocation == 2)
-                {
-                    imgSavedDie2.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + numberToSet + "Die.jpg"));
-                }
-                else if (dieLocation == 3)
-                {
-                    imgSavedDie3.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + numberToSet + "Die.jpg"));
-                }
-                else if (dieLocation == 4)
-                {
-                    imgSavedDie4.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + numberToSet + "Die.jpg"));
-                }
-                else if (dieLocation == 5)
-                {
-                    imgSavedDie5.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + numberToSet + "Die.jpg"));
+                    // Increment the locked counter.
+                    lockedCount++;
+
+                    // Increment the total counter.
+                    totalCount++;
                 }
                 else
                 {
-                    // DieLocation is 6. 
-                    imgSavedDie6.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + numberToSet + "Die.jpg"));
+                    // If the die is not locked only increment the total counter.
+                    totalCount++;
                 }
+            }
+
+            // Compare the lockedCount variable and the totalCount variable.
+            if (lockedCount == totalCount)
+            {
+                // If they are equal nothing has been added to the save area, return false.
+                return false;
             }
             else
             {
-                MessageBox.Show("Sorry, the die you are trying to save has vanished.");
+                // If they are different something has been added to the save area, return true.
+                return true;
             }
-
         }
-
     }
 }

@@ -1053,22 +1053,22 @@ namespace farkle
             }
 
             // Check to make sure the dice kept are scorable.
-            if (twoCounter >= 3 && twoCounter + oneCounter + fiveCounter == savedDieList.Count)
+            if (twoCounter >= 3 && twoCounter + oneCounter + fiveCounter == savedDieList.Count || twoCounter >= 3 && twoCounter + oneCounter + fiveCounter == tempSavedDieListCount)
             {
                 // Set scorable dice to true.
                 keptDiceScorable = true;
             }
-            else if (threeCounter >= 3 && threeCounter + oneCounter + fiveCounter == savedDieList.Count)
+            else if (threeCounter >= 3 && threeCounter + oneCounter + fiveCounter == savedDieList.Count || threeCounter >= 3 && threeCounter + oneCounter + fiveCounter == tempSavedDieListCount)
             {
                 // Set scorable dice to true.
                 keptDiceScorable = true;
             }
-            else if (fourCounter >= 3 && fourCounter + oneCounter + fiveCounter == savedDieList.Count)
+            else if (fourCounter >= 3 && fourCounter + oneCounter + fiveCounter == savedDieList.Count || fourCounter >= 3 && fourCounter + oneCounter + fiveCounter == tempSavedDieListCount)
             {
                 // Set scorable dice to true.
                 keptDiceScorable = true;
             }
-            else if (sixCounter >= 3 && sixCounter + oneCounter + fiveCounter == savedDieList.Count)
+            else if (sixCounter >= 3 && sixCounter + oneCounter + fiveCounter == savedDieList.Count || sixCounter >= 3 && sixCounter + oneCounter + fiveCounter == tempSavedDieListCount)
             {
                 // Set scorable dice to true.
                 keptDiceScorable = true;

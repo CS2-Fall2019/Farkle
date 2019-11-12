@@ -8,9 +8,7 @@ namespace farkle
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
-    using System.Media;
     using System.Text;
     using System.Threading.Tasks;
     using System.Windows;
@@ -33,12 +31,6 @@ namespace farkle
         public Winner()
         {
             this.InitializeComponent();
-
-            // Play the applause sound.
-            Stream strApplause = Properties.Resources.applause;
-            SoundPlayer sndApplause = new SoundPlayer(strApplause);
-            sndApplause.Play();
-
         }
 
         /// <summary>
