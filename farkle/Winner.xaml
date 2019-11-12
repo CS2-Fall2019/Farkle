@@ -11,7 +11,7 @@
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Label x:Name="lblWinner" Content="Congradulations Player 1 wins!" HorizontalAlignment="Left" Margin="120,76,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="36" Width="543" Height="61" Grid.ColumnSpan="2"/>
+        <Label x:Name="lblWinner" Content="Congratulations Player 1 Wins!" HorizontalAlignment="Center" Margin="78,76,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="36" Width="647" Height="61" Grid.ColumnSpan="2"/>
         <Button x:Name="btnNewGame" Content="Start New Game" HorizontalAlignment="Left" Margin="226,280,0,0" VerticalAlignment="Top" Width="122" Height="55" Click="BtnNewGame_Click"/>
         <Button x:Name="btnExit" Content="Exit" HorizontalAlignment="Left" Margin="432,280,0,0" VerticalAlignment="Top" Width="122" Height="55" Click="BtnExit_Click" Grid.ColumnSpan="2"/>
         <RadioButton x:Name="rdoOnePlayer" Content="1 Player" HorizontalAlignment="Left" Margin="273,164,0,0" VerticalAlignment="Top" IsChecked="True" FontSize="22"/>
