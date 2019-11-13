@@ -59,33 +59,9 @@ namespace farkle
         /// <param name="e">RoutedEventArgs e.</param>
         private void BtnNewGame_Click(object sender, RoutedEventArgs e)
         {
-            if ((bool)rdoOnePlayer.IsChecked == true)
-            {
-                MainWindow farkleGame = new MainWindow();
-                farkleGame.OnePlayer = true;
-                farkleGame.Show();
-            }
-            else if ((bool)rdoTwoPlayer.IsChecked == true)
-            {
-                MainWindow farkleGame = new MainWindow();
-                farkleGame.TwoPlayer = true;
-                farkleGame.Show();
-            }
-            else if ((bool)rdoThreePlayers.IsChecked == true)
-            {
-                MainWindow farkleGame = new MainWindow();
-                farkleGame.ThreePlayer = true;
-                farkleGame.Show();
-            }
-            else
-            {
-                // Four players was selected.
-                MainWindow farkleGame = new MainWindow();
-                farkleGame.FourPlayer = true;
-                farkleGame.Show();
-            }
+            MainMenu newGame = new MainMenu();
+            newGame.Show();
 
-            // Close current Winner window.
             this.Close();
         }
     }

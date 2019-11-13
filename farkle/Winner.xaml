@@ -11,13 +11,13 @@
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Label x:Name="lblWinner" Content="Congradulations Player 1 wins!" HorizontalAlignment="Left" Margin="120,76,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="36" Width="543" Height="61" Grid.ColumnSpan="2"/>
-        <Button x:Name="btnNewGame" Content="Start New Game" HorizontalAlignment="Left" Margin="226,280,0,0" VerticalAlignment="Top" Width="122" Height="55" Click="BtnNewGame_Click"/>
-        <Button x:Name="btnExit" Content="Exit" HorizontalAlignment="Left" Margin="432,280,0,0" VerticalAlignment="Top" Width="122" Height="55" Click="BtnExit_Click" Grid.ColumnSpan="2"/>
-        <RadioButton x:Name="rdoOnePlayer" Content="1 Player" HorizontalAlignment="Left" Margin="273,164,0,0" VerticalAlignment="Top" IsChecked="True" FontSize="22"/>
-        <RadioButton x:Name="rdoThreePlayers" Content="3 Players" HorizontalAlignment="Left" Margin="388,164,0,0" VerticalAlignment="Top" FontSize="22"/>
-        <RadioButton x:Name="rdoTwoPlayer" Content="2 Players" HorizontalAlignment="Left" Margin="273,199,0,0" VerticalAlignment="Top" FontSize="22"/>
-        <RadioButton x:Name="rdoFourPlayers" Content="4 Players" HorizontalAlignment="Left" Margin="388,199,0,0" VerticalAlignment="Top" FontSize="22"/>
+        <Label x:Name="lblWinner" Content="Congratulations Player 1 Wins!" HorizontalAlignment="Center" Margin="110,116,36,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="36" Width="646" Height="62" Grid.ColumnSpan="2"/>
+        <Button x:Name="btnNewGame" Content="Start New Game" HorizontalAlignment="Left" Margin="198,256,0,0" VerticalAlignment="Top" Width="122" Height="56" Click="BtnNewGame_Click"/>
+        <Button x:Name="btnExit" Content="Exit" HorizontalAlignment="Left" Margin="486,256,0,0" VerticalAlignment="Top" Width="122" Height="56" Click="BtnExit_Click" Grid.ColumnSpan="2"/>
+        <RadioButton x:Name="rdoThreeAI" Content="3 AI" HorizontalAlignment="Left" Margin="361,251,0,0" VerticalAlignment="Top" FontSize="22" Visibility="Hidden"/>
+        <RadioButton x:Name="rdoOneAI" Content="1 AI" HorizontalAlignment="Left" Margin="263,251,0,0" VerticalAlignment="Top" FontSize="22" RenderTransformOrigin="0.594,0.177" Visibility="Hidden"/>
+        <RadioButton x:Name="rdoFourAI" Content="4 AI" HorizontalAlignment="Left" Margin="361,284,0,0" VerticalAlignment="Top" FontSize="22" Visibility="Hidden"/>
+        <RadioButton x:Name="rdoTwoAI" Content="2 AI" HorizontalAlignment="Left" Margin="263,284,0,0" VerticalAlignment="Top" FontSize="22" RenderTransformOrigin="0.594,0.177" Visibility="Hidden"/>
 
     </Grid>
 </Window>
