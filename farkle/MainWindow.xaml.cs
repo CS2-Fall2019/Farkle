@@ -19,6 +19,7 @@ namespace farkle
     using System.Windows.Documents;
     using System.Windows.Input;
     using System.Windows.Media;
+    using System.Windows.Media.Animation;
     using System.Windows.Media.Imaging;
     using System.Windows.Navigation;
     using System.Windows.Shapes;
@@ -1003,6 +1004,68 @@ namespace farkle
             {
                 this.diceList[counter] = this.rand.Next(6) + 1;
             }
+
+
+            MoveDice(imgRoll1);
+            MoveDice(imgRoll2);
+            MoveDice(imgRoll3);
+            MoveDice(imgRoll4);
+            MoveDice(imgRoll5);
+            MoveDice(imgRoll6);
+
+        }
+
+        public static void MoveDice(Image target)
+        {
+            // Variables for the starting position of the dice for the animation.
+            int startY;
+            int startX;
+
+            // Each die starts at a certan place then moves to the predetermined spot set in the xaml.
+            if (target.Name == "imgRoll1")
+            {
+                startY = 289;
+                startX = 112;
+            }
+            else if (target.Name == "imgRoll2")
+            {
+                startY = 20;
+                startX = 35;
+            }
+            else if (target.Name == "imgRoll3")
+            {
+                startY = -150;
+                startX = 62;
+            }
+            else if (target.Name == "imgRoll4")
+            {
+                startY = 220;
+                startX = -112;
+            }
+            else if (target.Name == "imgRoll5")
+            {
+                startY = 20;
+                startX = -12;
+            }
+            else if (target.Name == "imgRoll6")
+            {
+                startY = -120;
+                startX = 20;
+            } else
+            {
+                startY = 0;
+                startX = 0;
+            }
+
+            // Animate!
+            TranslateTransform trans = new TranslateTransform();
+            target.RenderTransform = trans;
+            DoubleAnimation anim1 = new DoubleAnimation(startY, 0, TimeSpan.FromSeconds(1));
+            DoubleAnimation anim2 = new DoubleAnimation(startX, 0, TimeSpan.FromSeconds(1));
+            //DoubleAnimation anim3 = new DoubleAnimation(360, 0, TimeSpan.FromSeconds(1));
+            trans.BeginAnimation(TranslateTransform.XProperty, anim1);
+            trans.BeginAnimation(TranslateTransform.YProperty, anim2);
+            //trans.BeginAnimation(RotateTransform.AngleProperty, anim3);
         }
 
         /// <summary>
@@ -1094,7 +1157,7 @@ namespace farkle
                 this.diceInPlay.Remove(this.die1);
 
                 // Call Display Score method.
-                this.DisplayScore();
+                this.DisplayScore();     
             }
         }
 

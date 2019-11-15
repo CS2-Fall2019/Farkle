@@ -22,66 +22,68 @@
         <Button x:Name="btnScoring" Content="Scoring" HorizontalAlignment="Left" Margin="707,341,0,0" VerticalAlignment="Top" Width="75" Click="BtnScoring_Click"/>
         <Button x:Name="btnExit" Content="Exit" HorizontalAlignment="Left" Margin="707,371,0,0" VerticalAlignment="Top" Width="75" Click="BtnExit_Click"/>
         <Button x:Name="btnNextTurn" Content="Next Turn" HorizontalAlignment="Left" Margin="618,371,0,0" VerticalAlignment="Top" Width="75" Click="BtnNextTurn_Click"/>
-        <Image x:Name="imgRoll1" HorizontalAlignment="Left" Height="50" Margin="81,56,0,0" VerticalAlignment="Top" Width="50" Source="pack://siteoforigin:,,,/Resources/1Die.jpg" RenderTransformOrigin="0.5,0.5" MouseLeftButtonDown="ImgRoll1_MouseLeftButtonDown">
-            <Image.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-19.997"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Image.RenderTransform>
-        </Image>
-        <Image x:Name="imgRoll2" HorizontalAlignment="Left" Height="50" Margin="278,78,0,0" VerticalAlignment="Top" Width="50" Source="pack://siteoforigin:,,,/Resources/6Die.jpg" RenderTransformOrigin="0.5,0.5" MouseLeftButtonDown="ImgRoll2_MouseLeftButtonDown">
-            <Image.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="47.631"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Image.RenderTransform>
-        </Image>
-        <Image x:Name="imgRoll3" HorizontalAlignment="Left" Height="50" Margin="465,29,0,0" VerticalAlignment="Top" Width="50" Source="pack://siteoforigin:,,,/Resources/4Die.jpg" RenderTransformOrigin="0.5,0.5" MouseLeftButtonDown="ImgRoll3_MouseLeftButtonDown">
-            <Image.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="18.507"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Image.RenderTransform>
-        </Image>
-        <Image x:Name="imgRoll4" HorizontalAlignment="Left" Height="50" Margin="52,196,0,0" VerticalAlignment="Top" Width="50" Source="pack://siteoforigin:,,,/Resources/2Die.jpg" RenderTransformOrigin="0.5,0.5" MouseLeftButtonDown="ImgRoll4_MouseLeftButtonDown">
-            <Image.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-77.232"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Image.RenderTransform>
-        </Image>
-        <Image x:Name="imgRoll5" HorizontalAlignment="Left" Height="50" Margin="215,176,0,0" VerticalAlignment="Top" Width="51" Source="pack://siteoforigin:,,,/Resources/5Die.jpg" RenderTransformOrigin="0.5,0.5" MouseLeftButtonDown="ImgRoll5_MouseLeftButtonDown">
-            <Image.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-32.51"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Image.RenderTransform>
-        </Image>
-        <Image x:Name="imgRoll6" HorizontalAlignment="Left" Height="50" Margin="450,194,0,0" VerticalAlignment="Top" Width="50" Source="pack://siteoforigin:,,,/Resources/3Die.jpg" RenderTransformOrigin="0.5,0.5" MouseLeftButtonDown="ImgRoll6_MouseLeftButtonDown">
-            <Image.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="86.955"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Image.RenderTransform>
-        </Image>
+        <Canvas Name="MainCanvas" Margin="10,0,188,137">
+            <Image x:Name="imgRoll1" HorizontalAlignment="Left" Height="50" VerticalAlignment="Top" Width="50" Source="pack://siteoforigin:,,,/Resources/1Die.jpg" RenderTransformOrigin="0.5,0.5" MouseLeftButtonDown="ImgRoll1_MouseLeftButtonDown" Canvas.Left="76" Canvas.Top="55">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-19.997"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image x:Name="imgRoll2" HorizontalAlignment="Left" Height="50" VerticalAlignment="Top" Width="50" Source="pack://siteoforigin:,,,/Resources/6Die.jpg" RenderTransformOrigin="0.5,0.5" MouseLeftButtonDown="ImgRoll2_MouseLeftButtonDown" Canvas.Left="293" Canvas.Top="56">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="47.631"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image x:Name="imgRoll3" HorizontalAlignment="Left" Height="50" VerticalAlignment="Top" Width="50" Source="pack://siteoforigin:,,,/Resources/4Die.jpg" RenderTransformOrigin="0.5,0.5" MouseLeftButtonDown="ImgRoll3_MouseLeftButtonDown" Canvas.Left="468" Canvas.Top="42">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="18.507"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image x:Name="imgRoll4" HorizontalAlignment="Left" Height="50" VerticalAlignment="Top" Width="50" Source="pack://siteoforigin:,,,/Resources/2Die.jpg" RenderTransformOrigin="0.5,0.5" MouseLeftButtonDown="ImgRoll4_MouseLeftButtonDown" Canvas.Left="70" Canvas.Top="181">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-77.232"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image x:Name="imgRoll5" HorizontalAlignment="Left" Height="50" VerticalAlignment="Top" Width="51" Source="pack://siteoforigin:,,,/Resources/5Die.jpg" RenderTransformOrigin="0.5,0.5" MouseLeftButtonDown="ImgRoll5_MouseLeftButtonDown" Canvas.Left="241" Canvas.Top="180">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-32.51"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image x:Name="imgRoll6" HorizontalAlignment="Left" Height="50" VerticalAlignment="Top" Width="50" Source="pack://siteoforigin:,,,/Resources/3Die.jpg" RenderTransformOrigin="0.5,0.5" MouseLeftButtonDown="ImgRoll6_MouseLeftButtonDown" Canvas.Left="442" Canvas.Top="167">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="86.955"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+        </Canvas>
         <Label x:Name="lblPlayerOneScore" Content="Score: 0" HorizontalAlignment="Left" Margin="618,37,-42,0" VerticalAlignment="Top" Foreground="White" FontSize="18" BorderBrush="#FF171717" Width="216" FontWeight="Bold"/>
         <Label x:Name="lblPlayerTwoScore" Content="Score: 0" HorizontalAlignment="Left" Margin="618,103,-42,0" VerticalAlignment="Top" Foreground="White" FontSize="18" BorderBrush="#FF171717" Width="216" FontWeight="Bold"/>
         <Label x:Name="lblPlayerThreeScore" Content="Score: 0" HorizontalAlignment="Left" Margin="618,169,-42,0" VerticalAlignment="Top" Foreground="White" FontSize="18" BorderBrush="#FF171717" Width="216" FontWeight="Bold"/>
