@@ -446,15 +446,6 @@ namespace farkle
         /// </summary>
         public int[] CheckDice()     // todo return value for int method. (changed to void to make it work temporarily)
         {
-            /*
-            int dv1 = player1.DieKept[0];
-            int dv2 = player1.DieKept[1];
-            int dv3 = player1.DieKept[2];
-            int dv4 = player1.DieKept[3];
-            int dv5 = player1.DieKept[4];
-            int dv6 = player1.DieKept[5];
-            */
-
             // Set up a boolean value to hold true if there is a straight.
             bool straight = false;
 
@@ -877,6 +868,178 @@ namespace farkle
                 }
             }
 
+            bool threeOnes = false;
+            bool threeTwos = false;
+            bool threeThrees = false;
+            bool threeFours = false;
+            bool threeFives = false;
+            bool threeSixes = false;
+
+            // todo make sure theres not a problem with being greater than 3.
+            if (oneCounter >= 3)
+            {
+                threeOnes = true;
+            }
+
+            if (twoCounter >= 3)
+            {
+                threeTwos = true;
+            }
+
+            if (threeCounter >= 3)
+            {
+                threeThrees = true;
+            }
+
+            if (fourCounter >= 3)
+            {
+                threeFours = true;
+            }
+
+            if (fiveCounter >= 3)
+            {
+                threeFives = true;
+            }
+
+            if (sixCounter >= 3)
+            {
+                threeSixes = true;
+            }
+
+            bool threeOfAKinds = false;
+            // Check for 2 3-of-a-kinds.
+            if (threeOnes)
+            {
+                if (threeTwos)
+                {
+                    // There is 2 3-of-a-kinds.
+                    // Set threeOfAKinds to true.
+                    threeOfAKinds = true;
+                }
+                else if (threeThrees)
+                {
+                    // There is 2 3-of-a-kinds.
+                    // Set threeOfAKinds to true.
+                    threeOfAKinds = true;
+                }
+                else if (threeFours)
+                {
+                    // There is 2 3-of-a-kinds.
+                    // Set threeOfAKinds to true.
+                    threeOfAKinds = true;
+                }
+                else if (threeFives)
+                {
+                    // There is 2 3-of-a-kinds.
+                    // Set threeOfAKinds to true.
+                    threeOfAKinds = true;
+                }
+                else if (threeSixes)
+                {
+                    // There is 2 3-of-a-kinds.
+                    // Set threeOfAKinds to true.
+                    threeOfAKinds = true;
+                }
+                else
+                {
+                    // Theres not 2 3-of-a-kinds.
+                }
+            }
+            else if (threeTwos)
+            {
+                if (threeThrees)
+                {
+                    // There is 2 3-of-a-kinds.
+                    // Set threeOfAKinds to true.
+                    threeOfAKinds = true;
+                }
+                else if (threeFours)
+                {
+                    // There is 2 3-of-a-kinds.
+                    // Set threeOfAKinds to true.
+                    threeOfAKinds = true;
+                }
+                else if (threeFives)
+                {
+                    // There is 2 3-of-a-kinds.
+                    // Set threeOfAKinds to true.
+                    threeOfAKinds = true;
+                }
+                else if (threeSixes)
+                {
+                    // There is 2 3-of-a-kinds.
+                    // Set threeOfAKinds to true.
+                    threeOfAKinds = true;
+                }
+                else
+                {
+                    // Theres not 2 3-of-a-kinds.
+                }
+            }
+            else if (threeThrees)
+            {
+                if (threeFours)
+                {
+                    // There is 2 3-of-a-kinds.
+                    // Set threeOfAKinds to true.
+                    threeOfAKinds = true;
+                }
+                else if (threeFives)
+                {
+                    // There is 2 3-of-a-kinds.
+                    // Set threeOfAKinds to true.
+                    threeOfAKinds = true;
+                }
+                else if (threeSixes)
+                {
+                    // There is 2 3-of-a-kinds.
+                    // Set threeOfAKinds to true.
+                    threeOfAKinds = true;
+                }
+                else
+                {
+                    // Theres not 2 3-of-a-kinds.
+                }
+            }
+            else if (threeFours)
+            {
+                if (threeFives)
+                {
+                    // There is 2 3-of-a-kinds.
+                    // Set threeOfAKinds to true.
+                    threeOfAKinds = true;
+                }
+                else if (threeSixes)
+                {
+                    // There is 2 3-of-a-kinds.
+                    // Set threeOfAKinds to true.
+                    threeOfAKinds = true;
+                }
+                else
+                {
+                    // Theres not 2 3-of-a-kinds.
+                }
+            }
+            else if (threeFives)
+            {
+                if (threeSixes)
+                {
+                    // There is 2 3-of-a-kinds.
+                    // Set threeOfAKinds to true.
+                    threeOfAKinds = true;
+                }
+                else
+                {
+                    // Theres not 2 3-of-a-kinds.
+                }
+            }
+            else
+            {
+                // There is not 2 3-of-a-kinds.
+            }
+            
+
+
             /*
           * I didnt know how else to get this information out of the method without copying the whole thing
           * and that doesnt seem effecient. So I decided to make a "packet" like thing. 
@@ -894,10 +1057,23 @@ namespace farkle
           * 8: pairSixes
           * 9: straight
           * 10: threePairs
+          * 11: threeOfAKinds
+          * 12: HotDice
+          * 13: threeOnes
+          * 14: threeTwos
+          * 15: threeThrees
+          * 16: threeFours
+          * 17: threeFives
+          * 18: threeSixes
+          * 19: twoCounter
+          * 20: threeCounter
+          * 21: FourCounter
+          * 22: sixCounter
           * A value 0 means false
           * a value 1 means true
           */
-            int[] AIPackage = new int[11];
+
+            int[] AIPackage = new int[23];
 
             // ScoreableDice
             if (scoreableDice == true)
@@ -991,6 +1167,127 @@ namespace farkle
             {
                 AIPackage[10] = 0;
             }
+
+            // Three Of a Kind
+            if (threeOfAKinds == true)
+            {
+                AIPackage[11] = 1;
+            }
+            else
+            {
+                AIPackage[11] = 0;
+            }
+
+            // Hotdice
+            if (currentPlayerList[0].HotDice == true)
+            {
+                AIPackage[12] = 1;
+            }
+            else
+            {
+                AIPackage[12] = 0;
+            }
+
+            // ThreeOnes
+            if (threeOnes)
+            {
+                AIPackage[13] = 1;
+            }
+            else
+            {
+                AIPackage[13] = 0;
+            }
+
+            // ThreeTwos
+            if (threeTwos == true)
+            {
+                AIPackage[14] = 1;
+            }
+            else
+            {
+                AIPackage[14] = 0;
+            }
+
+            // ThreeThrees
+            if (threeThrees == true)
+            {
+                AIPackage[15] = 1;
+            }
+            else
+            {
+                AIPackage[15] = 0;
+            }
+
+            // ThreeFours
+            if (threeFours == true)
+            {
+                AIPackage[16] = 1;
+            }
+            else
+            {
+                AIPackage[16] = 0;
+            }
+
+            // ThreeFives
+            if (threeFives == true)
+            {
+                AIPackage[17] = 1;
+            }
+            else
+            {
+                AIPackage[17] = 0;
+            }
+
+            // ThreeSixes
+            if (threeSixes == true)
+            {
+                AIPackage[18] = 1;
+            }
+            else
+            {
+                AIPackage[18] = 0;
+            }
+
+            // twoCounter
+            if (twoCounter >= 0)
+            {
+                AIPackage[19] = twoCounter;
+            }
+            else
+            {
+                AIPackage[19] = 0;
+            }
+
+            // ThreeCounter
+            if (threeCounter >= 0)
+            {
+                AIPackage[20] = threeCounter;
+            }
+            else
+            {
+                AIPackage[20] = 0;
+            }
+
+            // fourCounter
+            if (fourCounter >= 0)
+            {
+                AIPackage[21] = fourCounter;
+            }
+            else
+            {
+                AIPackage[21] = 0;
+            }
+
+            // sixCounter
+            if (fiveCounter >= 0)
+            {
+                AIPackage[22] = sixCounter;
+            }
+            else
+            {
+                AIPackage[22] = 0;
+            }
+
             return AIPackage;
         }
 
@@ -1079,21 +1376,28 @@ namespace farkle
             // If dice are valid.
             if (this.currentPlayerList[0].ValidDice)
             {
+                // If the player did not farkle
                 if (!this.playerFarkle)
                 {
-                    // Enable the roll button.
-                    btnRoll.IsEnabled = true;
+                    // Check if the current player is a human
+                    if (!currentPlayerList[0].IsAI)
+                    {
+                        // If they are enable the roll button.
+                        btnRoll.IsEnabled = true;
+                    }
+                    else
+                    {
+                        // If its a computer disable the roll button.
+                        btnRoll.IsEnabled = false;
+                    }
                 }
 
                 // Set label to show score.
                 lblPendingScore.Content = "Pending Score: " + this.currentPlayerList[0].TempScore.ToString();
-
-
             }
             else
             {
                 lblPendingScore.Content = "Pending Score: " + this.currentPlayerList[0].TempScore.ToString();
-
             }
 
             // Check to see if all dice have been kept and are valid.
@@ -1104,38 +1408,64 @@ namespace farkle
                 // Set hot dice to true.
                 this.currentPlayerList[0].HotDice = true;
 
+                // Call resetLockedLists.
+                ResetLockedLists();
 
+                // Reset the borders.
+                bdrDie1.Visibility = Visibility.Visible;
+                bdrDie2.Visibility = Visibility.Visible;
+                bdrDie3.Visibility = Visibility.Visible;
+                bdrDie4.Visibility = Visibility.Visible;
+                bdrDie5.Visibility = Visibility.Visible;
+                bdrDie6.Visibility = Visibility.Visible;
 
-                // Messagebox telling the user they can roll again.
-                MessageBox.Show("You have hot dice! You can roll again to try and score" +
-                                " more points, or you can press the next turn button to end your turn!"
-                                + "\n" + "\n" +
-                                "If you decide to roll again you could possibly lose all of your points " +
-                                "for this turn!!");
+                // Reset the roll incrementer.
+                rollIncrementer = 0;
+
+                if(!currentPlayerList[0].IsAI)
+                {
+                    // Messagebox telling the user they can roll again.
+                    MessageBox.Show("You have hot dice! You can roll again to try and score" +
+                                    " more points, or you can press the next turn button to end your turn!"
+                                    + "\n" + "\n" +
+                                    "If you decide to roll again you could possibly lose all of your points " +
+                                    "for this turn!!");
+                }
+
 
                 // Play the applause sound.
                 Stream strHotDice = Properties.Resources.hot_dice;
                 SoundPlayer sndHotDice = new SoundPlayer(strHotDice);
                 sndHotDice.Play();
-
             }
             else
             {
                 // Hot dice is already false.
             }
 
-            // todo locked vs scoring maybe?
-            // when clicking on saved die the to scores are adding not subtracting
-            // Extra dice are being scored.
-            // when to lock dice.
-            // when to call scoring?
-            // inverse display method?
-            // todo after some dice are locked dynamic scoring doesnt work if dice is removed.
-            // todo maybe add some sort of counter to check if there are less in saved dice than the previous roll?
-            // todo checkDice method not working.
-            // todo dynamic scoring for currentScore. -- done
-            // todo check to make sure resetFields... method is working
-            // todo goofy stuff going on with scoring, when 3 of a kind + 1 or 5 and removal/addition of dice to this.savedDieList.
+            // Call OkToRoll method and set it equal to a local bool value.
+            bool okay = OkToRollCheck();
+
+            // Check the value of okay.
+            if (okay)
+            {
+                // Check if the current player is a human
+                if (!currentPlayerList[0].IsAI)
+                {
+                    // If they are enable the roll button.
+                    btnRoll.IsEnabled = true;
+                }
+                else
+                {
+                    // If its a computer disable the roll button.
+                    btnRoll.IsEnabled = false;
+                }
+            }
+            else
+            {
+                // If false disable the roll button.
+                btnRoll.IsEnabled = false;
+            }
         }
 
         /// <summary>
@@ -1444,6 +1774,21 @@ namespace farkle
             }
             else
             {
+                // Disable the roll button.
+                btnRoll.IsEnabled = false;
+
+                // Check if the current player is a human or computer.
+                if (currentPlayerList[0].IsAI)
+                {
+                    // If its a computer disable the next turn button.
+                    btnNextTurn.IsEnabled = false;
+                }
+                else
+                {
+                    // If its a human enable the next turn button.
+                    btnNextTurn.IsEnabled = true;
+                }
+
                 if (this.currentPlayerList[0].ValidDice || this.rollIncrementer == 0)
                 {
                     // Loop through this.savedDieList
@@ -1682,10 +2027,14 @@ namespace farkle
                         Stream strSadHorn = Properties.Resources.sad_trombone;
                         SoundPlayer sndSadHorn = new SoundPlayer(strSadHorn);
                         sndSadHorn.Play();
+                        
+                        if(!currentPlayerList[0].IsAI)
+                        {
+                            // Messagebox telling the player they farkled.
+                            MessageBox.Show("Farkle! You lost all points for this round."
+                                + "\n" + "Please hit the next turn button.");
+                        }
 
-                        // Messagebox telling the player they farkled.
-                        MessageBox.Show("Farkle! You lost all points for this round."
-                            + "\n" + "Please hit the next turn button.");
 
                         // Disable the roll button.
                         btnRoll.IsEnabled = false;
@@ -1719,21 +2068,22 @@ namespace farkle
                         // Nothing needs to be done here.
                     }
                 }
+
+                // If the player has hot dice. 
+                if (this.currentPlayerList[0].HotDice)
+                {
+                    // Reset the roll incrementer to 0.
+                    this.rollIncrementer = 0;
+                }
+                else
+                {
+                    // Otherwise increment the roll counter.
+                    this.rollIncrementer++;
+                }
             }
 
-            if (this.currentPlayerList[0].HotDice)
-            {
-                this.rollIncrementer = 0;
-            }
-            else
-            {
-                this.rollIncrementer++;
-            }
-
-            if (CurrentPlayerList[0].IsAI == true)
-            {
-                AImakePlay();
-            }
+            Refresh(farkle);
+            System.Threading.Thread.Sleep(300);
         }
 
         /// <summary>
@@ -1744,7 +2094,7 @@ namespace farkle
         private void BtnNextTurn_Click(object sender, RoutedEventArgs e)
         {
             this.rollIncrementer = 0;
-
+            AIreroll = 0;
             // Call ResetFieldsForNewTurn.
             this.currentPlayerList[0].ResetFieldsForNewTurn();
 
@@ -1769,16 +2119,6 @@ namespace farkle
                 i++;
             }
 
-            /*
-            // reset the isLocked variable on every die to false
-            die1.isLocked = false;
-            die2.isLocked = false;
-            die3.isLocked = false;
-            die4.isLocked = false;
-            die5.isLocked = false;
-            die6.isLocked = false;
-            */
-
             // Hide all the saved die images.
             imgSavedDie1.Visibility = Visibility.Hidden;
             imgSavedDie2.Visibility = Visibility.Hidden;
@@ -1794,12 +2134,6 @@ namespace farkle
             imgRoll4.Visibility = Visibility.Visible;
             imgRoll5.Visibility = Visibility.Visible;
             imgRoll6.Visibility = Visibility.Visible;
-
-            // Call the score dice method.
-            // player1.ScoreDice();
-
-            // todo for testing purposes put scoring here.
-            // player1.ScoreDice(allDice.this.diceList);
 
             // Set current score.
             if (!this.playerFarkle)
@@ -1822,8 +2156,6 @@ namespace farkle
             // Reset lblPendingScore.
             lblPendingScore.Content = "Pending Score: " + this.currentPlayerList[0].TempScore.ToString();
 
-
-
             // Check if score is greater than or equal to 10000. If it is the player wins.
             if (this.currentPlayerList[0].CurrentScore >= 10000)
             {
@@ -1832,9 +2164,9 @@ namespace farkle
 
                 // Create and show Winner page.
                 Winner win = new Winner();
+
                 win.lblWinner.Content = "Congratulations player " + this.currentPlayerList[0].Number + " you win!";
                 win.ShowDialog();
-
             }
             else
             {
@@ -1879,6 +2211,14 @@ namespace farkle
             // Roll for the next turn
             this.BtnRoll_Click(null, null);
 
+            // Check if the current player is a computer.
+            if (currentPlayerList[0].IsAI == true)
+            {
+                // If it is a computer call the AImakePlay method.
+                AImakePlay();
+            }
+
+            // Disable the roll button.
             btnRoll.IsEnabled = false;
         }
 
@@ -1891,6 +2231,7 @@ namespace farkle
         {
             // Close the form.
             this.Close();
+            Environment.Exit(1);
         }
 
         /// <summary>
@@ -1941,17 +2282,17 @@ namespace farkle
         /// <param name="e">RoutedEventArgs e.</param>
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
+            // Make sure that the difficulty is set. 
+            if (difficulty == 0 || difficulty == null)
+            {
+                difficulty = 1;
+            }
+
             Player tempPlayer = new Player();
-            die1.Position = 1;
-            die2.Position = 2;
-            die2.Position = 3;
-            die4.Position = 4;
-            die5.Position = 5;
-            die6.Position = 6;
 
             if (this.onePlayer)
             {
-                if(AICount == 1)
+                if (AICount == 1)
                 {
                     tempPlayer.Number = 1;
                     tempPlayer.IsAI = true;
@@ -2178,7 +2519,7 @@ namespace farkle
 
             this.currentPlayerList[0].ValidDice = true;
 
-            if(difficulty == 1)
+            if (difficulty == 1)
             {
                 lblDifficulty.Content = "Difficulty: Easy";
                 lblDifficulty.Foreground = Brushes.LimeGreen;
@@ -2188,17 +2529,49 @@ namespace farkle
                 lblDifficulty.Content = "Difficulty: Hard";
                 lblDifficulty.Foreground = Brushes.IndianRed;
             }
+
+            // Quick check to see if all of the players are ai and start the game up
+            if(fourPlayer && AICount == 4)
+            {
+                BtnRoll_Click(null, null);
+                System.Threading.Thread.Sleep(300);
+                AImakePlay();
+            }
+
+            if (twoPlayer && AICount == 2)
+            {
+                BtnRoll_Click(null, null);
+                System.Threading.Thread.Sleep(300);
+                AImakePlay();
+            }
+
+            if (threePlayer && AICount == 3)
+            {
+                BtnRoll_Click(null, null);
+                System.Threading.Thread.Sleep(300);
+                AImakePlay();
+            }
+
+            if (onePlayer && AICount == 1)
+            {
+                BtnRoll_Click(null, null);
+                System.Threading.Thread.Sleep(300);
+                AImakePlay();
+            }
         }
 
+        int AIreroll = 0;
         public void AImakePlay()
         {
-            // First make sure the player is supposed to be AI.
+            // first make sure the player is supposed to be AI
             if (currentPlayerList[0].IsAI == true)
             {
                 lblPlayerInformation.Content = "Player " + currentPlayerList[0].Number + "'s Turn (AI)";
             }
 
-            int[] AIPackage = new int[11];
+
+
+            int[] AIPackage = new int[23];
             AIPackage = CheckDice().Clone() as int[];
             /*
             * the array elements in order are
@@ -2213,67 +2586,353 @@ namespace farkle
             * 8: pairSixes
             * 9: straight
             * 10: threePairs
+            * 11: threeOfAKinds
+            * 12: hotDice
             * A value 0 means false
             * a value 1 means true
             */
-
-            // If our dice are scoreable then begin our checks
-            if (AIPackage[0] == 1)
+            if (AIreroll > 0 || AIPackage[12] == 1)
             {
-                // Check for a straight
-                if (AIPackage[9] == 1)
+                System.Threading.Thread.Sleep(1000);
+            }
+            // Check to see if the difficulty is 2 (which would be hard)
+            //  If it is the AI will check for all possible ways to score.
+            // It will also reroll if it can only take 1/2 dice.
+            if (difficulty == 2)
+            {
+                // if our dice are scoreable then begin our checks
+                if (AIPackage[0] == 1 || AIreroll > 0)
                 {
-                    // We have a straight
-                    // then set images and check roll incrementer add to saveddielist/lockedlist for scoring
-                    // going to call the aisetimg method, which is below here
-                    int counter = 1;
-                    while (counter < 6)
+                    // check for a straight
+                    if (AIPackage[9] == 1)
                     {
-                        AISetImg(counter);
-                        counter++;
+                        // we have a straight
+                        // then set images and check roll incrementer add to saveddielist/lockedlist for scoring
+                        // going to call the aisetimg method, which is below, here
+                        int counter = 1;
+                        while (counter <= 6)
+                        {
+                            System.Threading.Thread.Sleep(150);
+                            AISetImg(counter);
+                            System.Threading.Thread.Sleep(150);
+                            counter++;
+                        }
+                    }
+
+                    if (AIPackage[10] == 1)
+                    {
+                        // we have 3 pairs, now we need to check to see which
+                        /*
+                                * 3: pairOnes
+                                * 4: pairTwos
+                                * 5: pairThrees
+                                * 6: pairFours
+                                * 7: pairFives
+                                * 8: pairSixes
+                        */
+                        // then set images and check roll incrementer add to saveddielist/lockedlist for scoring
+
+                        if(AIPackage[3] == 1 && AIPackage[4] == 1 && AIPackage[5] == 1)
+                        {
+                            // We have a pair of of 1's, a pair of 2's, and a pair of 3's
+                            AISetImg(1);
+                            AISetImg(1);
+                            AISetImg(2);
+                            AISetImg(2);
+                            AISetImg(3);
+                            AISetImg(3);
+                        }
+
+                        if (AIPackage[3] == 1 && AIPackage[4] == 1 && AIPackage[6] == 1)
+                        {
+                            // We have a pair of of 1's, a pair of 2's, and a pair of 4's
+                            AISetImg(1);
+                            AISetImg(1);
+                            AISetImg(2);
+                            AISetImg(2);
+                            AISetImg(4);
+                            AISetImg(4);
+                        }
+
+                        if (AIPackage[3] == 1 && AIPackage[4] == 1 && AIPackage[7] == 1)
+                        {
+                            // We have a pair of of 1's, a pair of 2's, and a pair of 5's
+                            AISetImg(1);
+                            AISetImg(1);
+                            AISetImg(2);
+                            AISetImg(2);
+                            AISetImg(5);
+                            AISetImg(5);
+                        }
+
+                        if (AIPackage[3] == 1 && AIPackage[4] == 1 && AIPackage[8] == 1)
+                        {
+                            // We have a pair of of 1's, a pair of 2's, and a pair of 6's
+                            AISetImg(1);
+                            AISetImg(1);
+                            AISetImg(2);
+                            AISetImg(2);
+                            AISetImg(6);
+                            AISetImg(6);
+                        }
+
+                        if (AIPackage[3] == 1 && AIPackage[5] == 1 && AIPackage[6] == 1)
+                        {
+                            // We have a pair of of 1's, a pair of 3's, and a pair of 4's
+                            AISetImg(1);
+                            AISetImg(1);
+                            AISetImg(3);
+                            AISetImg(3);
+                            AISetImg(4);
+                            AISetImg(4);
+                        }
+
+                        if (AIPackage[3] == 1 && AIPackage[5] == 1 && AIPackage[7] == 1)
+                        {
+                            // We have a pair of of 1's, a pair of 3's, and a pair of 5's
+                            AISetImg(1);
+                            AISetImg(1);
+                            AISetImg(3);
+                            AISetImg(3);
+                            AISetImg(5);
+                            AISetImg(5);
+                        }
+
+                        if (AIPackage[3] == 1 && AIPackage[5] == 1 && AIPackage[8] == 1)
+                        {
+                            // We have a pair of of 1's, a pair of 3's, and a pair of 6's
+                            AISetImg(1);
+                            AISetImg(1);
+                            AISetImg(3);
+                            AISetImg(3);
+                            AISetImg(6);
+                            AISetImg(6);
+                        }
+
+                        if (AIPackage[3] == 1 && AIPackage[6] == 1 && AIPackage[7] == 1)
+                        {
+                            // We have a pair of of 1's, a pair of 4's, and a pair of 5's
+                            AISetImg(1);
+                            AISetImg(1);
+                            AISetImg(4);
+                            AISetImg(4);
+                            AISetImg(5);
+                            AISetImg(5);
+                        }
+
+                        if (AIPackage[3] == 1 && AIPackage[6] == 1 && AIPackage[8] == 1)
+                        {
+                            // We have a pair of of 1's, a pair of 4's, and a pair of 6's
+                            AISetImg(1);
+                            AISetImg(1);
+                            AISetImg(4);
+                            AISetImg(4);
+                            AISetImg(6);
+                            AISetImg(6);
+                        }
+
+                        if (AIPackage[3] == 1 && AIPackage[7] == 1 && AIPackage[8] == 1)
+                        {
+                            // We have a pair of of 1's, a pair of 5's, and a pair of 6's
+                            AISetImg(1);
+                            AISetImg(1);
+                            AISetImg(5);
+                            AISetImg(5);
+                            AISetImg(6);
+                            AISetImg(6);
+                        }
+
+                    }    
+                    
+                        // If we have 3 6's
+                        if(AIPackage[18] == 1)
+                        {
+                            int count = AIPackage[22];
+                            while (count > 0)
+                            {
+                                AISetImg(6);
+                                count--;
+                            }
+                        }
+
+                        // If we have 3 5's
+                        if (AIPackage[17] == 1)
+                        {
+                            int count = AIPackage[2];
+                            while (count > 0)
+                            {
+                                AISetImg(5);
+                                count--;
+                            }
+                        }
+
+                        // If we have 3 4's
+                        if (AIPackage[16] == 1)
+                        {
+                            int count = AIPackage[21];
+                            while (count > 0)
+                            {
+                                AISetImg(4);
+                                count--;
+                            }
+                        }
+
+                        // If we have 3 3's
+                        if (AIPackage[15] == 1)
+                        {
+                            int count = AIPackage[20];
+                            while (count > 0)
+                            {
+                                AISetImg(3);
+                                count--;
+                            }
+                        }
+
+                        // If we have 3 2's
+                        if (AIPackage[14] == 1)
+                        {
+                            int count = AIPackage[19];
+                            while (count > 0)
+                            {
+                                AISetImg(2);
+                                count--;
+                            }
+                        }
+
+                        // If we have 3 1's
+                        if (AIPackage[13] == 1)
+                        {
+                            int count = AIPackage[1];
+                            while (count > 0)
+                            {
+                                AISetImg(1);
+                                count--;
+                            }
+                        }                
+
+                    if (AIPackage[1] > 0)
+                    {
+                        int count = AIPackage[1];
+                        while (count > 0)
+                        {
+                            AISetImg(1);
+                            count--;
+                        }
+                        // we have more than 0 ones 
+                    }
+
+                    if (AIPackage[2] > 0)
+                    {
+                        int count = AIPackage[2];
+                        while (count > 0)
+                        {
+                            System.Threading.Thread.Sleep(100);
+                            AISetImg(5);
+                            count--;
+                        }
+                        // we have more than 0 fives 
                     }
                 }
-
-                if (AIPackage[10] == 1)
+                else
                 {
-                    // we have 3 pairs, now we need to check to see which
-                    // then set images and check roll incrementer add to saveddielist/lockedlist for scoring
+                    // our dice are not scoreable
                 }
-
-                if (AIPackage[1] > 0)
+                AIreroll++;
+                // after we choose the initial set of cards we need to do some checks. 
+                // first check will be to see how many dice we have saved 
+                if(AIreroll < 2 || currentPlayerList[0].HotDice == true)
                 {
-                    int count = AIPackage[1];
-                    while(count > 0)
-                    {
-                        AISetImg(1);
-                        count--;
-                    }
-                    // we have more than 0 ones 
-                }
-
-                if (AIPackage[2] > 0)
-                {
-                    int count = AIPackage[1];
-                    while (count > 0)
-                    {
-                        AISetImg(5);
-                        count--;
-                    }
-                    // we have more than 0 fives 
+                    AICheckReroll();
                 }
             }
             else
             {
-                // our dice are not scoreable
+                // if our dice are scoreable then begin our checks
+                if (AIPackage[0] == 1)
+                {
+                    // check for a straight
+                    if (AIPackage[9] == 1)
+                    {
+                        // we have a straight
+                        // then set images and check roll incrementer add to saveddielist/lockedlist for scoring
+                        // going to call the aisetimg method, which is below, here
+                        int counter = 1;
+                        while (counter < 6)
+                        {
+                            System.Threading.Thread.Sleep(150);
+                            AISetImg(counter);
+                            System.Threading.Thread.Sleep(150);
+                            counter++;
+                        }
+                    }
+
+                    if (AIPackage[1] > 0)
+                    {
+                        int count = AIPackage[1];
+                        while (count > 0)
+                        {
+                            AISetImg(1);
+                            count--;
+                        }
+                        // we have more than 0 ones 
+                    }
+
+                    if (AIPackage[2] > 0)
+                    {
+                        int count = AIPackage[2];
+                        while (count > 0)
+                        {
+                            System.Threading.Thread.Sleep(100);
+                            AISetImg(5);
+                            count--;
+                        }
+                        // we have more than 0 fives 
+                    }
+                }
+                else
+                {
+                    // our dice are not scoreable
+                }
             }
 
             // difficulty check will go here
-            
+            Refresh(farkle);
+            System.Threading.Thread.Sleep(650);
+
+            if(currentPlayerList[0].IsAI)
+            {
+                BtnNextTurn_Click(null, null);
+
+            }
+        }
+
+        public void AICheckReroll()
+        {
+                int diceSavedCount = savedDieList.Count();
+            if (diceSavedCount < 3)
+            {
+                BtnRoll_Click(null, null);
+                AImakePlay();
+            }
+            else if (currentPlayerList[0].HotDice == true)
+            {
+                BtnRoll_Click(null, null);
+                AImakePlay();
+            }
+
         }
 
         public void AISetImg(int numberToSet)
         {
-            int dieLocation = 0;
+            // set our dice positions. Die1 will always be for imgroll1, and imgsaveddie1. 
+            die1.Position = 1;
+            die2.Position = 2;
+            die3.Position = 3;
+            die4.Position = 4;
+            die5.Position = 5;
+            die6.Position = 6;
+
+            // int dieLocation = 0;
             // loop through the diceinplay list to find the dice we want to save
             foreach (Dice d in DiceInPlay)
             {
@@ -2281,52 +2940,132 @@ namespace farkle
                 // Also get the dies location
                 if (d.Pips == numberToSet)
                 {
-                    savedDieList.Add(d);
-                    dieLocation = d.Position;
-                    DiceInPlay.Remove(d);
-                    DisplayScore();
+                    // Since die1 will always = imgroll1 and imgsaveddie1(the other dice follow the same pattern)
+                    // we can get the dies position and then set the correct image control on the form
+                    // then set the die to saved
+                    if (d.Position == 1)
+                    {
+                        SavedDieList.Add(d);
+                        imgRoll1.Visibility = Visibility.Hidden;
+                        imgSavedDie1.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + numberToSet + "Die.jpg"));
+                        imgSavedDie1.Visibility = Visibility.Visible;
+                        diceInPlay.Remove(d);
+                        DisplayScore();
+                    }
+
+                    if (d.Position == 2)
+                    {
+                        SavedDieList.Add(d);
+                        imgRoll2.Visibility = Visibility.Hidden;
+                        imgSavedDie2.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + numberToSet + "Die.jpg"));
+                        imgSavedDie2.Visibility = Visibility.Visible;
+                        diceInPlay.Remove(d);
+                        DisplayScore();
+
+                    }
+
+                    if (d.Position == 3)
+                    {
+                        SavedDieList.Add(d);
+                        imgRoll3.Visibility = Visibility.Hidden;
+                        imgSavedDie3.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + numberToSet + "Die.jpg"));
+                        imgSavedDie3.Visibility = Visibility.Visible;
+                        diceInPlay.Remove(d);
+                        DisplayScore();
+
+                    }
+
+                    if (d.Position == 4)
+                    {
+                        SavedDieList.Add(d);
+                        imgRoll4.Visibility = Visibility.Hidden;
+                        imgSavedDie4.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + numberToSet + "Die.jpg"));
+                        imgSavedDie4.Visibility = Visibility.Visible;
+                        diceInPlay.Remove(d);
+                        DisplayScore();
+
+                    }
+
+                    if (d.Position == 5)
+                    {
+                        SavedDieList.Add(d);
+                        imgRoll5.Visibility = Visibility.Hidden;
+                        imgSavedDie5.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + numberToSet + "Die.jpg"));
+                        imgSavedDie5.Visibility = Visibility.Visible;
+                        diceInPlay.Remove(d);
+                        DisplayScore();
+
+                    }
+
+                    if (d.Position == 6)
+                    {
+                        SavedDieList.Add(d);
+                        imgRoll6.Visibility = Visibility.Hidden;
+                        imgSavedDie6.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + numberToSet + "Die.jpg"));
+                        imgSavedDie6.Visibility = Visibility.Visible;
+                        diceInPlay.Remove(d);
+                        DisplayScore();
+
+                    }
+
+                    Refresh(farkle);
+                    System.Threading.Thread.Sleep(1000);
                     // todo keep an eye on where the break takes you back to: the foreach or out of the foreach
                     break;
                 }
             }
+        }
 
-            // if the dieLocation is not 0 (in other words if we found the correct die to save)
-            // then set the die to saved
-            if (dieLocation != 0)
+        // Below code is used to make the form stop proccesing information and force a redraw of the form
+        // use this to refresh and show that the ai is actually doing stuff
+
+        private delegate void Delegate();
+        public static void Refresh(DependencyObject objToRefresh)
+
+        {
+            objToRefresh.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.ApplicationIdle,
+                (Delegate)delegate { });
+        }
+
+        private bool OkToRollCheck()
+        {
+            // todo copy over AI methods?
+            // Counter for all dice that have a locked value.
+            int lockedCount = 0;
+
+            // Counter for all dice currently in the save area.
+            int totalCount = 0;
+
+            // Loop through each die in the savedDieList
+            foreach (Dice die in SavedDieList)
             {
-                // need to determine which position to place the image at. 
-                if(dieLocation == 1)
+                // If the dice is locked.
+                if (die.Locked1 || die.Locked2 || die.Locked3 || die.Locked4 || die.Locked5)
                 {
-                    imgSavedDie1.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + numberToSet + "Die.jpg"));
-                }
-                else if (dieLocation == 2)
-                {
-                    imgSavedDie2.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + numberToSet + "Die.jpg"));
-                }
-                else if (dieLocation == 3)
-                {
-                    imgSavedDie3.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + numberToSet + "Die.jpg"));
-                }
-                else if (dieLocation == 4)
-                {
-                    imgSavedDie4.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + numberToSet + "Die.jpg"));
-                }
-                else if (dieLocation == 5)
-                {
-                    imgSavedDie5.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + numberToSet + "Die.jpg"));
+                    // Increment the locked counter.
+                    lockedCount++;
+
+                    // Increment the total counter.
+                    totalCount++;
                 }
                 else
                 {
-                    // DieLocation is 6. 
-                    imgSavedDie6.Source = new BitmapImage(new Uri(@"pack://application:,,,/farkle;component/Resources/" + numberToSet + "Die.jpg"));
+                    // If the die is not locked only increment the total counter.
+                    totalCount++;
                 }
+            }
+
+            // Compare the lockedCount variable and the totalCount variable.
+            if (lockedCount == totalCount)
+            {
+                // If they are equal nothing has been added to the save area, return false.
+                return false;
             }
             else
             {
-                MessageBox.Show("Sorry, the die you are trying to save has vanished.");
+                // If they are different something has been added to the save area, return true.
+                return true;
             }
-
         }
-
     }
 }
