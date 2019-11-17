@@ -109,12 +109,12 @@ namespace farkle
         private bool isAI;
 
         /// <summary>
-        /// Field to keep track of the tempScore if hotDice happens.
+        /// Gets or sets a value indicating whether IsAI is true or false.
         /// </summary>
         public bool IsAI
         {
-            get => isAI;
-            set => isAI = value;
+            get => this.isAI;
+            set => this.isAI = value;
         }
 
         /// <summary>
@@ -373,6 +373,8 @@ namespace farkle
 
             // todo right here check if there are scorable dice by comparing the one/fiveCounters and 
             // the other counters compared to the total counter?
+            // Set pending score back to zero or else duplication errors can occur. Example: a score of 200 is shown when the correct score would be 100.
+            this.pendingScore = 0;
 
             // If there are ones to be scored.
             if (oneCounter > 0)
@@ -1053,22 +1055,22 @@ namespace farkle
             }
 
             // Check to make sure the dice kept are scorable.
-            if (twoCounter >= 3 && twoCounter + oneCounter + fiveCounter == savedDieList.Count || twoCounter >= 3 && twoCounter + oneCounter + fiveCounter == tempSavedDieListCount)
+            if ((twoCounter >= 3 && twoCounter + oneCounter + fiveCounter == savedDieList.Count) || (twoCounter >= 3 && twoCounter + oneCounter + fiveCounter == tempSavedDieListCount))
             {
                 // Set scorable dice to true.
                 keptDiceScorable = true;
             }
-            else if (threeCounter >= 3 && threeCounter + oneCounter + fiveCounter == savedDieList.Count || threeCounter >= 3 && threeCounter + oneCounter + fiveCounter == tempSavedDieListCount)
+            else if ((threeCounter >= 3 && threeCounter + oneCounter + fiveCounter == savedDieList.Count) || (threeCounter >= 3 && threeCounter + oneCounter + fiveCounter == tempSavedDieListCount))
             {
                 // Set scorable dice to true.
                 keptDiceScorable = true;
             }
-            else if (fourCounter >= 3 && fourCounter + oneCounter + fiveCounter == savedDieList.Count || fourCounter >= 3 && fourCounter + oneCounter + fiveCounter == tempSavedDieListCount)
+            else if ((fourCounter >= 3 && fourCounter + oneCounter + fiveCounter == savedDieList.Count) || (fourCounter >= 3 && fourCounter + oneCounter + fiveCounter == tempSavedDieListCount))
             {
                 // Set scorable dice to true.
                 keptDiceScorable = true;
             }
-            else if (sixCounter >= 3 && sixCounter + oneCounter + fiveCounter == savedDieList.Count || sixCounter >= 3 && sixCounter + oneCounter + fiveCounter == tempSavedDieListCount)
+            else if ((sixCounter >= 3 && sixCounter + oneCounter + fiveCounter == savedDieList.Count) || (sixCounter >= 3 && sixCounter + oneCounter + fiveCounter == tempSavedDieListCount))
             {
                 // Set scorable dice to true.
                 keptDiceScorable = true;

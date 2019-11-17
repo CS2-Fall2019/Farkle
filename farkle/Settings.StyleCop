@@ -9,8 +9,21 @@
       <Value>Img</Value>
       <Value>Imgsaved</Value>
       <Value>Incrementer</Value>
+      <Value>Ireroll</Value>
       <Value>scorable</Value>
       <Value>xaml</Value>
     </CollectionProperty>
   </GlobalSettings>
+  <Analyzers>
+    <Analyzer AnalyzerId="StyleCop.CSharp.NamingRules">
+      <AnalyzerSettings>
+        <CollectionProperty Name="Hungarian">
+          <Value>a</Value>
+          <Value>ai</Value>
+          <Value>aI</Value>
+          <Value>AI</Value>
+        </CollectionProperty>
+      </AnalyzerSettings>
+    </Analyzer>
+  </Analyzers>
 </StyleCopSettings>

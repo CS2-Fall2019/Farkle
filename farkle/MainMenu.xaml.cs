@@ -46,26 +46,32 @@ namespace farkle
             {
                 d = 1;
             }
-            else if(cbxHard.IsChecked == true)
+            else if (cbxHard.IsChecked == true)
             {
                 d = 2;
             }
 
             if ((bool)rdoOnePlayer.IsChecked == true)
             {
-                if(rdoOneAI.IsChecked == true)
+                if (rdoOneAI.IsChecked == true)
                 {
-                    MainWindow farkleGame = new MainWindow();
-                    farkleGame.OnePlayer = true;
-                    farkleGame.AICount = 1;
-                    farkleGame.Difficulty = d;
+                    MainWindow farkleGame = new MainWindow()
+                    {
+                        OnePlayer = true,
+                        AICount = 1,
+                        Difficulty = d
+                    };
+
                     farkleGame.Show();
                 }
                 else
                 {
-                    MainWindow farkleGame = new MainWindow();
-                    farkleGame.OnePlayer = true;
-                    farkleGame.Difficulty = d;
+                    MainWindow farkleGame = new MainWindow()
+                    {
+                        OnePlayer = true,
+                        Difficulty = d
+                    };
+
                     farkleGame.Show();
                 }
             }
@@ -73,25 +79,34 @@ namespace farkle
             {
                 if (rdoOneAI.IsChecked == true)
                 {
-                    MainWindow farkleGame = new MainWindow();
-                    farkleGame.TwoPlayer = true;
-                    farkleGame.AICount = 1;
-                    farkleGame.Difficulty = d;
+                    MainWindow farkleGame = new MainWindow()
+                    {
+                        TwoPlayer = true,
+                        AICount = 1,
+                        Difficulty = d
+                    };
+
                     farkleGame.Show();
                 }
                 else if (rdoTwoAI.IsChecked == true)
                 {
-                    MainWindow farkleGame = new MainWindow();
-                    farkleGame.TwoPlayer = true;
-                    farkleGame.AICount = 2;
-                    farkleGame.Difficulty = d;
+                    MainWindow farkleGame = new MainWindow()
+                    {
+                        TwoPlayer = true,
+                        AICount = 2,
+                        Difficulty = d
+                    };
+
                     farkleGame.Show();
                 }
                 else
                 {
-                    MainWindow farkleGame = new MainWindow();
-                    farkleGame.TwoPlayer = true;
-                    farkleGame.Difficulty = d;
+                    MainWindow farkleGame = new MainWindow()
+                    {
+                        TwoPlayer = true,
+                        Difficulty = d
+                    };
+
                     farkleGame.Show();
                 }
             }
@@ -99,33 +114,46 @@ namespace farkle
             {
                 if (rdoOneAI.IsChecked == true)
                 {
-                    MainWindow farkleGame = new MainWindow();
-                    farkleGame.ThreePlayer = true;
-                    farkleGame.AICount = 1;
-                    farkleGame.Difficulty = d;
+                    MainWindow farkleGame = new MainWindow()
+                    {
+                        ThreePlayer = true,
+                        AICount = 1,
+                        Difficulty = d
+                    };
+
                     farkleGame.Show();
                 }
                 else if (rdoTwoAI.IsChecked == true)
                 {
-                    MainWindow farkleGame = new MainWindow();
-                    farkleGame.ThreePlayer = true;
-                    farkleGame.AICount = 2;
-                    farkleGame.Difficulty = d;
+                    MainWindow farkleGame = new MainWindow()
+                    {
+                        ThreePlayer = true,
+                        AICount = 2,
+                        Difficulty = d
+
+                    };
+
                     farkleGame.Show();
                 }
                 else if (rdoThreeAI.IsChecked == true)
                 {
-                    MainWindow farkleGame = new MainWindow();
-                    farkleGame.ThreePlayer = true;
-                    farkleGame.AICount = 3;
-                    farkleGame.Difficulty = d;
+                    MainWindow farkleGame = new MainWindow()
+                    {
+                        ThreePlayer = true,
+                        AICount = 3,
+                        Difficulty = d,
+                    };
+
                     farkleGame.Show();
                 }
                 else
                 {
-                    MainWindow farkleGame = new MainWindow();
-                    farkleGame.ThreePlayer = true;
-                    farkleGame.Difficulty = d;
+                    MainWindow farkleGame = new MainWindow()
+                    {
+                        ThreePlayer = true,
+                        Difficulty = d,
+                    };
+
                     farkleGame.Show();
                 }
             }
@@ -133,43 +161,59 @@ namespace farkle
             {
                 if (rdoOneAI.IsChecked == true)
                 {
-                    MainWindow farkleGame = new MainWindow();
-                    farkleGame.FourPlayer = true;
-                    farkleGame.AICount = 1;
-                    farkleGame.Difficulty = d;
+                    MainWindow farkleGame = new MainWindow()
+                    {
+                        FourPlayer = true,
+                        AICount = 1,
+                        Difficulty = d
+                    };
+
                     farkleGame.Show();
                 }
                 else if (rdoTwoAI.IsChecked == true)
                 {
-                    MainWindow farkleGame = new MainWindow();
-                    farkleGame.FourPlayer = true;
-                    farkleGame.AICount = 2;
-                    farkleGame.Difficulty = d;
+                    // Two AI players was selected.
+                    MainWindow farkleGame = new MainWindow()
+                    {
+                        FourPlayer = true,
+                        AICount = 2,
+                        Difficulty = d,
+                    };
+
                     farkleGame.Show();
                 }
                 else if (rdoThreeAI.IsChecked == true)
                 {
-                    MainWindow farkleGame = new MainWindow();
-                    farkleGame.FourPlayer = true;
-                    farkleGame.AICount = 3;
-                    farkleGame.Difficulty = d;
+                    MainWindow farkleGame = new MainWindow()
+                    {
+                        FourPlayer = true,
+                        AICount = 3,
+                        Difficulty = d
+                    };
+
                     farkleGame.Show();
                 }
                 else if (rdoFourAI.IsChecked == true)
                 {
                     // Four players was selected.
-                    MainWindow farkleGame = new MainWindow();
-                    farkleGame.FourPlayer = true;
-                    farkleGame.AICount = 4;
-                    farkleGame.Difficulty = d;
+                    MainWindow farkleGame = new MainWindow()
+                    {
+                        FourPlayer = true,
+                        AICount = 4,
+                        Difficulty = d,
+                    };
+
                     farkleGame.Show();
                 }
                 else
                 {
                     // Four players was selected.
-                    MainWindow farkleGame = new MainWindow();
-                    farkleGame.FourPlayer = true;
-                    farkleGame.Difficulty = d;
+                    MainWindow farkleGame = new MainWindow()
+                    {
+                        FourPlayer = true,
+                        Difficulty = d
+                    };
+
                     farkleGame.Show();
                 }
             }
@@ -210,6 +254,11 @@ namespace farkle
                      "Rules");
         }
 
+        /// <summary>
+        /// One player radio button checked event.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">RoutedEventArgs e.</param>
         private void RdoOnePlayer_Checked(object sender, RoutedEventArgs e)
         {
             rdoOneAI.Visibility = Visibility.Visible;
@@ -221,6 +270,11 @@ namespace farkle
             rdoFourAI.IsChecked = false;
         }
 
+        /// <summary>
+        /// Two player radio button checked event.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">RoutedEventArgs e.</param>
         private void RdoTwoPlayer_Checked(object sender, RoutedEventArgs e)
         {
             rdoOneAI.Visibility = Visibility.Visible;
@@ -231,6 +285,11 @@ namespace farkle
             rdoFourAI.IsChecked = false;
         }
 
+        /// <summary>
+        /// Three player radio button checked event.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">RoutedEventArgs e.</param>
         private void RdoThreePlayer_Checked(object sender, RoutedEventArgs e)
         {
             rdoOneAI.Visibility = Visibility.Visible;
@@ -240,6 +299,11 @@ namespace farkle
             rdoFourAI.IsChecked = false;
         }
 
+        /// <summary>
+        /// Four player radio button checked event.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">RoutedEventArgs e.</param>
         private void RdoFourPlayers_Checked(object sender, RoutedEventArgs e)
         {
             rdoOneAI.Visibility = Visibility.Visible;
@@ -248,6 +312,11 @@ namespace farkle
             rdoFourAI.Visibility = Visibility.Visible;
         }
 
+        /// <summary>
+        /// Easy difficulty checkbox checked event.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">RoutedEventArgs e.</param>
         private void CbxEasy_Checked(object sender, RoutedEventArgs e)
         {
             if (cbxHard.IsChecked == true)
@@ -256,6 +325,11 @@ namespace farkle
             }
         }
 
+        /// <summary>
+        /// Hard difficulty checkbox checked event.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">RoutedEventArgs e.</param>
         private void CbxHard_Checked(object sender, RoutedEventArgs e)
         {
             if (cbxEasy.IsChecked == true)
@@ -264,6 +338,11 @@ namespace farkle
             }
         }
 
+        /// <summary>
+        /// Hard difficulty checkbox checked event.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">RoutedEventArgs e.</param>
         private void RdoZeroAI_Checked(object sender, RoutedEventArgs e)
         {
             cbxHard.IsEnabled = false;
@@ -272,6 +351,11 @@ namespace farkle
             cbxEasy.IsChecked = false;
         }
 
+        /// <summary>
+        /// Hard difficulty checkbox checked event.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">RoutedEventArgs e.</param>
         private void RdoOneAI_Checked(object sender, RoutedEventArgs e)
         {
             cbxHard.IsEnabled = true;
@@ -288,6 +372,11 @@ namespace farkle
             }
         }
 
+        /// <summary>
+        /// Hard difficulty checkbox checked event.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">RoutedEventArgs e.</param>
         private void RdoTwoAI_Checked(object sender, RoutedEventArgs e)
         {
             cbxHard.IsEnabled = true;
@@ -304,6 +393,11 @@ namespace farkle
             }
         }
 
+        /// <summary>
+        /// Hard difficulty checkbox checked event.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">RoutedEventArgs e.</param>
         private void RdoThreeAI_Checked(object sender, RoutedEventArgs e)
         {
             cbxHard.IsEnabled = true;
@@ -321,6 +415,11 @@ namespace farkle
             }
         }
 
+        /// <summary>
+        /// Hard difficulty checkbox checked event.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">RoutedEventArgs e.</param>
         private void RdoFourAI_Checked(object sender, RoutedEventArgs e)
         {
             cbxHard.IsEnabled = true;
