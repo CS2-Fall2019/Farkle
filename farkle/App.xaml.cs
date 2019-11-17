@@ -4,7 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace farkle
+namespace Farkle
 {
     using System;
     using System.Collections.Generic;

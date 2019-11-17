@@ -3,7 +3,7 @@
 //     Copyright (c) Ian Burroughs, Mike Boudreau, Brandon Biles & James A. Schulze. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
-namespace farkle
+namespace Farkle
 {
     using System;
     using System.Collections.Generic;

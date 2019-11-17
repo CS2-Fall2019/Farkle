@@ -1,9 +1,9 @@
-﻿<Window x:Name="farkle" x:Class="farkle.MainWindow"
+﻿<Window x:Name="farkle" x:Class="Farkle.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:farkle"
+        xmlns:local="clr-namespace:Farkle"
         mc:Ignorable="d"
         Title="Farkle" Height="455.396" Width="800" Background="{x:Null}">
     <Grid HorizontalAlignment="Left" Width="792" Background="#FF305B04" Loaded="Grid_Loaded">
