@@ -130,7 +130,6 @@ namespace Farkle
                         ThreePlayer = true,
                         AICount = 2,
                         Difficulty = d
-
                     };
 
                     farkleGame.Show();
