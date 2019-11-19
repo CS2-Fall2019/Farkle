@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Farkle"
         mc:Ignorable="d"
-        Title="Winner" Height="450" Width="800" Background="#FF36DA81">
+        Title="Winner" Height="450" Width="800" Background="#FF36DA81" Icon="Resources/farkleicon.png">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>

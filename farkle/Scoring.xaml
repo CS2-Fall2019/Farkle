@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Farkle"
         mc:Ignorable="d"
-        Title="Scoring" Height="445.958" Width="800" Background="#FF2A7A13">
+        Title="Scoring" Height="445.958" Width="800" Background="#FF2A7A13" Icon="Resources/farkleicon.png">
     <Grid Background="#FF15590B">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="484*"/>

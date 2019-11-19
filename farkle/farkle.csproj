@@ -122,6 +122,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\farkleicon.png" />
     <None Include="Resources\hot-dice.wav" />
     <None Include="Resources\sad-trombone.wav" />
     <None Include="Resources\roll-dice.wav" />

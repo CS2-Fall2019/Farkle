@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Farkle"
         mc:Ignorable="d"
-        Title="Farkle" Height="455.396" Width="800" Background="{x:Null}">
+        Title="Farkle" Height="455.396" Width="800" Background="{x:Null}" Icon="Resources/farkleicon.png">
     <Grid HorizontalAlignment="Left" Width="792" Background="#FF305B04" Loaded="Grid_Loaded">
         <Label x:Name="lblPlayerInformation" Content="Player X's Turn ---------" HorizontalAlignment="Left" Margin="0,293,0,0" VerticalAlignment="Top" FontFamily="Sitka Banner" FontSize="24" Foreground="White" FontStyle="Italic"/>
         <Label x:Name="lblPendingScore" Content="Pending Score: 0" HorizontalAlignment="Left" Margin="10,345,0,0" VerticalAlignment="Top" Foreground="#FFF10C0C" FontSize="18" Width="216" FontWeight="Bold"/>

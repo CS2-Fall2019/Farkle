@@ -325,3 +325,7 @@ C:\Users\Home\OneDrive\Desktop\Farkle-farkle-111119\farkle\obj\Debug\farkle.Prop
 C:\Users\Home\OneDrive\Desktop\Farkle-farkle-111119\farkle\obj\Debug\farkle.csproj.GenerateResource.cache
 C:\Users\Home\OneDrive\Desktop\Farkle-farkle-111119\farkle\obj\Debug\farkle.exe
 C:\Users\Home\OneDrive\Desktop\Farkle-farkle-111119\farkle\obj\Debug\farkle.pdb
+C:\Users\Home\OneDrive\Desktop\Farkle-master\farkle\bin\Debug\Resources\Farkle.png
+C:\Users\Home\OneDrive\Desktop\Farkle-master\farkle\obj\Debug\Winner.g.cs
+C:\Users\Home\OneDrive\Desktop\Farkle-master\farkle\obj\Debug\Farkle_Content.g.cs
+C:\Users\Home\OneDrive\Desktop\Farkle-master\farkle\obj\Debug\Winner.baml

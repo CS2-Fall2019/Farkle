@@ -1858,11 +1858,27 @@ namespace Farkle
             if (diceSavedCount < 3)
             {
                 this.BtnRoll_Click(null, null);
+                System.Threading.Thread.Sleep(300);
+                Refresh(this.farkle);
+                System.Threading.Thread.Sleep(300);
+                Refresh(this.farkle);
+                System.Threading.Thread.Sleep(300);
+                Refresh(this.farkle);
+                System.Threading.Thread.Sleep(300);
+                Refresh(this.farkle);
                 this.AImakePlay();
             }
             else if (this.currentPlayerList[0].HotDice == true)
             {
                 this.BtnRoll_Click(null, null);
+                System.Threading.Thread.Sleep(300);
+                Refresh(this.farkle);
+                System.Threading.Thread.Sleep(300);
+                Refresh(this.farkle);
+                System.Threading.Thread.Sleep(300);
+                Refresh(this.farkle);
+                System.Threading.Thread.Sleep(300);
+                Refresh(this.farkle);
                 this.AImakePlay();
             }
         }
@@ -2808,6 +2824,14 @@ namespace Farkle
             if (this.currentPlayerList[0].IsAI == true)
             {
                 // If it is a computer call the AImakePlay method.
+                System.Threading.Thread.Sleep(300);
+                Refresh(this.farkle);
+                System.Threading.Thread.Sleep(300);
+                Refresh(this.farkle);
+                System.Threading.Thread.Sleep(300);
+                Refresh(this.farkle);
+                System.Threading.Thread.Sleep(300);
+                Refresh(this.farkle);
                 this.AImakePlay();
             }
 
